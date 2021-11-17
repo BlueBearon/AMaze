@@ -22,6 +22,9 @@ public class WinningActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityWinningBinding binding;
 
+    private int pathLength = 0;
+    private int energyConsumed = 3400;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -22,6 +22,12 @@ public class PlayManuallyActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityPlayManuallyBinding binding;
 
+    private boolean fullMazeView = false;
+    private boolean showSolution = false;
+    private boolean showVisableWalls = false;
+    private double MapScale = 1.0;
+    private int PathLength = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

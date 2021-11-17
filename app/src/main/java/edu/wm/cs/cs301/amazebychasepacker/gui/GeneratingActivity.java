@@ -22,6 +22,24 @@ public class GeneratingActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityGeneratingBinding binding;
 
+    //////Driving Information/////////////////////////
+    private String[] drivers = {"Manual", "Wall Follower", "Wizard", "Jumping Wizard"};
+    private int driver = 0;
+
+    private String[] RobotConfigs = {"Premium", "Mediocre", "Soso", "Shaky"};
+    private int config = 0;
+    ////////////////////////////////////////////////////
+
+    ///////MazeGenerationInformation/////////////////////
+    private int SkillLevel = 0;
+    private boolean hasRooms = true;
+    //private Order.Builder[] = {Order.Builder.DFS, Order.Builder.Prim, Order.Builder.Boruvka};
+    private int seed = 13;
+    //////////////////////////////////////////////////////////
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

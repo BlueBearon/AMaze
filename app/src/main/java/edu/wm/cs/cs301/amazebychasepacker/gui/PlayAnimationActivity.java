@@ -22,6 +22,29 @@ public class PlayAnimationActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityPlayAnimationBinding binding;
 
+    //Driving Information//////////////////////////////////
+    private int Driver = 0;
+    private int RobotConfig = 0;
+    /*
+    private Driver theDriver;
+    private Robot theRobot;
+     */
+
+    ///////////////////////////////////////////////////////
+
+    private boolean showEnergy = true;
+    private boolean showMap = true;
+    private double mapScale = 1.0;
+    private boolean activeDriver = false;
+    private int animationSpeed = 5;
+
+
+    //Hardcoded P6 values///
+    private int consumedEnergy = 3500;
+    private int pathLength = 100;
+    ////////////////////////////
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
