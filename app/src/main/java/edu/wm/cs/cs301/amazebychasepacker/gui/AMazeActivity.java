@@ -6,6 +6,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.navigation.NavController;
@@ -18,8 +19,15 @@ import edu.wm.cs.cs301.amazebychasepacker.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SeekBar;
+import android.widget.CheckBox;
+import android.widget.Spinner;
+import android.widget.Button;
+import android.content.Intent;
 
-public class AMazeActivity extends AppCompatActivity {
+import java.util.Random;
+
+public class AMazeActivity extends AppCompatActivity{
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
@@ -27,11 +35,31 @@ public class AMazeActivity extends AppCompatActivity {
 
     private int SkillLevel = 0;
     private boolean hasRooms = true;
-    //will later inherit Order
+
+
     private int builder = 0;
     private String[] builders = {"DFS", "Prim", "Boruvka"};
-    private boolean GenerateNew = true;
     private int seed = 13;
+
+    private int[] previousSeeds = new int[10];
+
+
+    /*
+    UI components:
+
+    Widgets:
+    Seekbar for Skill Level
+
+    Spinner for Builder
+
+
+     */
+
+    private SeekBar skilllevelBar;
+    private CheckBox roomBox;
+    private Spinner builderSpinner;
+    private Button revisitButton;
+    private Button newButton;
 
 
     @Override
@@ -39,14 +67,75 @@ public class AMazeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_main);
 
         setSupportActionBar(binding.toolbar);
+
+        AMazeActivity activity = this;
+
+
+        /////SEEKBAR//////////////////////////////////////////////////////////
+        skilllevelBar = (SeekBar) findViewById(R.id.seekBar);
+
+        skilllevelBar.setProgress(0);
+
+        skilllevelBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                SkillLevel = progress;
+                String msg = "Skill Level set to " + progress + ".";
+                Log.v("AMazeActivity", msg);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        ///////////////////////////////////////////////////////////////////////////////////
+
+        //Maze Generation////////////////////////////////////////////////////////////////////
+        builderSpinner = (Spinner) findViewById(R.id.DriverSpinner);
+        /////////////////////////////////////////////////////////////////////////////////////
+
+
+        //Has Rooms CheckBox/////////////////////////////////////////////////////////////////
+        roomBox = (CheckBox) findViewById(R.id.checkBox);
+        /////////////////////////////////////////////////////////////////////////////////////
+
+        //Explore Button///////////////////////////////////////////////////////////////////////
+        newButton = (Button) findViewById(R.id.Explore);
+
+        newButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+              SwitchtoGenerating(true);
+            }
+        });
+        ///////////////////////////////////////////////////////////////////////////////////////
+
+        //Revisit Button//////////////////////////////////////////////////////////////////////
+        revisitButton = (Button) findViewById(R.id.Revisit);
+
+        revisitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SwitchtoGenerating(false);
+            }
+        });
+        ////////////////////////////////////////////////////////////////////////////////////////
+
 
         NavController navController = Navigation.findNavController(this, R.id.Title);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
+        /*
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,6 +143,8 @@ public class AMazeActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        */
     }
 
     @Override
@@ -78,10 +169,28 @@ public class AMazeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.Title);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
+    private void SwitchtoGenerating(boolean newMaze)
+    {
+        Intent toGenerating = new Intent(this, GeneratingActivity.class);
+        toGenerating.putExtra("Skill Level", SkillLevel);
+        toGenerating.putExtra("Has Rooms", hasRooms);
+        toGenerating.putExtra("Builder", builder);
+
+        Random gen = new Random();
+
+        if(newMaze == true)
+        {
+           seed = gen.nextInt();
+        }
+        else
+        {
+
+        }
+
+        toGenerating.putExtra("Seed", seed);
+
+        startActivity(toGenerating);
+
     }
+
 }
