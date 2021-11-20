@@ -87,9 +87,15 @@ public class GeneratingActivity extends AppCompatActivity {
 
         percent.setText("0%");
 
-        int currentPercent = 0;
 
-        String msg = currentPercent + "%";
+
+        progress = (ProgressBar) findViewById(R.id.progressBar);
+
+        progress.setProgress(0);
+
+
+        //start thread
+
 
         //if driverSelected is true, switchToPlaying
         //else, create pop up telling user to indicate driver
@@ -238,6 +244,43 @@ public class GeneratingActivity extends AppCompatActivity {
             Intent toManual = new Intent(this, PlayManuallyActivity.class);
             //send to PlayManuallyActivity
             startActivity(toManual);
+        }
+    }
+
+    private class progressSimulation implements Runnable
+    {
+        public progressSimulation()
+        {}
+
+        @Override
+        public void run()
+        {
+            try
+            {
+                while (mazeProgress < 100)
+                {
+                    mazeProgress += 10;
+                    String msg = mazeProgress + "%";
+                    percent.setText(msg);
+                    progress.setProgress(mazeProgress, true);
+                    Thread.sleep(1000);
+                }
+
+                if(driverSelected)
+                {
+                    switchToPlaying();
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Please specify driver.", Toast.LENGTH_LONG).show();
+                }
+            }
+            catch (InterruptedException e)
+            {
+                mazeProgress = 0;
+            }
+
+
         }
     }
 
