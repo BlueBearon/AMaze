@@ -19,6 +19,8 @@ import edu.wm.cs.cs301.amazebychasepacker.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.SeekBar;
 import android.widget.CheckBox;
 import android.widget.Spinner;
@@ -26,6 +28,7 @@ import android.widget.Button;
 import android.content.Intent;
 
 import java.util.Random;
+import android.widget.Toast;
 
 public class AMazeActivity extends AppCompatActivity{
 
@@ -71,8 +74,6 @@ public class AMazeActivity extends AppCompatActivity{
 
         setSupportActionBar(binding.toolbar);
 
-        AMazeActivity activity = this;
-
 
         /////SEEKBAR//////////////////////////////////////////////////////////
         skilllevelBar = (SeekBar) findViewById(R.id.seekBar);
@@ -100,12 +101,68 @@ public class AMazeActivity extends AppCompatActivity{
         ///////////////////////////////////////////////////////////////////////////////////
 
         //Maze Generation////////////////////////////////////////////////////////////////////
+        //spinner tutorial:  https://www.youtube.com/watch?v=PjW-XiQ6usI
         builderSpinner = (Spinner) findViewById(R.id.DriverSpinner);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.builders, R.layout.support_simple_spinner_dropdown_item);
+        builderSpinner.setAdapter(adapter);
+
+        builderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                String choice = parent.getItemAtPosition(position).toString();
+
+                Toast.makeText(getApplicationContext(), choice, Toast.LENGTH_LONG).show();
+
+              switch(choice)
+              {
+                  case "Prim":
+                  {
+                      builder = 1;
+                      break;
+                  }
+                  case "Boruvka":
+                  {
+                      builder = 2;
+                      break;
+                  }
+                  default:
+                  {
+                      builder = 0;
+                      break;
+                  }
+              }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
         /////////////////////////////////////////////////////////////////////////////////////
 
 
         //Has Rooms CheckBox/////////////////////////////////////////////////////////////////
         roomBox = (CheckBox) findViewById(R.id.checkBox);
+
+        roomBox.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v)
+            {
+               if(hasRooms)
+               {
+                   hasRooms = false;
+               }
+               else
+               {
+                   hasRooms = true;
+               }
+            }
+        });
         /////////////////////////////////////////////////////////////////////////////////////
 
         //Explore Button///////////////////////////////////////////////////////////////////////
@@ -131,20 +188,11 @@ public class AMazeActivity extends AppCompatActivity{
         });
         ////////////////////////////////////////////////////////////////////////////////////////
 
-
         NavController navController = Navigation.findNavController(this, R.id.Title);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        /*
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
-        */
+
     }
 
     @Override
