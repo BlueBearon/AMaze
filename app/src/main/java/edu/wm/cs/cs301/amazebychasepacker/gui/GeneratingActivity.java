@@ -14,6 +14,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import android.content.Intent;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import edu.wm.cs.cs301.amazebychasepacker.databinding.ActivityGeneratingBinding;
 
@@ -31,8 +37,11 @@ public class GeneratingActivity extends AppCompatActivity {
     private boolean driverSelected = false;
 
     private String[] RobotConfigs = {"Premium", "Mediocre", "Soso", "Shaky"};
-    private int config = 0;
-    ////////////////////////////////////////////////////
+    private String config = "1111";
+
+    private int mazeProgress = 0;
+    private boolean mazeBuilt = false;
+    ///////////////////////////////////////////////////
 
     ///////MazeGenerationInformation/////////////////////
     private int SkillLevel = 0;
@@ -42,6 +51,12 @@ public class GeneratingActivity extends AppCompatActivity {
     private int seed = 13;
     //////////////////////////////////////////////////////////
 
+    //GUI elements//////////////////////////////////////////////
+    TextView percent;
+    Spinner driverSpinner;
+    Spinner configSpinner;
+    ProgressBar progress;
+    /////////////////////////////////////////////////////////////
 
 
 
@@ -68,13 +83,69 @@ public class GeneratingActivity extends AppCompatActivity {
         //////////////////////////////////////////////////////////////////////////////
 
         //Progress///////////////////////////////////////////////////////////////////////
+        percent = (TextView) findViewById(R.id.PercentageText);
+
+        percent.setText("0%");
+
+        int currentPercent = 0;
+
+        String msg = currentPercent + "%";
 
         //if driverSelected is true, switchToPlaying
         //else, create pop up telling user to indicate driver
         /////////////////////////////////////////////////////////////////////////////////
 
         //Driver Spinner/////////////////////////////////////////
+        driverSpinner = (Spinner) findViewById(R.id.DriverSpinner);
 
+        ArrayAdapter<CharSequence> driverAdapter = ArrayAdapter.createFromResource(this, R.array.drivers, R.layout.support_simple_spinner_dropdown_item);
+        driverSpinner.setAdapter(driverAdapter);
+
+        driverSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String choice = parent.getItemAtPosition(position).toString();
+
+                Toast.makeText(getApplicationContext(), choice, Toast.LENGTH_LONG).show();
+
+                switch(choice)
+                {
+                    case "Wizard": {
+                        driver = 1;
+                        break;
+                    }
+                    case "JumpingWizard":
+                    {
+                        driver = 2;
+                        break;
+                    }
+                    case "Wall Follower":
+                    {
+                        driver = 3;
+                        break;
+                    }
+                    default:
+                    {
+                        driver = 0;
+                        break;
+                    }
+
+                }
+
+                driverSelected = true;
+
+                if(mazeBuilt)
+                {
+                    switchToPlaying();
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         //set driverSelected to true
 
@@ -83,7 +154,48 @@ public class GeneratingActivity extends AppCompatActivity {
         /////////////////////////////////////////////////////////
 
         //Config Spinner/////////////////////////////////////////
+        configSpinner = (Spinner) findViewById(R.id.ConfigSpinner);
 
+        ArrayAdapter<CharSequence> configAdapter = ArrayAdapter.createFromResource(this, R.array.robotConfigs, R.layout.support_simple_spinner_dropdown_item);
+        configSpinner.setAdapter(configAdapter);
+
+        configSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String choice = parent.getItemAtPosition(position).toString();
+
+                Toast.makeText(getApplicationContext(), choice, Toast.LENGTH_LONG).show();
+
+                switch(choice)
+                {
+                    case "Mediocre":
+                    {
+                        config = "1100";
+                        break;
+                    }
+                    case "So so":
+                    {
+                        config = "0011";
+                        break;
+                    }
+                    case "Shaky":
+                    {
+                        config = "0000";
+                        break;
+                    }
+                    default:
+                    {
+                        config = "1111";
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         /////////////////////////////////////////////////////////
 
 
