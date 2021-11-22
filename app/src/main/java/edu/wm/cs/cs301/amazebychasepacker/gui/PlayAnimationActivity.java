@@ -1,12 +1,21 @@
 package edu.wm.cs.cs301.amazebychasepacker.gui;
 
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.SeekBar;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -24,7 +33,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
 
     //Driving Information//////////////////////////////////
     private int Driver = 0;
-    private int RobotConfig = 0;
+    private String RobotConfig = "1111";
     /*
     private Driver theDriver;
     private Robot theRobot;
@@ -32,45 +41,185 @@ public class PlayAnimationActivity extends AppCompatActivity {
 
     ///////////////////////////////////////////////////////
 
-    private boolean showEnergy = true;
-    private boolean showMap = true;
+    private boolean showMapV = true;
     private double mapScale = 1.0;
-    private boolean activeDriver = false;
-    private int animationSpeed = 5;
+    private boolean active = false;
+    private int animationSpeed = 2;
+    private int failure_cause = 0;
 
 
     //Hardcoded P6 values///
-    private int consumedEnergy = 3500;
+    private float consumedEnergy = 3500;
     private int pathLength = 100;
     ////////////////////////////
+
+    //GUI Elements//
+    ProgressBar consumption;
+    CheckBox ShowMap;
+    Button decreaseScale;
+    Button increaseScale;
+    Button winning;
+    Button losing;
+    Button start;
+    SeekBar animation;
+    ImageView sensorStatus;
+
+    ///////////////////////////
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityPlayAnimationBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.toolbar);
+        Driver = getIntent().getIntExtra("Driver", 0);
+        RobotConfig = getIntent().getStringExtra("RobotConfig");
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_play_animation);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        setContentView(R.layout.activity_play_animation);
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
+        consumption = (ProgressBar) findViewById(R.id.EnergyLeft);
+        consumption.setProgress(100);
+
+        ShowMap = (CheckBox) findViewById(R.id.showMap);
+        ShowMap.setChecked(true);
+
+        decreaseScale = (Button) findViewById(R.id.Decrease_Scale);
+        increaseScale = (Button) findViewById(R.id.Increase_Scale);
+
+        winning = (Button) findViewById(R.id.SkipAnimation);
+        losing = (Button) findViewById(R.id.Go2Lose);
+
+        start = (Button) findViewById(R.id.ActivateButton);
+        animation = (SeekBar) findViewById(R.id.SpeedBar);
+        animation.setProgress(2);
+
+        sensorStatus = (ImageView) findViewById(R.id.SensorStatus);
+        Drawable sensorImage = getResources().getDrawable(R.drawable.s1100, getTheme());
+        sensorStatus.setImageDrawable(sensorImage);
+
+
+        ShowMap.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                if(showMapV)
+                {
+                    showMapV = false;
+                }
+                else
+                {
+                    showMapV = true;
+                }
             }
         });
+
+        decreaseScale.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(mapScale > .10)
+                {
+                    mapScale -= .10;
+                }
+
+            }
+        });
+
+        increaseScale.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mapScale < 5)
+                {
+                    mapScale += .10;
+                }
+            }
+        });
+
+        winning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchToWinning();
+            }
+        });
+
+        losing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchToLosing();
+
+            }
+        });
+
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(active)
+                {
+                    stopDriver();
+                }
+                else
+                {
+                    startDriver();
+                }
+            }
+        });
+
+        animation.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                animationSpeed = progress;
+
+                String msg = "Animation speed set to " + progress + " .";
+
+                Log.v("PlayAnimationActivity", msg);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                //interrupt generation
+                switchToTitle();
+            }
+        };
+
+
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_play_animation);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
+    private void switchToTitle() {
+        Intent toTitle = new Intent(this, AMazeActivity.class);
+        startActivity(toTitle);
     }
+
+    private void stopDriver() {
+    }
+
+    private void startDriver() {
+    }
+
+    private void switchToWinning() {
+        Intent toWinning = new Intent(this, WinningActivity.class);
+        toWinning.putExtra("Consumption", consumedEnergy);
+        toWinning.putExtra("path", pathLength);
+        startActivity(toWinning);
+    }
+
+    private void switchToLosing() {
+        Intent toLosing = new Intent(this, LosingActivity.class);
+        toLosing.putExtra("Consumption", consumedEnergy);
+        toLosing.putExtra("path", pathLength);
+        toLosing.putExtra("Failure", failure_cause);
+        startActivity(toLosing);
+    }
+
 }
