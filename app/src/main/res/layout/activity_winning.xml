@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/starsactual"
-    tools:context=".gui.WinningActivity">
+    tools:context=".gui.WinningActivity"
+    tools:visibility="visible">
 
     <TextView
         android:id="@+id/WinningText"
@@ -13,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="112dp"
         android:fontFamily="serif"
-        android:text="We Have Arrived At Our Destination!"
+        android:text="@string/we_have_arrived_at_our_destination"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="#FFEB3B"
@@ -38,7 +39,7 @@
             android:id="@+id/PathText"
             android:layout_width="196dp"
             android:layout_height="wrap_content"
-            android:text="PathText"
+            android:text="@string/pathtext"
             android:textColor="#CDDC39"
             android:textSize="20sp"
             android:visibility="visible" />
@@ -47,10 +48,10 @@
             android:id="@+id/EnergyText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="EnergyText"
+            android:text="@string/energytext"
             android:textColor="#FFEB3B"
             android:textSize="20sp"
-            android:visibility="visible" />
+            tools:visibility="visible" />
     </LinearLayout>
 
     <Button
@@ -59,8 +60,9 @@
         android:layout_height="68dp"
         android:layout_marginStart="108dp"
         android:layout_marginTop="360dp"
-        android:text="Return to Title"
+        android:text="@string/return_to_title"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

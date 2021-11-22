@@ -20,7 +20,7 @@
             android:layout_width="287dp"
             android:layout_height="17dp"
             android:layout_weight="1"
-            android:text="Remaining Energy"
+            android:text="@string/remaining_energy"
             android:textColor="@color/textColor"
             android:textSize="20sp"
             android:visibility="visible" />
@@ -52,7 +52,7 @@
             android:id="@+id/showMap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Show Map"
+            android:text="@string/show_map"
             android:textColor="#CDDC39"
             android:textSize="20sp"
             android:visibility="visible" />
@@ -66,7 +66,7 @@
             <Button
                 android:id="@+id/Decrease_Scale"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:text="-"
                 android:visibility="visible" />
@@ -76,7 +76,7 @@
                 android:layout_width="87dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="  Map Scale"
+                android:text="@string/map_scale"
                 android:textColor="@color/textColor"
                 android:textSize="24sp"
                 android:visibility="visible" />
@@ -84,7 +84,7 @@
             <Button
                 android:id="@+id/Increase_Scale"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:text="+"
                 android:visibility="visible" />
@@ -104,14 +104,14 @@
             android:id="@+id/ActivateButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Start/Pause"
+            android:text="@string/start_pause"
             android:visibility="visible" />
 
         <TextView
             android:id="@+id/AnimationSpeedText"
             android:layout_width="163dp"
             android:layout_height="wrap_content"
-            android:text="Animation Speed"
+            android:text="@string/animation_speed"
             android:textColor="#FFEB3B"
             android:textSize="20sp"
             android:visibility="visible" />
@@ -120,7 +120,7 @@
             android:id="@+id/SpeedBar"
             style="@style/Widget.AppCompat.SeekBar.Discrete"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:indeterminate="false"
             android:max="4"
@@ -134,10 +134,10 @@
     <Button
         android:id="@+id/SkipAnimation"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginStart="124dp"
         android:layout_marginTop="280dp"
-        android:text="Go2Winning"
+        android:text="@string/go2winning"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -145,10 +145,10 @@
     <Button
         android:id="@+id/Go2Lose"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginStart="124dp"
         android:layout_marginTop="328dp"
-        android:text="Go2Losing"
+        android:text="@string/go2losing"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -161,6 +161,7 @@
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="248dp"
         android:background="#C60F0F"
+        android:contentDescription="Status of robot sensors"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

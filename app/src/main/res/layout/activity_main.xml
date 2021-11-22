@@ -38,7 +38,7 @@
             android:id="@+id/SkillLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Skill Level:"
+            android:text="@string/skill_level"
             android:textColor="#FFEB3B"
             android:textSize="25sp"
             android:visibility="visible" />
@@ -71,7 +71,7 @@
             android:id="@+id/SpinnerLabel"
             android:layout_width="159dp"
             android:layout_height="wrap_content"
-            android:text="Cartographer"
+            android:text="@string/cartographer"
             android:textColor="#FFEB3B"
             android:textSize="25sp"
             android:visibility="visible" />
@@ -79,7 +79,7 @@
         <Spinner
             android:id="@+id/DriverSpinner"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="50dp"
             android:background="#FFEB3B"
             android:entries="@array/builders"
             android:foregroundTint="#FFEB3B"
@@ -101,9 +101,9 @@
         <CheckBox
             android:id="@+id/checkBox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="No Rooms"
+            android:text="@string/no_rooms"
             android:textColor="#FFEB3B"
             android:textSize="20sp"
             android:visibility="visible" />
@@ -125,7 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Explore"
+            android:text="@string/explore"
             android:visibility="visible" />
 
         <Button
@@ -133,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Revisit"
+            android:text="@string/revisit"
             android:visibility="visible" />
     </LinearLayout>
 

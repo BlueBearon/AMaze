@@ -21,12 +21,30 @@
     <string name="full_maze_view">Full Maze View</string>
     <string name="show_solution">Show Solution</string>
     <string name="f">F</string>
-    <string name="map_scale">Map Scale</string>
     <string name="go2win">Go2Win</string>
     <string name="b">B</string>
     <string name="l">L</string>
     <string name="r">R</string>
     <string name="j">J</string>
+    <string name="houston_we_have_a_problem">Houston, We have a Problem. . .</string>
+    <string name="java_will_decide">Java Will Decide</string>
+    <string name="attempting_recovery">Attempting Recovery. . .</string>
+    <string name="we_have_arrived_at_our_destination">We Have Arrived At Our Destination!</string>
+    <string name="pathtext">PathText</string>
+    <string name="energytext">EnergyText</string>
+    <string name="return_to_title">Return to Title</string>
+    <string name="show_map">Show Map</string>
+    <string name="remaining_energy">Remaining Energy</string>
+    <string name="map_scale">Map Scale</string>
+    <string name="start_pause">Start/Pause</string>
+    <string name="animation_speed">Animation Speed</string>
+    <string name="go2losing">Go2Losing</string>
+    <string name="go2winning">Go2Winning</string>
+    <string name="skill_level">Skill Level:</string>
+    <string name="cartographer">Cartographer</string>
+    <string name="no_rooms">No Rooms</string>
+    <string name="explore">Explore</string>
+    <string name="revisit">Revisit</string>
     <string-array name="builders">
         <item>DFS</item>
         <item>Prim</item>
