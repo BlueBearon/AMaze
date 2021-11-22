@@ -66,15 +66,6 @@ public class GeneratingActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_generating);
 
-        binding = ActivityGeneratingBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        setSupportActionBar(binding.GeneratingToolbar);
-
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_generating);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
         //Get Info from AMazeActivity////////////////////////////////////////////////
         SkillLevel = getIntent().getIntExtra("Skill Level", 0);
         hasRooms = getIntent().getBooleanExtra("Has Rooms", true);
@@ -86,8 +77,6 @@ public class GeneratingActivity extends AppCompatActivity {
         percent = (TextView) findViewById(R.id.PercentageText);
 
         percent.setText("0%");
-
-
 
         progress = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -220,12 +209,6 @@ public class GeneratingActivity extends AppCompatActivity {
         startActivity(toTitle);
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_generating);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
 
     private void switchToPlaying()
     {
