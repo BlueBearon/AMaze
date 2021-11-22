@@ -152,6 +152,10 @@ public class GeneratingActivity extends AppCompatActivity {
                 {
                     switchToPlaying();
                 }
+                else
+                {
+                    Snackbar.make(view, "Please Wait for Maze to be Generated", Snackbar.LENGTH_SHORT).show();
+                }
 
             }
 
@@ -283,6 +287,10 @@ public class GeneratingActivity extends AppCompatActivity {
                 if(driverSelected)
                 {
                     switchToPlaying();
+                }
+                else
+                {
+                    Snackbar.make(driverSpinner, "Please pick a driver", Snackbar.LENGTH_SHORT).show();
                 }
             }
             catch (InterruptedException e)
