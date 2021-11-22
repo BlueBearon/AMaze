@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
@@ -23,14 +24,13 @@ import edu.wm.cs.cs301.amazebychasepacker.R;
 public class PlayManuallyActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
-    private ActivityPlayManuallyBinding binding;
 
     private boolean fullMazeViewValue = false;
     private boolean showSolutionValue = false;
     private boolean showVisableWalls = false;
     private double MapScale = 1.0;
     private int PathLength = 0;
-
+    //GUI Elements//////
     CheckBox fullMazeView;
     CheckBox showSolution;
     CheckBox showWalls;
@@ -42,6 +42,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
     Button left;
     Button right;
     Button jump;
+    ////////////////////////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
             }
         });
 
+
         showSolution.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +89,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
             }
         });
 
+        //change setting of showVisableWalls if pressed
         showWalls.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +109,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
         decreaseScale = (Button) findViewById(R.id.Decrease_Scale1);
         increaseScale = (Button) findViewById(R.id.Increase_Scale1);
 
+        //decrease the scale of map if pressed
         decreaseScale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,6 +122,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
             }
         });
 
+        //if increase scale is pressed, increase the scale
         increaseScale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,6 +137,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
 
         Go2Win = (Button) findViewById(R.id.Go2Win);
 
+        //if go2Win is pressed, go to WinningActivity
         Go2Win.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,6 +153,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
         right = (Button) findViewById(R.id.Right);
         jump = (Button) findViewById(R.id.Jump);
 
+        //if forward is pushed, add to pathlength
         forward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,6 +182,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
             }
         });
 
+        //if jump is pushed, add to pathlength
         jump.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,24 +190,30 @@ public class PlayManuallyActivity extends AppCompatActivity {
             }
         });
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_play_manually);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
+        //if back is pressed, go to title screen
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                //interrupt generation
+                switchToTitle();
+            }
+        };
+
+
+    }
+
+    private void switchToTitle() {
+        Intent toTitle = new Intent(this, AMazeActivity.class);
+        startActivity(toTitle);
     }
 
     private void switchToWinning() {
         Intent toWinning = new Intent(this, WinningActivity.class);
-        toWinning.putExtra("PathLength", PathLength);
-        toWinning.putExtra("EnergyConsumed", -42);
+        toWinning.putExtra("path", PathLength);
+        toWinning.putExtra("Consumption", -42);
         startActivity(toWinning);
 
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_play_manually);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
 }
