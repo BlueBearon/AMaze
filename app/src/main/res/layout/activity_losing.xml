@@ -1,34 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/starsactual"
     tools:context=".gui.LosingActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/Theme.AMazeByChasePacker.AppBarOverlay">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.AMazeByChasePacker.PopupOverlay" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <include layout="@layout/content_losing" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+    <TextView
+        android:id="@+id/LosingText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="16dp"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:layout_marginTop="112dp"
+        android:fontFamily="serif"
+        android:text="Houston, We have a Problem. . ."
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#FFEB3B"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <LinearLayout
+        android:id="@+id/FailureCause"
+        android:layout_width="372dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="259dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/FailureCauseText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Java Will Decide"
+            android:textAlignment="center"
+            android:textColor="#CDDC39"
+            android:textSize="20sp"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/RecoveryText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Attempting Recovery. . ."
+            android:textAlignment="center"
+            android:textColor="#CDDC39"
+            android:textSize="20sp"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LosingInfo"
+        android:layout_width="359dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="515dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/PathTextLosing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PathText"
+            android:textAlignment="center"
+            android:textColor="#CDDC39"
+            android:textSize="20sp"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/EnergyTextLosing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EnergyText"
+            android:textAlignment="center"
+            android:textColor="#FFEB3B"
+            android:textSize="20sp"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/LoseToTitleButton"
+        android:layout_width="193dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="109dp"
+        android:layout_marginTop="631dp"
+        android:text="Return to Title"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

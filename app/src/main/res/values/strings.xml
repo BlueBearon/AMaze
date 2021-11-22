@@ -14,4 +14,37 @@
     <string name="title_activity_play_animation">PlayAnimationActivity</string>
     <string name="title_activity_winning">WinningActivity</string>
     <string name="title_activity_losing">LosingActivity</string>
+
+
+    <string name="MazeTitle">Astro Taxi</string>
+    <string name="show_walls">Show Walls</string>
+    <string name="full_maze_view">Full Maze View</string>
+    <string name="show_solution">Show Solution</string>
+    <string name="f">F</string>
+    <string name="map_scale">Map Scale</string>
+    <string name="go2win">Go2Win</string>
+    <string name="b">B</string>
+    <string name="l">L</string>
+    <string name="r">R</string>
+    <string name="j">J</string>
+    <string-array name="builders">
+        <item>DFS</item>
+        <item>Prim</item>
+        <item>Boruvka</item>
+    </string-array>
+
+    <string-array name="drivers">
+        <item>Manual</item>
+        <item>Wizard</item>
+        <item>JumpingWizard</item>
+        <item>Wall Follower</item>
+    </string-array>
+
+    <string-array name="robotConfigs">
+        <item>Premium</item>
+        <item>Mediocre</item>
+        <item>So so</item>
+        <item>Shaky</item>
+    </string-array>
+
 </resources>
