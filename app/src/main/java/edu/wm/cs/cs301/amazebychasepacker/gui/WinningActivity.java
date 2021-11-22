@@ -8,6 +8,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -51,6 +52,10 @@ public class WinningActivity extends AppCompatActivity {
         energyText = (TextView) findViewById(R.id.EnergyText);
         titleButton = (Button) findViewById(R.id.WinToTitleButton);
 
+        String msg = "pathLength:  " + pathLength + " EnergyConsumed:  " + energyConsumed;
+        Log.v("WinningActivity", msg);
+        Snackbar.make(pathText, msg, Snackbar.LENGTH_SHORT).show();
+
         //set text contents
         String msgPath = "Pathlength:  " + pathLength;
         String msgEnergy = "Energy Consumed:  " + energyConsumed;
@@ -69,7 +74,12 @@ public class WinningActivity extends AppCompatActivity {
         titleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String msg = "Going to title screen";
+                Log.v("WinningActivity", msg);
+                Snackbar.make(v, msg, Snackbar.LENGTH_SHORT).show();
                 switchToTitle();
+
             }
         });
 

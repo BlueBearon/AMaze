@@ -8,6 +8,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -72,6 +73,10 @@ public class PlayManuallyActivity extends AppCompatActivity {
                     fullMazeViewValue = true;
                 }
 
+                String msg = "fullMazeView:  " + fullMazeViewValue;
+                Log.v("PlayAnimationActivity", msg);
+                Snackbar.make(fullMazeView, msg, Snackbar.LENGTH_SHORT).show();
+
             }
         });
 
@@ -87,6 +92,10 @@ public class PlayManuallyActivity extends AppCompatActivity {
                 {
                     showSolutionValue = true;
                 }
+
+                String msg = "showSolution:  " + showSolutionValue;
+                Log.v("PlayAnimationActivity", msg);
+                Snackbar.make(showSolution, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -104,6 +113,10 @@ public class PlayManuallyActivity extends AppCompatActivity {
                     showVisableWalls = true;
                 }
 
+                String msg = "showWalls:  " + showVisableWalls;
+                Log.v("PlayAnimationActivity", msg);
+                Snackbar.make(showWalls, msg, Snackbar.LENGTH_SHORT).show();
+
             }
         });
 
@@ -119,7 +132,9 @@ public class PlayManuallyActivity extends AppCompatActivity {
                 {
                     MapScale -= .10;
                 }
-
+                String msg = "New Scale:  " + MapScale;
+                Log.v("PlayManuallyActivity", msg);
+                Snackbar.make(increaseScale, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -131,6 +146,10 @@ public class PlayManuallyActivity extends AppCompatActivity {
                 {
                     MapScale += .10;
                 }
+
+                String msg = "New Scale:  " + MapScale;
+                Log.v("PlayManuallyActivity", msg);
+                Snackbar.make(increaseScale, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -142,7 +161,9 @@ public class PlayManuallyActivity extends AppCompatActivity {
         Go2Win.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String msg = "Going to Win";
+                Log.v("PlayManuallyActivity", msg);
+                Snackbar.make(Go2Win, msg, Snackbar.LENGTH_SHORT).show();
                 switchToWinning();
 
             }
@@ -159,27 +180,36 @@ public class PlayManuallyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PathLength++;
+                String msg = "forward pressed";
+                Log.v("PlayManuallyActivity", msg);
+                Snackbar.make(v, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
 
         backward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String msg = "back pressed";
+                Log.v("PlayManuallyActivity", msg);
+                Snackbar.make(v, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
 
         left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String msg = "left pressed";
+                Log.v("PlayManuallyActivity", msg);
+                Snackbar.make(v, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
 
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String msg = "right pressed";
+                Log.v("PlayManuallyActivity", msg);
+                Snackbar.make(v, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -188,6 +218,10 @@ public class PlayManuallyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PathLength++;
+
+                String msg = "jump pressed";
+                Log.v("PlayManuallyActivity", msg);
+                Snackbar.make(v, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
 

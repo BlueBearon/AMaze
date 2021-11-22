@@ -7,6 +7,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.navigation.NavController;
@@ -71,6 +72,8 @@ public class GeneratingActivity extends AppCompatActivity {
         hasRooms = getIntent().getBooleanExtra("Has Rooms", true);
         builder = getIntent().getIntExtra("Builder", 0);
         seed = getIntent().getIntExtra("Seed", 13);
+
+
         //////////////////////////////////////////////////////////////////////////////
 
         //Progress///////////////////////////////////////////////////////////////////////
@@ -81,7 +84,11 @@ public class GeneratingActivity extends AppCompatActivity {
         progress = (ProgressBar) findViewById(R.id.progressBar);
 
         progress.setProgress(0);
-
+        ////////////////////
+        String msg = "Skill Level: " + SkillLevel + " hasRooms:  " + hasRooms + " Builder:  " + " Seed:  " + seed;
+        Log.v("GeneratingActivity", msg);
+        Snackbar.make(percent, msg, Snackbar.LENGTH_SHORT).show();
+        ////////////////////////
 
         //start thread
         progressSimulation simulate = new progressSimulation();
@@ -103,7 +110,9 @@ public class GeneratingActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String choice = parent.getItemAtPosition(position).toString();
 
-                Toast.makeText(getApplicationContext(), choice, Toast.LENGTH_LONG).show();
+                String msg = "Driver selected:  " + choice;
+                Log.v("GeneratingActivity", msg);
+                Snackbar.make(driverSpinner, msg, Snackbar.LENGTH_SHORT).show();
 
                 switch(choice)
                 {
@@ -166,7 +175,9 @@ public class GeneratingActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String choice = parent.getItemAtPosition(position).toString();
 
-                Toast.makeText(getApplicationContext(), choice, Toast.LENGTH_LONG).show();
+                String msg = "Robot Config selected:  " + choice;
+                Log.v("GeneratingActivity", msg);
+                Snackbar.make(configSpinner, msg, Snackbar.LENGTH_SHORT).show();
 
                 switch(choice)
                 {

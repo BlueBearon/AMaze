@@ -164,7 +164,7 @@ public class AMazeActivity extends AppCompatActivity{
                    hasRooms = true;
                }
 
-                String msg = "Skill Level set to " + hasRooms + ".";
+                String msg = "Has rooms is set to " + hasRooms + ".";
                 Log.v("AMazeActivity", msg);
                 Snackbar.make(roomBox, msg, Snackbar.LENGTH_SHORT).show();
             }

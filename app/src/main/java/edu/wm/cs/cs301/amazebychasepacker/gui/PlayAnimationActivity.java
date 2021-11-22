@@ -80,6 +80,10 @@ public class PlayAnimationActivity extends AppCompatActivity {
         consumption = (ProgressBar) findViewById(R.id.EnergyLeft);
         consumption.setProgress(100);
 
+        String msg = "Driver:  " + Driver + " RobotConfig:  " + RobotConfig;
+        Log.v("PlayAnimationActivity", msg);
+        Snackbar.make(consumption, msg, Snackbar.LENGTH_SHORT).show();
+
         ShowMap = (CheckBox) findViewById(R.id.showMap);
         ShowMap.setChecked(true);
 
@@ -111,6 +115,10 @@ public class PlayAnimationActivity extends AppCompatActivity {
                 {
                     showMapV = true;
                 }
+
+                String msg = "Show Map:  " + showMapV;
+                Log.v("PlayAnimationActivity", msg);
+                Snackbar.make(ShowMap, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
         //decrease map scale if pressed.
@@ -123,6 +131,10 @@ public class PlayAnimationActivity extends AppCompatActivity {
                     mapScale -= .10;
                 }
 
+                String msg = "New Scale:  " + mapScale;
+                Log.v("PlayAnimationActivity", msg);
+                Snackbar.make(decreaseScale, msg, Snackbar.LENGTH_SHORT).show();
+
             }
         });
         //increase map scale if pressed
@@ -133,12 +145,20 @@ public class PlayAnimationActivity extends AppCompatActivity {
                 {
                     mapScale += .10;
                 }
+
+                String msg = "New Scale:  " + mapScale;
+                Log.v("PlayAnimationActivity", msg);
+                Snackbar.make(increaseScale, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
         //switch to winning
         winning.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                String msg = "Going to Winning";
+                Log.v("PlayAnimationActivity", msg);
+                Snackbar.make(winning, msg, Snackbar.LENGTH_SHORT).show();
                 switchToWinning();
             }
         });
@@ -146,6 +166,9 @@ public class PlayAnimationActivity extends AppCompatActivity {
         losing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String msg = "Going to Losing";
+                Log.v("PlayAnimationActivity", msg);
+                Snackbar.make(winning, msg, Snackbar.LENGTH_SHORT).show();
                 switchToLosing();
 
             }
@@ -163,6 +186,10 @@ public class PlayAnimationActivity extends AppCompatActivity {
                 {
                     startDriver();
                 }
+
+                String msg = "Start/Stop button Selected";
+                Log.v("PlayAnimationActivity", msg);
+                Snackbar.make(increaseScale, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
         //if animation speed bar is changed, change the animation speed.
@@ -174,6 +201,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
                 String msg = "Animation speed set to " + progress + " .";
 
                 Log.v("PlayAnimationActivity", msg);
+                Snackbar.make(animation, msg, Snackbar.LENGTH_SHORT).show();
             }
 
             @Override
