@@ -219,6 +219,7 @@ public class GeneratingActivity extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
+        //Credit to Tutorial:  https://www.youtube.com/watch?v=ODg638Qzp8g
         switchToTitle();
     }
 
