@@ -63,10 +63,6 @@ public class LosingActivity extends AppCompatActivity {
         pathText.setText(msgPath);
         energyText.setText(msgEnergy);
 
-        if(energyConsumed < 0)
-        {
-            energyText.setVisibility(View.INVISIBLE);
-        }
 
         if(cause == 1)
         {

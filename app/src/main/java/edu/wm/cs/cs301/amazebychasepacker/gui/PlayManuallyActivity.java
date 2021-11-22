@@ -218,7 +218,6 @@ public class PlayManuallyActivity extends AppCompatActivity {
     private void switchToWinning() {
         Intent toWinning = new Intent(this, WinningActivity.class);
         toWinning.putExtra("path", PathLength);
-        toWinning.putExtra("Consumption", -42.00);
         startActivity(toWinning);
 
     }

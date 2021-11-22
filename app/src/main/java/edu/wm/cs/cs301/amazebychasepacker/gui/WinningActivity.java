@@ -44,7 +44,7 @@ public class WinningActivity extends AppCompatActivity {
 
         //get info from previous activity
         pathLength = getIntent().getIntExtra("path", 0);
-        energyConsumed = getIntent().getFloatExtra("Consumption", 3400);
+        energyConsumed = getIntent().getFloatExtra("Consumption", 9000);
 
         //get gui elements
         pathText = (TextView) findViewById(R.id.PathText);
@@ -57,7 +57,7 @@ public class WinningActivity extends AppCompatActivity {
 
         //energyconsumed will be negative if coming from Manual
         //If we come from manual, energyConsumed is irrelevant, so don't show it.
-        if(energyConsumed < 0)
+        if(energyConsumed >= 9000)
         {
             energyText.setVisibility(View.INVISIBLE);
         }

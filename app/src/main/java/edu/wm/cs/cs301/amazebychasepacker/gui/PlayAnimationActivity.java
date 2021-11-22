@@ -49,7 +49,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
 
 
     //Hardcoded P6 values///
-    private float consumedEnergy = 3500;
+    private float consumedEnergy = 2400;
     private int pathLength = 100;
     ////////////////////////////
 
