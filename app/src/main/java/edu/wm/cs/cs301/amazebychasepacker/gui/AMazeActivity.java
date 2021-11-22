@@ -188,10 +188,6 @@ public class AMazeActivity extends AppCompatActivity{
         });
         ////////////////////////////////////////////////////////////////////////////////////////
 
-        NavController navController = Navigation.findNavController(this, R.id.Title);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
 
     }
 

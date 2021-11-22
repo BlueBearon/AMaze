@@ -84,7 +84,9 @@ public class GeneratingActivity extends AppCompatActivity {
 
 
         //start thread
-
+        progressSimulation simulate = new progressSimulation();
+        Thread t = new Thread(simulate);
+        t.start();
 
         //if driverSelected is true, switchToPlaying
         //else, create pop up telling user to indicate driver
