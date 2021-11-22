@@ -82,8 +82,10 @@ public class AMazeActivity extends AppCompatActivity{
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 SkillLevel = progress;
+
                 String msg = "Skill Level set to " + progress + ".";
                 Log.v("AMazeActivity", msg);
+                Snackbar.make(skilllevelBar, msg, Snackbar.LENGTH_SHORT).show();
             }
 
             @Override
@@ -111,7 +113,9 @@ public class AMazeActivity extends AppCompatActivity{
             {
                 String choice = parent.getItemAtPosition(position).toString();
 
-                Toast.makeText(getApplicationContext(), choice, Toast.LENGTH_LONG).show();
+                String msg = "Builder selected is " + choice + ".";
+                Log.v("AMazeActivity", msg);
+                Snackbar.make(builderSpinner, msg, Snackbar.LENGTH_SHORT).show();
 
               switch(choice)
               {
@@ -159,6 +163,10 @@ public class AMazeActivity extends AppCompatActivity{
                {
                    hasRooms = true;
                }
+
+                String msg = "Skill Level set to " + hasRooms + ".";
+                Log.v("AMazeActivity", msg);
+                Snackbar.make(roomBox, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
         /////////////////////////////////////////////////////////////////////////////////////
@@ -170,6 +178,10 @@ public class AMazeActivity extends AppCompatActivity{
             @Override
             public void onClick(View v)
             {
+                String msg = "Explore Selected";
+                Log.v("AMazeActivity", msg);
+                Snackbar.make(newButton, msg, Snackbar.LENGTH_SHORT).show();
+
               SwitchtoGenerating(true);
             }
         });
@@ -181,6 +193,10 @@ public class AMazeActivity extends AppCompatActivity{
         revisitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String msg = "Revist Selected";
+                Log.v("AMazeActivity", msg);
+                Snackbar.make(newButton, msg, Snackbar.LENGTH_SHORT).show();
                 SwitchtoGenerating(false);
             }
         });
