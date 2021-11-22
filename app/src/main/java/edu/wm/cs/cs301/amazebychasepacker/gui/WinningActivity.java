@@ -42,13 +42,16 @@ public class WinningActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_winning);
 
+        //get info from previous activity
         pathLength = getIntent().getIntExtra("path", 0);
         energyConsumed = getIntent().getFloatExtra("Consumption", 3400);
 
+        //get gui elements
         pathText = (TextView) findViewById(R.id.PathText);
         energyText = (TextView) findViewById(R.id.EnergyText);
         titleButton = (Button) findViewById(R.id.WinToTitleButton);
 
+        //set text contents
         String msgPath = "Pathlength:  " + pathLength;
         String msgEnergy = "Energy Consumed:  " + energyConsumed;
 
@@ -62,6 +65,7 @@ public class WinningActivity extends AppCompatActivity {
         pathText.setText(msgPath);
         energyText.setText(msgEnergy);
 
+        //if title button is selected, change to Title
         titleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +83,9 @@ public class WinningActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Switches Activity to AMazeActivity
+     */
     private void switchToTitle()
     {
         Intent toTitle = new Intent (this, AMazeActivity.class);

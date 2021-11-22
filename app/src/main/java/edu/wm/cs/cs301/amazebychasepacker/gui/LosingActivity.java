@@ -45,20 +45,28 @@ public class LosingActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_losing);
 
+        //get info from previous activity
         pathLength = getIntent().getIntExtra("path", 0);
         energyConsumed = getIntent().getFloatExtra("Consumption", 3500);
         int cause = getIntent().getIntExtra("Failure", 0);
 
+        //get gui elements
         pathText = (TextView) findViewById(R.id.PathTextLosing);
         energyText = (TextView) findViewById(R.id.EnergyTextLosing);
         titleButton = (Button) findViewById(R.id.LoseToTitleButton);
         losingCause = (TextView) findViewById(R.id.FailureCauseText);
 
+        //set text to display on screen
         String msgPath = "Pathlength:  " + pathLength;
         String msgEnergy = "Energy Consumed:  " + energyConsumed;
 
         pathText.setText(msgPath);
         energyText.setText(msgEnergy);
+
+        if(energyConsumed < 0)
+        {
+            energyText.setVisibility(View.INVISIBLE);
+        }
 
         if(cause == 1)
         {
@@ -69,7 +77,7 @@ public class LosingActivity extends AppCompatActivity {
             losingCause.setText("Ran out of Energy");
         }
 
-
+        //if title button is clicked, go to title screen.
         titleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,7 +96,9 @@ public class LosingActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * This method, when called, creates the intent and changes activity to AMazeActivity
+     */
     private void switchToTitle()
     {
         Intent toTitle = new Intent (this, AMazeActivity.class);
