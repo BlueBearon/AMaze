@@ -34,6 +34,7 @@
     </string-array>
 
     <string-array name="drivers">
+        <item>Choose Driver</item>
         <item>Manual</item>
         <item>Wizard</item>
         <item>JumpingWizard</item>

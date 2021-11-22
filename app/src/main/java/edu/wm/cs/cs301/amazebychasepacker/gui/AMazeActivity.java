@@ -72,8 +72,6 @@ public class AMazeActivity extends AppCompatActivity{
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);
 
-        setSupportActionBar(binding.toolbar);
-
 
         /////SEEKBAR//////////////////////////////////////////////////////////
         skilllevelBar = (SeekBar) findViewById(R.id.seekBar);

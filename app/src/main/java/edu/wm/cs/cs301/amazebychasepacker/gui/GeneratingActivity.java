@@ -32,8 +32,8 @@ public class GeneratingActivity extends AppCompatActivity {
 
     //////Driving Information/////////////////////////
     private String[] drivers = {"Manual", "Wall Follower", "Wizard", "Jumping Wizard"};
-    private int driver = 0;
-
+    private int driver = -1;
+    private Thread t;
     private boolean driverSelected = false;
 
     private String[] RobotConfigs = {"Premium", "Mediocre", "Soso", "Shaky"};
@@ -85,7 +85,7 @@ public class GeneratingActivity extends AppCompatActivity {
 
         //start thread
         progressSimulation simulate = new progressSimulation();
-        Thread t = new Thread(simulate);
+        t = new Thread(simulate);
         t.start();
 
         //if driverSelected is true, switchToPlaying
@@ -107,6 +107,11 @@ public class GeneratingActivity extends AppCompatActivity {
 
                 switch(choice)
                 {
+                    case "Manual":
+                    {
+                        driver = 0;
+                        break;
+                    }
                     case "Wizard": {
                         driver = 1;
                         break;
@@ -123,13 +128,16 @@ public class GeneratingActivity extends AppCompatActivity {
                     }
                     default:
                     {
-                        driver = 0;
+                        driver = -1;
                         break;
                     }
 
                 }
 
-                driverSelected = true;
+                if(driver >= 0)
+                {
+                    driverSelected = true;
+                }
 
                 if(mazeBuilt)
                 {
@@ -207,6 +215,7 @@ public class GeneratingActivity extends AppCompatActivity {
 
     private void switchToTitle()
     {
+        t.interrupt();
         Intent toTitle = new Intent (this, AMazeActivity.class);
         startActivity(toTitle);
     }
@@ -251,13 +260,10 @@ public class GeneratingActivity extends AppCompatActivity {
                     Thread.sleep(1000);
                 }
 
+                mazeBuilt = true;
                 if(driverSelected)
                 {
                     switchToPlaying();
-                }
-                else
-                {
-                    Toast.makeText(getApplicationContext(), "Please specify driver.", Toast.LENGTH_LONG).show();
                 }
             }
             catch (InterruptedException e)
