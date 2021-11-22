@@ -97,7 +97,7 @@ public class GeneratingActivity extends AppCompatActivity {
 
         ArrayAdapter<CharSequence> driverAdapter = ArrayAdapter.createFromResource(this, R.array.drivers, R.layout.support_simple_spinner_dropdown_item);
         driverSpinner.setAdapter(driverAdapter);
-
+        //when user selects a driver, change driver to selected driver.
         driverSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -152,10 +152,6 @@ public class GeneratingActivity extends AppCompatActivity {
             }
         });
 
-        //set driverSelected to true
-
-        //if progress is less than 100%, create pop up telling user to wait for generation
-        //else, switchToPlaying
         /////////////////////////////////////////////////////////
 
         //Config Spinner/////////////////////////////////////////
@@ -164,6 +160,7 @@ public class GeneratingActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> configAdapter = ArrayAdapter.createFromResource(this, R.array.robotConfigs, R.layout.support_simple_spinner_dropdown_item);
         configSpinner.setAdapter(configAdapter);
 
+        //when user makes a choice, change the robot config
         configSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -213,6 +210,9 @@ public class GeneratingActivity extends AppCompatActivity {
         };
     }
 
+    /**
+     * Stops the progress bar thread and switches to title
+     */
     private void switchToTitle()
     {
         t.interrupt();
@@ -220,7 +220,10 @@ public class GeneratingActivity extends AppCompatActivity {
         startActivity(toTitle);
     }
 
-
+    /**
+     * Depending on the value of driver, will activate either PlayAnimation or PlayManually.
+     * Sends driver and robot config info if necessary.
+     */
     private void switchToPlaying()
     {
         if(driver > 0)
@@ -241,6 +244,11 @@ public class GeneratingActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This class is the runnable object that simulates maze generation.
+     * Every second, progress bar increases by 10.  If mazeDriver is selected
+     * it will call SwitchtoPlaying().
+     */
     private class progressSimulation implements Runnable
     {
         public progressSimulation()

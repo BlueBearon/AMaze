@@ -58,6 +58,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
         showSolution.setChecked(true);
         showWalls.setChecked(true);
 
+        //if fullMazeView is clicked, change setting
         fullMazeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +75,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
             }
         });
 
-
+        //if showSolution is clicked, change setting
         showSolution.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -203,15 +204,21 @@ public class PlayManuallyActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * switches to AMazeActivity
+     */
     private void switchToTitle() {
         Intent toTitle = new Intent(this, AMazeActivity.class);
         startActivity(toTitle);
     }
 
+    /**
+     * Switches to WinningActivity with path and consumption parameters
+     */
     private void switchToWinning() {
         Intent toWinning = new Intent(this, WinningActivity.class);
         toWinning.putExtra("path", PathLength);
-        toWinning.putExtra("Consumption", -42);
+        toWinning.putExtra("Consumption", -42.00);
         startActivity(toWinning);
 
     }

@@ -93,11 +93,13 @@ public class PlayAnimationActivity extends AppCompatActivity {
         animation = (SeekBar) findViewById(R.id.SpeedBar);
         animation.setProgress(2);
 
+        //Depending on the sensor status of robot, the image will change on screen.  Will be
+        //implemented further in project 7
         sensorStatus = (ImageView) findViewById(R.id.SensorStatus);
         Drawable sensorImage = getResources().getDrawable(R.drawable.s1100, getTheme());
         sensorStatus.setImageDrawable(sensorImage);
 
-
+        //change showMap setting if pressed.
         ShowMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,7 +113,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
                 }
             }
         });
-
+        //decrease map scale if pressed.
         decreaseScale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,7 +125,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
 
             }
         });
-
+        //increase map scale if pressed
         increaseScale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,14 +135,14 @@ public class PlayAnimationActivity extends AppCompatActivity {
                 }
             }
         });
-
+        //switch to winning
         winning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switchToWinning();
             }
         });
-
+        //switch to losing
         losing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,7 +150,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
 
             }
         });
-
+        //if start/stop button is pressed, either activate or deactivate driver depending on state
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,7 +165,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
                 }
             }
         });
-
+        //if animation speed bar is changed, change the animation speed.
         animation.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -195,18 +197,25 @@ public class PlayAnimationActivity extends AppCompatActivity {
 
 
     }
-
+    /**
+     * switches to AMazeActivity
+     */
     private void switchToTitle() {
         Intent toTitle = new Intent(this, AMazeActivity.class);
         startActivity(toTitle);
     }
 
     private void stopDriver() {
+        //project 7
     }
 
     private void startDriver() {
+        //project 7
     }
 
+    /**
+     * Switches to WinningActivity with path and consumption
+     */
     private void switchToWinning() {
         Intent toWinning = new Intent(this, WinningActivity.class);
         toWinning.putExtra("Consumption", consumedEnergy);
@@ -214,6 +223,9 @@ public class PlayAnimationActivity extends AppCompatActivity {
         startActivity(toWinning);
     }
 
+    /**
+     * Switches ot LosingActivity and sends path and consumption
+     */
     private void switchToLosing() {
         Intent toLosing = new Intent(this, LosingActivity.class);
         toLosing.putExtra("Consumption", consumedEnergy);

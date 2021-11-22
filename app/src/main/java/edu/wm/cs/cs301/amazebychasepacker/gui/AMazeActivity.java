@@ -77,7 +77,7 @@ public class AMazeActivity extends AppCompatActivity{
         skilllevelBar = (SeekBar) findViewById(R.id.seekBar);
 
         skilllevelBar.setProgress(0);
-
+        //When user sets skill level, change skill level to selected skill level
         skilllevelBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -104,7 +104,7 @@ public class AMazeActivity extends AppCompatActivity{
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.builders, R.layout.support_simple_spinner_dropdown_item);
         builderSpinner.setAdapter(adapter);
-
+        //if user selects a builder, change builder to selected builder
         builderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
@@ -211,6 +211,11 @@ public class AMazeActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Sends the speicfied parameters to Generating Activity and switches to Activity.
+     *If explore maze is selected, it generates a new seed.
+     * @param newMaze: whether or not new seed needs to be created.
+     */
     private void SwitchtoGenerating(boolean newMaze)
     {
         Intent toGenerating = new Intent(this, GeneratingActivity.class);
