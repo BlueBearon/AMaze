@@ -93,24 +93,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/Forward"
+        android:id="@+id/Jump"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="299dp"
-        android:layout_marginTop="563dp"
-        android:text="@string/f"
-        android:visibility="visible"
-        app:iconTint="#EDE0E0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/Around"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="299dp"
-        android:layout_marginTop="659dp"
-        android:text="@string/b"
+        android:layout_marginStart="304dp"
+        android:layout_marginTop="504dp"
+        android:text="@string/j"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -119,8 +107,8 @@
         android:id="@+id/Left"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="251dp"
-        android:layout_marginTop="611dp"
+        android:layout_marginStart="256dp"
+        android:layout_marginTop="504dp"
         android:text="@string/l"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
@@ -130,21 +118,33 @@
         android:id="@+id/Right"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="347dp"
-        android:layout_marginTop="611dp"
+        android:layout_marginStart="352dp"
+        android:layout_marginTop="504dp"
         android:text="@string/r"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/Jump"
+        android:id="@+id/Around"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="299dp"
-        android:layout_marginTop="611dp"
-        android:text="@string/j"
+        android:layout_marginStart="304dp"
+        android:layout_marginTop="552dp"
+        android:text="@string/b"
         android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Forward"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="304dp"
+        android:layout_marginTop="456dp"
+        android:text="@string/f"
+        android:visibility="visible"
+        app:iconTint="#EDE0E0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

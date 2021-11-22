@@ -94,7 +94,8 @@
     <LinearLayout
         android:layout_width="410dp"
         android:layout_height="130dp"
-        android:layout_marginBottom="2dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="108dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -108,7 +109,7 @@
 
         <TextView
             android:id="@+id/AnimationSpeedText"
-            android:layout_width="match_parent"
+            android:layout_width="163dp"
             android:layout_height="wrap_content"
             android:text="Animation Speed"
             android:textColor="#FFEB3B"
@@ -134,8 +135,8 @@
         android:id="@+id/SkipAnimation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="156dp"
-        android:layout_marginTop="339dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="280dp"
         android:text="Go2Winning"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
@@ -145,8 +146,8 @@
         android:id="@+id/Go2Lose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="156dp"
-        android:layout_marginTop="392dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="328dp"
         android:text="Go2Losing"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
@@ -158,11 +159,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="276dp"
         android:layout_marginEnd="1dp"
-        android:layout_marginBottom="132dp"
+        android:layout_marginBottom="248dp"
         android:background="#C60F0F"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/s1100" />
 
