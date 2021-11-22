@@ -215,16 +215,15 @@ public class PlayAnimationActivity extends AppCompatActivity {
             }
         });
 
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                //interrupt generation
-                switchToTitle();
-            }
-        };
-
 
     }
+
+    @Override
+    public void onBackPressed()
+    {
+        switchToTitle();
+    }
+
     /**
      * switches to AMazeActivity
      */

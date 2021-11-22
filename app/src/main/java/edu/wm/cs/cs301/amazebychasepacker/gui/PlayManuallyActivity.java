@@ -226,16 +226,13 @@ public class PlayManuallyActivity extends AppCompatActivity {
         });
 
 
-        //if back is pressed, go to title screen
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                //interrupt generation
-                switchToTitle();
-            }
-        };
+    }
 
 
+    @Override
+    public void onBackPressed()
+    {
+        switchToTitle();
     }
 
     /**
