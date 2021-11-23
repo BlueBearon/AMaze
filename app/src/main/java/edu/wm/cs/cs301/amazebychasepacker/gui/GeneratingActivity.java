@@ -4,23 +4,19 @@ import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
 import android.view.View;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+
 import android.content.Intent;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import edu.wm.cs.cs301.amazebychasepacker.generation.Factory;
@@ -28,7 +24,6 @@ import edu.wm.cs.cs301.amazebychasepacker.generation.Floorplan;
 import edu.wm.cs.cs301.amazebychasepacker.generation.Maze;
 import edu.wm.cs.cs301.amazebychasepacker.generation.MazeFactory;
 import edu.wm.cs.cs301.amazebychasepacker.generation.Order;
-import edu.wm.cs.cs301.amazebychasepacker.gui.Constants.UserInput;
 
 import edu.wm.cs.cs301.amazebychasepacker.databinding.ActivityGeneratingBinding;
 
@@ -101,6 +96,26 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
         builderint = getIntent().getIntExtra("Builder", 0);
         seed = getIntent().getIntExtra("Seed", 13);
 
+        switch(builderint)
+        {
+
+            case 1:
+            {
+                setBuilder(Builder.Prim);
+                break;
+            }
+            case 2:
+            {
+                setBuilder(Builder.Boruvka);
+                break;
+            }
+            default:
+            {
+                setBuilder(Builder.DFS);
+                break;
+            }
+        }
+
 
         //////////////////////////////////////////////////////////////////////////////
 
@@ -119,9 +134,14 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
         ////////////////////////
 
         //start thread
+        /*
         progressSimulation simulate = new progressSimulation();
         t = new Thread(simulate);
         t.start();
+
+         */
+
+        StartGenerating();
 
         //if driverSelected is true, switchToPlaying
         //else, create pop up telling user to indicate driver
@@ -328,12 +348,12 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
 
     @Override
     public boolean isPerfect() {
-        return false;
+        return !hasRooms;
     }
 
     @Override
     public int getSeed() {
-        return 0;
+        return this.seed;
     }
 
 
@@ -344,10 +364,14 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
         {
           this.mazeProgress = percentage;
           progress.setProgress(percentage);
+
+          String msg = mazeProgress + "%";
+          percent.setText(msg);
+          progress.setProgress(mazeProgress, true);
         }
     }
 
-    public void Start()
+    public void StartGenerating()
     {
         started = true;
 
