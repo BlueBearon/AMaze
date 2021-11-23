@@ -22,11 +22,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import edu.wm.cs.cs301.amazebychasepacker.generation.Factory;
+import edu.wm.cs.cs301.amazebychasepacker.generation.Floorplan;
+import edu.wm.cs.cs301.amazebychasepacker.generation.Maze;
+import edu.wm.cs.cs301.amazebychasepacker.generation.MazeFactory;
+import edu.wm.cs.cs301.amazebychasepacker.generation.Order;
+import edu.wm.cs.cs301.amazebychasepacker.gui.Constants.UserInput;
+
 import edu.wm.cs.cs301.amazebychasepacker.databinding.ActivityGeneratingBinding;
 
 import edu.wm.cs.cs301.amazebychasepacker.R;
 
-public class GeneratingActivity extends AppCompatActivity {
+public class GeneratingActivity extends AppCompatActivity implements Order{
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityGeneratingBinding binding;
@@ -40,7 +48,7 @@ public class GeneratingActivity extends AppCompatActivity {
     private String[] RobotConfigs = {"Premium", "Mediocre", "Soso", "Shaky"};
     private String config = "1111";
 
-    private int mazeProgress = 0;
+
     private boolean mazeBuilt = false;
     ///////////////////////////////////////////////////
 
@@ -48,8 +56,18 @@ public class GeneratingActivity extends AppCompatActivity {
     private int SkillLevel = 0;
     private boolean hasRooms = true;
     //private Order.Builder[] = {Order.Builder.DFS, Order.Builder.Prim, Order.Builder.Boruvka};
-    private int builder = 0;
+    private int builderint = 0;
     private int seed = 13;
+
+    private String filename;
+    private Order.Builder builder;
+    private int mazeProgress = 0;
+    protected Factory factory;
+    boolean started;
+
+
+    public static Maze finishedMaze;
+
     //////////////////////////////////////////////////////////
 
     //GUI elements//////////////////////////////////////////////
@@ -57,6 +75,16 @@ public class GeneratingActivity extends AppCompatActivity {
     Spinner driverSpinner;
     Spinner configSpinner;
     ProgressBar progress;
+
+    public GeneratingActivity() {
+        filename = null;
+        factory = new MazeFactory();
+        SkillLevel = 0;
+        builder = Order.Builder.DFS;
+        hasRooms = true;
+        started = false;
+        seed = 13;
+    }
     /////////////////////////////////////////////////////////////
 
 
@@ -70,7 +98,7 @@ public class GeneratingActivity extends AppCompatActivity {
         //Get Info from AMazeActivity////////////////////////////////////////////////
         SkillLevel = getIntent().getIntExtra("Skill Level", 0);
         hasRooms = getIntent().getBooleanExtra("Has Rooms", true);
-        builder = getIntent().getIntExtra("Builder", 0);
+        builderint = getIntent().getIntExtra("Builder", 0);
         seed = getIntent().getIntExtra("Seed", 13);
 
 
@@ -256,6 +284,94 @@ public class GeneratingActivity extends AppCompatActivity {
             startActivity(toManual);
         }
     }
+
+    @Override
+    public int getSkillLevel() {
+        return 0;
+    }
+
+    public void setSkillLevel(int skilllevel)
+    {
+        this.SkillLevel = skilllevel;
+    }
+
+    @Override
+    public Builder getBuilder() {
+        return this.builder;
+    }
+
+    public void setBuilder(Builder builder)
+    {
+        this.builder = builder;
+    }
+
+    public void setHasRooms(boolean rooms)
+    {
+        this.hasRooms = rooms;
+    }
+
+    public void setSeed(int seed)
+    {
+        this.seed = seed;
+    }
+
+    private Maze loadMazeConfigurationFromFile(String filename)
+    {
+        return null;
+    }
+
+
+    public void setFilename(String filename)
+    {
+        this.filename = filename;
+    }
+
+    @Override
+    public boolean isPerfect() {
+        return false;
+    }
+
+    @Override
+    public int getSeed() {
+        return 0;
+    }
+
+
+    @Override
+    public void updateProgress(int percentage)
+    {
+        if(this.mazeProgress < percentage && percentage <= 100)
+        {
+          this.mazeProgress = percentage;
+          progress.setProgress(percentage);
+        }
+    }
+
+    public void Start()
+    {
+        started = true;
+
+        mazeProgress = 0;
+
+        if(filename == null)
+        {
+            assert null != factory:  "GeneratingActivity:  factory must be present";
+
+            factory.order(this);
+        }
+    }
+
+    @Override
+    public void deliver(Maze mazeconfig)
+    {
+       if(Floorplan.deepdebugWall)
+       {
+           mazeconfig.getFloorplan().saveLogFile(Floorplan.deepedebugWallFileName);
+       }
+
+       finishedMaze = mazeconfig;
+    }
+
 
     /**
      * This class is the runnable object that simulates maze generation.
