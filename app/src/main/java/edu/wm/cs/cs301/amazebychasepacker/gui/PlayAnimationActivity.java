@@ -25,6 +25,7 @@ import androidx.navigation.ui.NavigationUI;
 import edu.wm.cs.cs301.amazebychasepacker.databinding.ActivityPlayAnimationBinding;
 
 import edu.wm.cs.cs301.amazebychasepacker.R;
+import edu.wm.cs.cs301.amazebychasepacker.generation.CardinalDirection;
 import edu.wm.cs.cs301.amazebychasepacker.generation.Maze;
 import edu.wm.cs.cs301.amazebychasepacker.generation.MazeContainer;
 
@@ -228,6 +229,39 @@ public class PlayAnimationActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    public int[] getCurrentPosition()
+    {
+        return game.getCurrentPosition();
+    }
+
+    public CardinalDirection getCurrentDirection() {
+        return game.getCurrentDirection();
+    }
+
+    public boolean keyDown(Constants.UserInput key, int value) {
+        // delegated to state object
+        return game.keyDown(key, value);
+    }
+
+    public Maze getMazeConfiguration() {
+        return game.getMazeConfiguration();
+    }
+
+
+    /**
+     * This method facilitates the robot jumping through the maze by
+     * directly changing it through the current state.
+     *
+     * @param x position
+     * @param y position
+     */
+    public void setNewPosition(int x, int y)
+    {
+
+        game.setCurrentPosition(x, y);
 
     }
 

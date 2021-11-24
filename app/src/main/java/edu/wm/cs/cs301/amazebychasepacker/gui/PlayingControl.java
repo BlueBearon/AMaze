@@ -69,6 +69,16 @@ public class PlayingControl
          */
     }
 
+    protected int[] getCurrentPosition() {
+        int[] result = new int[2];
+        result[0] = px;
+        result[1] = py;
+        return result;
+    }
+
+    public Maze getMazeConfiguration() {
+        return mazeConfig ;
+    }
 
     /**
      * Method incorporates all reactions to keyboard input in original code,
