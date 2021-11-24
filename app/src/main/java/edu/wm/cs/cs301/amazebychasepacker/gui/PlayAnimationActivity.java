@@ -40,6 +40,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
     private Robot robot;
     private String RobotConfig;
     private Thread t;
+    private boolean done = false;
     /*
     private Driver theDriver;
     private Robot theRobot;
@@ -79,6 +80,8 @@ public class PlayAnimationActivity extends AppCompatActivity {
     PlayingControl game = new PlayingControl();
 
     private boolean finished = false;
+
+    Animation go;
 
 
 
@@ -251,6 +254,11 @@ public class PlayAnimationActivity extends AppCompatActivity {
 
                 Log.v("PlayAnimationActivity", msg);
                 Snackbar.make(animation, msg, Snackbar.LENGTH_SHORT).show();
+
+                if(active)
+                {
+                    go.speedToDelay();
+                }
             }
 
             @Override
@@ -325,7 +333,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
         //project 7
         active = true;
 
-        Animation go = new Animation();
+        go = new Animation();
 
         t = new Thread(go);
 
@@ -365,9 +373,22 @@ public class PlayAnimationActivity extends AppCompatActivity {
         return finished;
     }
 
+    public void notifyWin() {
+        done = true;
+
+        stopDriver();
+
+        pathLength = driver.getPathLength();
+
+        consumedEnergy = driver.getEnergyConsumption();
+
+        switchToWinning();
+
+
+    }
+
     private class Animation implements Runnable
     {
-        private boolean done;
         private int delay;
 
         //speed -> delay
@@ -377,9 +398,34 @@ public class PlayAnimationActivity extends AppCompatActivity {
         //3 - 250 ms
         //4 - 50 ms
 
+        public void speedToDelay() {
+            switch (animationSpeed) {
+                case 1: {
+                    delay = 750;
+                    break;
+                }
+                case 2: {
+                    delay = 500;
+                    break;
+                }
+                case 3: {
+                    delay = 250;
+                    break;
+                }
+                case 4: {
+                    delay = 25;
+                    break;
+                }
+                default: {
+                    delay = 1000;
+                    break;
+                }
+            }
+        }
+
         public Animation()
         {
-            done = false;
+             speedToDelay();
         }
 
 
@@ -392,6 +438,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
                 while (!done)
                 {
                     //1 step to exit
+                    driver.drive1Step2Exit();
                     Thread.sleep(1000);
                 }
 
@@ -399,7 +446,29 @@ public class PlayAnimationActivity extends AppCompatActivity {
             }
             catch (InterruptedException e)
             {
+                active = false;
+            }
+            catch(Exception e)
+            {
+                active = false;
+                //add code to get failure condition
 
+                pathLength = driver.getPathLength();
+
+                consumedEnergy = driver.getEnergyConsumption();
+
+                switchToLosing();
+            }
+            catch(AssertionError e)
+            {
+                active = false;
+                //add code to get failure condition
+
+                pathLength = driver.getPathLength();
+
+                consumedEnergy = driver.getEnergyConsumption();
+
+                switchToLosing();
             }
 
 
@@ -408,7 +477,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
         public void setSpeed(int speed)
         {
             //Filler code for now, this is not how delay is calculated
-            delay = speed;
+            speedToDelay();
 
         }
 

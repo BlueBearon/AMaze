@@ -102,6 +102,7 @@ public class PlayingControl
                 walk(1);
                 // check termination, did we leave the maze?
                 if (isOutside(px,py)) {
+                    activity.notifyWin();
                     activity.switchToWinning();
                 }
                 break;
