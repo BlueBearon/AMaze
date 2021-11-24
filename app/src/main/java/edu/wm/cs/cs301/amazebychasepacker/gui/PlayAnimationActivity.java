@@ -234,7 +234,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
     /**
      * switches to AMazeActivity
      */
-    private void switchToTitle() {
+    public void switchToTitle() {
         Intent toTitle = new Intent(this, AMazeActivity.class);
         startActivity(toTitle);
     }
@@ -250,7 +250,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
     /**
      * Switches to WinningActivity with path and consumption
      */
-    private void switchToWinning() {
+    public void switchToWinning() {
         Intent toWinning = new Intent(this, WinningActivity.class);
         toWinning.putExtra("Consumption", consumedEnergy);
         toWinning.putExtra("path", pathLength);
