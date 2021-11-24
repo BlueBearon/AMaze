@@ -35,8 +35,11 @@ public class PlayAnimationActivity extends AppCompatActivity {
     private ActivityPlayAnimationBinding binding;
 
     //Driving Information//////////////////////////////////
-    private int Driver = 0;
+    private int DriverV = 0;
+    private RobotDriver driver;
+    private Robot robot;
     private String RobotConfig;
+    private Thread t;
     /*
     private Driver theDriver;
     private Robot theRobot;
@@ -84,15 +87,47 @@ public class PlayAnimationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-        Driver = getIntent().getIntExtra("Driver", 0);
+        DriverV = getIntent().getIntExtra("Driver", 0);
         RobotConfig = getIntent().getStringExtra("RobotConfig");
+
+        switch(DriverV)
+        {
+            case 2:
+            {
+                driver = new WizardJump();
+                break;
+            }
+            case 3:
+            {
+                driver = new Wallfollower();
+                break;
+            }
+            default:
+            {
+                driver = new Wizard();
+                break;
+            }
+        }
+
+        if(this.RobotConfig.contains("0"))
+        {
+            robot = new UnreliableRobot(this, this.RobotConfig);
+        }
+        else
+        {
+            robot = new ReliableRobot(this);
+        }
+
+        driver.setRobot(robot);
+
+
 
         setContentView(R.layout.activity_play_animation);
 
         consumption = (ProgressBar) findViewById(R.id.EnergyLeft);
         consumption.setProgress(100);
 
-        String msg = "Driver:  " + Driver + " RobotConfig:  " + RobotConfig;
+        String msg = "Driver:  " + DriverV + " RobotConfig:  " + RobotConfig;
         Log.v("PlayAnimationActivity", msg);
         Snackbar.make(consumption, msg, Snackbar.LENGTH_SHORT).show();
 
@@ -281,10 +316,22 @@ public class PlayAnimationActivity extends AppCompatActivity {
 
     private void stopDriver() {
         //project 7
+        active = false;
+
+        t.interrupt();
     }
 
     private void startDriver() {
         //project 7
+        active = true;
+
+        Animation go = new Animation();
+
+        t = new Thread(go);
+
+        t.start();
+
+
     }
 
     /**
