@@ -47,6 +47,11 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
     private boolean mazeBuilt = false;
     ///////////////////////////////////////////////////
 
+    /*
+
+    101010101000100100100100100010
+     */
+
     ///////MazeGenerationInformation/////////////////////
     private int SkillLevel = 0;
     private boolean hasRooms = true;
@@ -134,12 +139,13 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
         ////////////////////////
 
         //start thread
+
         /*
         progressSimulation simulate = new progressSimulation();
         t = new Thread(simulate);
         t.start();
+        */
 
-         */
 
         StartGenerating();
 
@@ -394,6 +400,18 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
        }
 
        finishedMaze = mazeconfig;
+
+        mazeBuilt = true;
+
+        if(driverSelected)
+        {
+            switchToPlaying();
+        }
+        else
+        {
+            Snackbar.make(driverSpinner, "Please pick a driver", Snackbar.LENGTH_SHORT).show();
+        }
+
     }
 
 
