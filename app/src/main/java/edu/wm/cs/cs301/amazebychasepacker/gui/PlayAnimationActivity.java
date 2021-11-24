@@ -25,6 +25,8 @@ import androidx.navigation.ui.NavigationUI;
 import edu.wm.cs.cs301.amazebychasepacker.databinding.ActivityPlayAnimationBinding;
 
 import edu.wm.cs.cs301.amazebychasepacker.R;
+import edu.wm.cs.cs301.amazebychasepacker.generation.Maze;
+import edu.wm.cs.cs301.amazebychasepacker.generation.MazeContainer;
 
 public class PlayAnimationActivity extends AppCompatActivity {
 
@@ -52,6 +54,9 @@ public class PlayAnimationActivity extends AppCompatActivity {
     private float consumedEnergy = 2400;
     private int pathLength = 100;
     ////////////////////////////
+
+
+    Maze theMaze;
 
     //GUI Elements//
     ProgressBar consumption;
@@ -92,6 +97,8 @@ public class PlayAnimationActivity extends AppCompatActivity {
 
         winning = (Button) findViewById(R.id.SkipAnimation);
         losing = (Button) findViewById(R.id.Go2Lose);
+
+        theMaze = GeneratingActivity.finishedMaze;
 
         start = (Button) findViewById(R.id.ActivateButton);
         animation = (SeekBar) findViewById(R.id.SpeedBar);

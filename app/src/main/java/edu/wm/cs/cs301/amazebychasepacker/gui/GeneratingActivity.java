@@ -293,6 +293,13 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
      */
     private void switchToPlaying()
     {
+        factory.waitTillDelivered();
+
+        if(finishedMaze == null)
+        {
+            throw new UnsupportedOperationException();
+        }
+
         if(driver > 0)
         {
             //create intent with driver and robot config info
