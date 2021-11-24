@@ -35,7 +35,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
 
     //Driving Information//////////////////////////////////
     private int Driver = 0;
-    private String RobotConfig = "1111";
+    private String RobotConfig;
     /*
     private Driver theDriver;
     private Robot theRobot;
@@ -70,6 +70,12 @@ public class PlayAnimationActivity extends AppCompatActivity {
     ImageView sensorStatus;
 
     ///////////////////////////
+
+
+    PlayingControl game = new PlayingControl();
+
+    private boolean finished = false;
+
 
 
     @Override
@@ -268,6 +274,15 @@ public class PlayAnimationActivity extends AppCompatActivity {
         startActivity(toLosing);
     }
 
+    public void setSensors(String SensorString)
+    {
+        RobotConfig = SensorString;
+    }
+
+    public boolean hasWon()
+    {
+        return finished;
+    }
 
     private class Animation implements Runnable
     {
@@ -315,6 +330,8 @@ public class PlayAnimationActivity extends AppCompatActivity {
             delay = speed;
 
         }
+
+
     }
 
 }

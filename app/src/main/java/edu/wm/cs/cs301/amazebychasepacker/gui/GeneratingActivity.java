@@ -320,7 +320,7 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
 
     @Override
     public int getSkillLevel() {
-        return 0;
+        return this.SkillLevel;
     }
 
     public void setSkillLevel(int skilllevel)
