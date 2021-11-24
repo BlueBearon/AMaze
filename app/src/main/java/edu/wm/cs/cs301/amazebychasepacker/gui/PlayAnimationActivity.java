@@ -268,4 +268,53 @@ public class PlayAnimationActivity extends AppCompatActivity {
         startActivity(toLosing);
     }
 
+
+    private class Animation implements Runnable
+    {
+        private boolean done;
+        private int delay;
+
+        //speed -> delay
+        //0 - 1000 ms
+        //1 - 750 ms
+        //2 - 500 ms
+        //3 - 250 ms
+        //4 - 50 ms
+
+        public Animation()
+        {
+            done = false;
+        }
+
+
+        @Override
+        public void run()
+        {
+
+            try
+            {
+                while (!done)
+                {
+                    //1 step to exit
+                    Thread.sleep(1000);
+                }
+
+
+            }
+            catch (InterruptedException e)
+            {
+
+            }
+
+
+        }
+
+        public void setSpeed(int speed)
+        {
+            //Filler code for now, this is not how delay is calculated
+            delay = speed;
+
+        }
+    }
+
 }
