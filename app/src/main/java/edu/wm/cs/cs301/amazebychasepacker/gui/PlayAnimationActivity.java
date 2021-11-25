@@ -361,6 +361,8 @@ public class PlayAnimationActivity extends AppCompatActivity {
      */
     public void switchToWinning() {
         Intent toWinning = new Intent(this, WinningActivity.class);
+        consumedEnergy = driver.getEnergyConsumption();
+        pathLength = driver.getPathLength();
         toWinning.putExtra("Consumption", consumedEnergy);
         toWinning.putExtra("path", pathLength);
         startActivity(toWinning);
@@ -451,9 +453,14 @@ public class PlayAnimationActivity extends AppCompatActivity {
             {
                 while (!done)
                 {
+                    if(theMaze.getDistanceToExit(getCurrentPosition()[0],getCurrentPosition()[1]) == 1)
+                    {
+                        done = true;
+                    }
                     //1 step to exit
                     driver.drive1Step2Exit();
                     Thread.sleep(delay);
+
                 }
 
 

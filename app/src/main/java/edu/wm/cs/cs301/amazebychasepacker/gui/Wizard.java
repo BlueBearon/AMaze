@@ -245,8 +245,6 @@ public class Wizard implements RobotDriver{
 
 		//tell robot to rotate to proper direction
 		CardinalDirection currentDir = theRobot.getCurrentDirection();
-
-		Log.v("Wizard", "Figured out Direction");
 		
 		if(turnDirection(currentDir, neighborDir) == null)
 		{
