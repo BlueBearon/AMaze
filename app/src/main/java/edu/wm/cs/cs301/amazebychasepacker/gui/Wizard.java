@@ -1,5 +1,9 @@
 package edu.wm.cs.cs301.amazebychasepacker.gui;
 
+import android.util.Log;
+
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
@@ -224,17 +228,25 @@ public class Wizard implements RobotDriver{
 		}
 		else
 		{
-		
+
 		//call maze method get current Postion and neighbor
 		int[] currentPos = theRobot.getCurrentPosition();
 		int[] neighbor = theMaze.getNeighborCloserToExit(currentPos[0], currentPos[1]);
-		
-		
+
+		int dist = theMaze.getDistanceToExit(currentPos[0], currentPos[1]);
+
+		String msg = "Distance " + dist;
+
+		Log.v("Wizard", msg);
+
 		//figure out which direction the neighbor is in.
 		CardinalDirection neighborDir = findNeighborsDirection(currentPos, neighbor);
 
+
 		//tell robot to rotate to proper direction
 		CardinalDirection currentDir = theRobot.getCurrentDirection();
+
+		Log.v("Wizard", "Figured out Direction");
 		
 		if(turnDirection(currentDir, neighborDir) == null)
 		{

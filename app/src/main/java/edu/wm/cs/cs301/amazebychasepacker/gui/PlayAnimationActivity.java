@@ -123,6 +123,9 @@ public class PlayAnimationActivity extends AppCompatActivity {
 
         driver.setRobot(robot);
 
+        driver.setMaze(GeneratingActivity.finishedMaze);
+
+        theMaze = GeneratingActivity.finishedMaze;
 
 
         setContentView(R.layout.activity_play_animation);
@@ -142,6 +145,17 @@ public class PlayAnimationActivity extends AppCompatActivity {
 
         winning = (Button) findViewById(R.id.SkipAnimation);
         losing = (Button) findViewById(R.id.Go2Lose);
+
+        try {
+            game.setMazeConfiguration(theMaze);
+            game.start(this);
+            Snackbar.make(winning, "Start Succeeded", Snackbar.LENGTH_LONG).show();
+        }
+        catch(Exception e)
+        {
+            Log.v("PlayAnimationActivity", e.toString());
+            Snackbar.make(winning, "Start Failed", Snackbar.LENGTH_LONG).show();
+        }
 
         theMaze = GeneratingActivity.finishedMaze;
 
@@ -290,7 +304,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
     }
 
     public Maze getMazeConfiguration() {
-        return game.getMazeConfiguration();
+        return GeneratingActivity.finishedMaze;
     }
 
 
@@ -439,7 +453,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
                 {
                     //1 step to exit
                     driver.drive1Step2Exit();
-                    Thread.sleep(1000);
+                    Thread.sleep(delay);
                 }
 
 
@@ -457,6 +471,11 @@ public class PlayAnimationActivity extends AppCompatActivity {
 
                 consumedEnergy = driver.getEnergyConsumption();
 
+                String msg = e.toString();
+
+                Log.v("PlayAnimation", msg);
+
+
                 switchToLosing();
             }
             catch(AssertionError e)
@@ -467,6 +486,10 @@ public class PlayAnimationActivity extends AppCompatActivity {
                 pathLength = driver.getPathLength();
 
                 consumedEnergy = driver.getEnergyConsumption();
+
+                String msg = e.toString();
+
+                Log.v("PlayAnimation", msg);
 
                 switchToLosing();
             }

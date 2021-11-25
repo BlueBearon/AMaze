@@ -3,6 +3,8 @@ package edu.wm.cs.cs301.amazebychasepacker.gui;
 
 import android.provider.Settings;
 
+import java.util.Map;
+
 import edu.wm.cs.cs301.amazebychasepacker.generation.CardinalDirection;
 import edu.wm.cs.cs301.amazebychasepacker.generation.Floorplan;
 import edu.wm.cs.cs301.amazebychasepacker.generation.Maze;
@@ -16,22 +18,36 @@ import edu.wm.cs.cs301.amazebychasepacker.generation.Maze;
  */
 public class PlayingControl
 {
-    //FPV
-    //Map
-    private MazePanel panel;
-    private Maze mazeConfig;
-    private PlayAnimationActivity activity;
+   // FirstPersonView firstPersonView;
+    //Map mapView;
+    MazePanel panel;
+    PlayAnimationActivity control;
 
+    Maze mazeConfig ;
+
+    private boolean showMaze;           // toggle switch to show overall maze on screen
+    private boolean showSolution;       // toggle switch to show solution in overall maze on screen
+    private boolean mapMode; // true: display map of maze, false: do not display map of maze
+    // mapMode is toggled by user keyboard input, causes a call to drawMap during play mode
+
+    // current position and direction with regard to MazeConfiguration
     int px, py ; // current position on maze grid (x,y)
     int dx, dy;  // current direction
 
     int angle; // current viewing angle, east == 0 degrees
     int walkStep; // counter for intermediate steps within a single step forward or backward
+    Floorplan seenCells; // a matrix with cells to memorize which cells are visible from the current point of view
+    // the FirstPersonView obtains this information and the Map uses it for highlighting currently visible walls on the map
+    //private CompassRose cr; // compass rose to show current direction
+
+    // debug stuff
+    //private boolean deepdebug = false;
+    //private boolean allVisible = false;
+    //private boolean newGame = false;
 
     boolean started;
 
-    public PlayingControl()
-    {
+    public PlayingControl() {
         started = false;
     }
 
@@ -39,21 +55,35 @@ public class PlayingControl
     public void setMazeConfiguration(Maze config) {
         mazeConfig = config;
     }
-
-    public void start(PlayAnimationActivity activity, MazePanel panel) {
+    /**
+     * Start the actual game play by showing the playing screen.
+     * If the panel is null, all drawing operations are skipped.
+     * This mode of operation is useful for testing purposes,
+     * i.e., a dryrun of the game without the graphics part.
+     * @param controller provides access to the controller this state resides in
+     * @param panel is part of the UI and visible on the screen, needed for drawing
+     */
+    public void start(PlayAnimationActivity controller) {
+        //add panel later
         started = true;
         // keep the reference to the controller to be able to call method to switch the state
-        this.activity = activity;
+        control = controller;
         // keep the reference to the panel for drawing
-        this.panel = panel;
+        //this.panel = panel;
         //
+        // adjust internal state of maze model
+        // visibility settings
+        //showMaze = false ;
+        //showSolution = false ;
+       // mapMode = false;
         // init data structure for visible walls
         //seenCells = new Floorplan(mazeConfig.getWidth()+1,mazeConfig.getHeight()+1) ;
         // set the current position and direction consistently with the viewing direction
         setPositionDirectionViewingDirection();
         walkStep = 0; // counts incremental steps during move/rotate operation
-        /*
+
         // configure compass rose
+        /*
         cr = new CompassRose();
         cr.setPositionAndSize(Constants.VIEW_WIDTH/2,
                 (int)(0.1*Constants.VIEW_HEIGHT),35);
@@ -68,17 +98,39 @@ public class PlayingControl
 
          */
     }
+    /**
+     * Initializes the drawer for the first person view
+     * and the map view and then draws the initial screen
+     * for this state.
+     */
+    protected void startDrawer() {
+       /* firstPersonView = new FirstPersonView(Constants.VIEW_WIDTH,
+                Constants.VIEW_HEIGHT, Constants.MAP_UNIT,
+                Constants.STEP_SIZE, seenCells, mazeConfig.getRootnode()) ;
+        mapView = new Map(seenCells, 15, mazeConfig) ;
+        // draw the initial screen for this state
+        draw();
 
-    protected int[] getCurrentPosition() {
-        int[] result = new int[2];
-        result[0] = px;
-        result[1] = py;
-        return result;
+        */
+    }
+    /**
+     * Internal method to set the current position, the direction
+     * and the viewing direction to values consistent with the
+     * given maze.
+     */
+    private void setPositionDirectionViewingDirection() {
+        // obtain starting position
+        int[] start = mazeConfig.getStartingPosition() ;
+        setCurrentPosition(start[0],start[1]) ;
+        // set current view direction and angle
+        angle = 0; // angle matches with east direction,
+        // hidden consistency constraint!
+        setDirectionToMatchCurrentAngle();
+        // initial direction is east, check this for sanity:
+        assert(dx == 1);
+        assert(dy == 0);
     }
 
-    public Maze getMazeConfiguration() {
-        return mazeConfig ;
-    }
 
     /**
      * Method incorporates all reactions to keyboard input in original code,
@@ -102,8 +154,7 @@ public class PlayingControl
                 walk(1);
                 // check termination, did we leave the maze?
                 if (isOutside(px,py)) {
-                    activity.notifyWin();
-                    activity.switchToWinning();
+                    control.switchToWinning();
                 }
                 break;
             case LEFT: // turn left
@@ -116,11 +167,11 @@ public class PlayingControl
                 walk(-1);
                 // check termination, did we leave the maze?
                 if (isOutside(px,py)) {
-                   activity.switchToWinning();
+                    control.switchToWinning();
                 }
                 break;
             case RETURNTOTITLE: // escape to title screen
-                activity.switchToTitle();
+                control.switchToTitle();
                 break;
             case JUMP: // make a step forward even through a wall
                 // go to position if within maze
@@ -132,57 +183,37 @@ public class PlayingControl
             case TOGGLELOCALMAP: // show local information: current position and visible walls
                 // precondition for showMaze and showSolution to be effective
                 // acts as a toggle switch
-                //mapMode = !mapMode;
-                //draw() ;
+                mapMode = !mapMode;
+                draw() ;
                 break;
             case TOGGLEFULLMAP: // show the whole maze
                 // acts as a toggle switch
-                //showMaze = !showMaze;
-                //draw() ;
+                showMaze = !showMaze;
+                draw() ;
                 break;
             case TOGGLESOLUTION: // show the solution as a yellow line towards the exit
                 // acts as a toggle switch
-                //showSolution = !showSolution;
-                //draw() ;
+                showSolution = !showSolution;
+                draw() ;
                 break;
             case ZOOMIN: // zoom into map
-                //mapView.incrementMapScale();
-                //draw() ;
+                /*
+                mapView.incrementMapScale();
+                draw() ;
                 break ;
+
+                */
+                break;
             case ZOOMOUT: // zoom out of map
-                //mapView.decrementMapScale();
-                //draw() ;
+                /*
+                mapView.decrementMapScale();
+                draw() ;
                 break ;
+                 */
+                break;
         } // end of internal switch statement for playing state
         return true;
     }
-
-    protected void startDrawer()
-    {
-        /*
-        firstPersonView = new FirstPersonView(Constants.VIEW_WIDTH,
-                Constants.VIEW_HEIGHT, Constants.MAP_UNIT,
-                Constants.STEP_SIZE, seenCells, mazeConfig.getRootnode()) ;
-        mapView = new Map(seenCells, 15, mazeConfig) ;
-        // draw the initial screen for this state
-        draw();
-
-         */
-    }
-
-    private void setPositionDirectionViewingDirection() {
-        // obtain starting position
-        int[] start = mazeConfig.getStartingPosition() ;
-        setCurrentPosition(start[0],start[1]) ;
-        // set current view direction and angle
-        angle = 0; // angle matches with east direction,
-        // hidden consistency constraint!
-        setDirectionToMatchCurrentAngle();
-        // initial direction is east, check this for sanity:
-        assert(dx == 1);
-        assert(dy == 0);
-    }
-
     /**
      * Draws the current content on panel to show it on screen.
      */
@@ -204,7 +235,6 @@ public class PlayingControl
 
          */
     }
-
     /**
      * Calculates a distance to exit as a percentage.
      * 1.0 is for the starting position as this is the maximal
@@ -215,8 +245,6 @@ public class PlayingControl
         return mazeConfig.getDistanceToExit(px, py) /
                 ((float) mazeConfig.getMazedists().getMaxDistance());
     }
-
-
     /**
      * Prints the warning about a missing panel only once
      */
@@ -227,8 +255,8 @@ public class PlayingControl
         System.out.println("StatePlaying.start: warning: no panel, dry-run game without graphics!");
         printedWarning = true;
     }
-
-
+    ////////////////////////////// set methods ///////////////////////////////////////////////////////////////
+    ////////////////////////////// Actions that can be performed on the maze model ///////////////////////////
     protected void setCurrentPosition(int x, int y) {
         px = x ;
         py = y ;
@@ -237,19 +265,40 @@ public class PlayingControl
         dx = x ;
         dy = y ;
     }
-
-    protected CardinalDirection getCurrentDirection() {
-        return CardinalDirection.getDirection(dx, dy);
-    }
-
+    /**
+     * Sets fields dx and dy to be consistent with
+     * current setting of field angle.
+     */
     private void setDirectionToMatchCurrentAngle() {
         setCurrentDirection((int) Math.cos(radify(angle)), (int) Math.sin(radify(angle))) ;
     }
 
+    ////////////////////////////// get methods ///////////////////////////////////////////////////////////////
+    protected int[] getCurrentPosition() {
+        int[] result = new int[2];
+        result[0] = px;
+        result[1] = py;
+        return result;
+    }
+    protected CardinalDirection getCurrentDirection() {
+        return CardinalDirection.getDirection(dx, dy);
+    }
+    boolean isInMapMode() {
+        return mapMode ;
+    }
+    boolean isInShowMazeMode() {
+        return showMaze ;
+    }
+    boolean isInShowSolutionMode() {
+        return showSolution ;
+    }
+    public Maze getMazeConfiguration() {
+        return mazeConfig ;
+    }
+    //////////////////////// Methods for move and rotate operations ///////////////
     final double radify(int x) {
         return x*Math.PI/180;
     }
-
     /**
      * Helper method for walk()
      * @param dir is the direction of interest
@@ -269,7 +318,18 @@ public class PlayingControl
         }
         return !mazeConfig.hasWall(px, py, cd);
     }
-
+    /**
+     * Draws and waits. Used to obtain a smooth appearance for rotate and move operations
+     */
+    private void slowedDownRedraw() {
+        draw() ;
+        try {
+            Thread.sleep(25);
+        } catch (Exception e) {
+            // may happen if thread is interrupted
+            // no reason to do anything about it, ignore exception
+        }
+    }
 
     /**
      * Performs a rotation with 4 intermediate views,
@@ -287,13 +347,13 @@ public class PlayingControl
             angle = (angle+1800) % 360;
             // draw method is called and uses angle field for direction
             // information.
-            //slowedDownRedraw();
+            slowedDownRedraw();
         }
         // update maze direction only after intermediate steps are done
         // because choice of direction values are more limited.
         setDirectionToMatchCurrentAngle();
         //logPosition(); // debugging
-        //drawHintIfNecessary();
+        drawHintIfNecessary();
     }
 
     /**
@@ -312,12 +372,12 @@ public class PlayingControl
         // FirstPersonDrawer and MapDrawer
         for (int step = 0; step != 4; step++) {
             walkStep += dir;
-            //slowedDownRedraw();
+            slowedDownRedraw();
         }
         setCurrentPosition(px + dir*dx, py + dir*dy) ;
         walkStep = 0; // reset counter for next time
         //logPosition(); // debugging
-        //drawHintIfNecessary();
+        drawHintIfNecessary();
     }
 
     /**
@@ -329,7 +389,6 @@ public class PlayingControl
     private boolean isOutside(int x, int y) {
         return !mazeConfig.isValidPosition(x, y) ;
     }
-
     /**
      * Draw a visual cue to help the user unless the
      * map is on display anyway.
@@ -337,17 +396,18 @@ public class PlayingControl
      * otherwise it is a compass rose.
      */
     private void drawHintIfNecessary() {
-
-        /*
         if (isInMapMode())
             return; // no need for help
         // in testing environments, there is sometimes no panel to draw on
         // or the panel is unable to deliver a graphics object
         // check this and quietly move on if drawing is impossible
+        /*
         if ((panel == null || panel.getBufferGraphics() == null)) {
             printWarning();
             return;
         }
+
+
         // if current position faces a dead end, show map with solution
         // for guidance
         if (isFacingDeadEnd()) {
@@ -360,9 +420,9 @@ public class PlayingControl
             cr.paintComponent(panel);
         }
         panel.update();
-        */
-    }
 
+         */
+    }
     /**
      * Checks if the current position and direction
      * faces a dead end
@@ -375,4 +435,18 @@ public class PlayingControl
                 mazeConfig.hasWall(px, py, getCurrentDirection().oppositeDirection().rotateClockwise()) &&
                 mazeConfig.hasWall(px, py, getCurrentDirection().rotateClockwise()));
     }
+    /////////////////////// Methods for debugging ////////////////////////////////
+    /*
+    private void dbg(String str) {
+        //System.out.println(str);
+    }
+
+    private void logPosition() {
+        if (!deepdebug)
+            return;
+        dbg("x="+viewx/Constants.MAP_UNIT+" ("+
+                viewx+") y="+viewy/Constants.MAP_UNIT+" ("+viewy+") ang="+
+                angle+" dx="+dx+" dy="+dy+" "+viewdx+" "+viewdy);
+    }
+    */
 }
