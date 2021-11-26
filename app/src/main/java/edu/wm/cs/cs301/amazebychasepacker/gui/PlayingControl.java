@@ -21,7 +21,7 @@ public class PlayingControl
    // FirstPersonView firstPersonView;
     //Map mapView;
     MazePanel panel;
-    PlayAnimationActivity control;
+    PlayingActivity control;
 
     Maze mazeConfig ;
 
@@ -61,9 +61,8 @@ public class PlayingControl
      * This mode of operation is useful for testing purposes,
      * i.e., a dryrun of the game without the graphics part.
      * @param controller provides access to the controller this state resides in
-     * @param panel is part of the UI and visible on the screen, needed for drawing
      */
-    public void start(PlayAnimationActivity controller) {
+    public void start(PlayingActivity controller) {
         //add panel later
         started = true;
         // keep the reference to the controller to be able to call method to switch the state
@@ -98,6 +97,7 @@ public class PlayingControl
 
          */
     }
+
     /**
      * Initializes the drawer for the first person view
      * and the map view and then draws the initial screen

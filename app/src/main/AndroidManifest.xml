@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AMazeByChasePacker">
         <activity
+            android:name=".gui.PlayingActivity"
+            android:exported="false" />
+        <activity
             android:name=".gui.LosingActivity"
             android:exported="false"
             android:label="@string/title_activity_losing"

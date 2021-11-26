@@ -28,7 +28,7 @@ import edu.wm.cs.cs301.amazebychasepacker.generation.CardinalDirection;
 import edu.wm.cs.cs301.amazebychasepacker.generation.Maze;
 import edu.wm.cs.cs301.amazebychasepacker.generation.MazeContainer;
 
-public class PlayAnimationActivity extends AppCompatActivity {
+public class PlayAnimationActivity extends PlayingActivity {
 
     private AppBarConfiguration appBarConfiguration;
 

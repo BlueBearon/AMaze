@@ -21,8 +21,9 @@ import androidx.navigation.ui.NavigationUI;
 import edu.wm.cs.cs301.amazebychasepacker.databinding.ActivityPlayManuallyBinding;
 
 import edu.wm.cs.cs301.amazebychasepacker.R;
+import edu.wm.cs.cs301.amazebychasepacker.generation.Maze;
 
-public class PlayManuallyActivity extends AppCompatActivity {
+public class PlayManuallyActivity extends PlayingActivity {
 
     private AppBarConfiguration appBarConfiguration;
 
@@ -45,6 +46,9 @@ public class PlayManuallyActivity extends AppCompatActivity {
     Button jump;
     ////////////////////////////////////////////
 
+    PlayingControl game = new PlayingControl();
+    Maze theMaze;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +62,8 @@ public class PlayManuallyActivity extends AppCompatActivity {
         fullMazeView.setChecked(true);
         showSolution.setChecked(true);
         showWalls.setChecked(true);
+
+        theMaze = GeneratingActivity.finishedMaze;
 
         //if fullMazeView is clicked, change setting
         fullMazeView.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +85,18 @@ public class PlayManuallyActivity extends AppCompatActivity {
 
             }
         });
+
+
+        try {
+            game.setMazeConfiguration(theMaze);
+            game.start(this);
+            Snackbar.make(fullMazeView, "Start Succeeded", Snackbar.LENGTH_LONG).show();
+        }
+        catch(Exception e)
+        {
+            Log.v("PlayAnimationActivity", e.toString());
+            Snackbar.make(fullMazeView, "Start Failed", Snackbar.LENGTH_LONG).show();
+        }
 
         //if showSolution is clicked, change setting
         showSolution.setOnClickListener(new View.OnClickListener() {
@@ -183,6 +201,8 @@ public class PlayManuallyActivity extends AppCompatActivity {
                 String msg = "forward pressed";
                 Log.v("PlayManuallyActivity", msg);
                 Snackbar.make(v, msg, Snackbar.LENGTH_SHORT).show();
+                game.keyDown(Constants.UserInput.UP, 2);
+                manualDebug();
             }
         });
 
@@ -192,6 +212,8 @@ public class PlayManuallyActivity extends AppCompatActivity {
                 String msg = "back pressed";
                 Log.v("PlayManuallyActivity", msg);
                 Snackbar.make(v, msg, Snackbar.LENGTH_SHORT).show();
+                game.keyDown(Constants.UserInput.DOWN, 2);
+                manualDebug();
             }
         });
 
@@ -201,6 +223,8 @@ public class PlayManuallyActivity extends AppCompatActivity {
                 String msg = "left pressed";
                 Log.v("PlayManuallyActivity", msg);
                 Snackbar.make(v, msg, Snackbar.LENGTH_SHORT).show();
+                game.keyDown(Constants.UserInput.LEFT, 2);
+                manualDebug();
             }
         });
 
@@ -210,6 +234,8 @@ public class PlayManuallyActivity extends AppCompatActivity {
                 String msg = "right pressed";
                 Log.v("PlayManuallyActivity", msg);
                 Snackbar.make(v, msg, Snackbar.LENGTH_SHORT).show();
+                game.keyDown(Constants.UserInput.RIGHT, 2);
+                manualDebug();
             }
         });
 
@@ -222,11 +248,31 @@ public class PlayManuallyActivity extends AppCompatActivity {
                 String msg = "jump pressed";
                 Log.v("PlayManuallyActivity", msg);
                 Snackbar.make(v, msg, Snackbar.LENGTH_SHORT).show();
+                game.keyDown(Constants.UserInput.JUMP, 2);
+                manualDebug();
             }
         });
 
 
     }
+
+
+    public void manualDebug()
+    {
+        Maze testMaze = game.getMazeConfiguration();
+
+        int[] position = game.getCurrentPosition();
+
+        int dist = testMaze.getDistanceToExit(position[0], position[1]);
+
+        String msg = "Distance:  " + dist;
+
+        Log.v("PlayManualActivity", msg);
+        Snackbar.make(Go2Win, msg, Snackbar.LENGTH_SHORT).show();
+    }
+
+
+
 
 
     @Override
@@ -238,7 +284,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
     /**
      * switches to AMazeActivity
      */
-    private void switchToTitle() {
+    public void switchToTitle() {
         Intent toTitle = new Intent(this, AMazeActivity.class);
         startActivity(toTitle);
     }
@@ -246,7 +292,7 @@ public class PlayManuallyActivity extends AppCompatActivity {
     /**
      * Switches to WinningActivity with path and consumption parameters
      */
-    private void switchToWinning() {
+    public void switchToWinning() {
         Intent toWinning = new Intent(this, WinningActivity.class);
         toWinning.putExtra("path", PathLength);
         startActivity(toWinning);
