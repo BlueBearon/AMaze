@@ -293,12 +293,7 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
      */
     private void switchToPlaying()
     {
-        factory.waitTillDelivered();
 
-        if(finishedMaze == null)
-        {
-            throw new UnsupportedOperationException();
-        }
 
         if(driver > 0)
         {
@@ -412,6 +407,7 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
 
         if(driverSelected)
         {
+            Log.v("PlayingActivity", "Switching to Playing");
             switchToPlaying();
         }
         else
@@ -449,6 +445,7 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
                 mazeBuilt = true;
                 if(driverSelected)
                 {
+                    Log.v("PlayingActivity", "Switching to Playing");
                     switchToPlaying();
                 }
                 else

@@ -22,7 +22,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import edu.wm.cs.cs301.amazebychasepacker.databinding.ActivityPlayAnimationBinding;
 
 import edu.wm.cs.cs301.amazebychasepacker.R;
 import edu.wm.cs.cs301.amazebychasepacker.generation.CardinalDirection;
@@ -32,7 +31,6 @@ import edu.wm.cs.cs301.amazebychasepacker.generation.MazeContainer;
 public class PlayAnimationActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
-    private ActivityPlayAnimationBinding binding;
 
     //Driving Information//////////////////////////////////
     private int DriverV = 0;
@@ -131,7 +129,7 @@ public class PlayAnimationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play_animation);
 
         consumption = (ProgressBar) findViewById(R.id.EnergyLeft);
-        consumption.setProgress(100);
+        consumption.setProgress(3500);
 
         String msg = "Driver:  " + DriverV + " RobotConfig:  " + RobotConfig;
         Log.v("PlayAnimationActivity", msg);
@@ -459,6 +457,10 @@ public class PlayAnimationActivity extends AppCompatActivity {
                     }
                     //1 step to exit
                     driver.drive1Step2Exit();
+
+                    int showConsumption = (int) (3500 - driver.getEnergyConsumption());
+
+                    consumption.setProgress(showConsumption);
                     Thread.sleep(delay);
 
                 }
