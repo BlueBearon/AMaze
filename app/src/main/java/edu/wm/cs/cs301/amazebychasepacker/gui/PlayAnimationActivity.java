@@ -306,6 +306,8 @@ public class PlayAnimationActivity extends PlayingActivity {
      * switches to AMazeActivity
      */
     public void switchToTitle() {
+
+        t.interrupt();
         Intent toTitle = new Intent(this, AMazeActivity.class);
         startActivity(toTitle);
     }
@@ -432,12 +434,14 @@ public class PlayAnimationActivity extends PlayingActivity {
                         done = true;
                     }
                     //1 step to exit
-                    driver.drive1Step2Exit();
+                    if(active) {
+                        driver.drive1Step2Exit();
 
-                    int showConsumption = (int) (3500 - driver.getEnergyConsumption());
+                        int showConsumption = (int) (3500 - driver.getEnergyConsumption());
 
-                    consumption.setProgress(showConsumption);
-                    Thread.sleep(delay);
+                        consumption.setProgress(showConsumption);
+                        Thread.sleep(delay);
+                    }
 
                 }
 

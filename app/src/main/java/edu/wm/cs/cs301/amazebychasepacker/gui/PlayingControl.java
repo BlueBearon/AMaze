@@ -1,10 +1,6 @@
 package edu.wm.cs.cs301.amazebychasepacker.gui;
 
 
-import android.provider.Settings;
-
-import java.util.Map;
-
 import edu.wm.cs.cs301.amazebychasepacker.generation.CardinalDirection;
 import edu.wm.cs.cs301.amazebychasepacker.generation.Floorplan;
 import edu.wm.cs.cs301.amazebychasepacker.generation.Maze;
@@ -18,10 +14,11 @@ import edu.wm.cs.cs301.amazebychasepacker.generation.Maze;
  */
 public class PlayingControl
 {
-   // FirstPersonView firstPersonView;
-    //Map mapView;
+    FirstPersonView firstPersonView;
+    Map mapView;
     MazePanel panel;
     PlayingActivity control;
+
 
     Maze mazeConfig ;
     private boolean showWalls;
@@ -68,15 +65,15 @@ public class PlayingControl
         // keep the reference to the controller to be able to call method to switch the state
         control = controller;
         // keep the reference to the panel for drawing
-        //this.panel = panel;
+        this.panel = panel;
         //
         // adjust internal state of maze model
         // visibility settings
-        //showMaze = false ;
-        //showSolution = false ;
-       // mapMode = false;
+        showMaze = false ;
+        showSolution = false ;
+        mapMode = false;
         // init data structure for visible walls
-        //seenCells = new Floorplan(mazeConfig.getWidth()+1,mazeConfig.getHeight()+1) ;
+        seenCells = new Floorplan(mazeConfig.getWidth()+1,mazeConfig.getHeight()+1) ;
         // set the current position and direction consistently with the viewing direction
         setPositionDirectionViewingDirection();
         walkStep = 0; // counts incremental steps during move/rotate operation
