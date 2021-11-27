@@ -141,8 +141,6 @@ public class PlayAnimationActivity extends PlayingActivity {
         decreaseScale = (Button) findViewById(R.id.Decrease_Scale);
         increaseScale = (Button) findViewById(R.id.Increase_Scale);
 
-        winning = (Button) findViewById(R.id.SkipAnimation);
-        losing = (Button) findViewById(R.id.Go2Lose);
 
         try {
             game.setMazeConfiguration(theMaze);
@@ -215,28 +213,7 @@ public class PlayAnimationActivity extends PlayingActivity {
                 Snackbar.make(increaseScale, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
-        //switch to winning
-        winning.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                String msg = "Going to Winning";
-                Log.v("PlayAnimationActivity", msg);
-                Snackbar.make(winning, msg, Snackbar.LENGTH_SHORT).show();
-                switchToWinning();
-            }
-        });
-        //switch to losing
-        losing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String msg = "Going to Losing";
-                Log.v("PlayAnimationActivity", msg);
-                Snackbar.make(winning, msg, Snackbar.LENGTH_SHORT).show();
-                switchToLosing();
-
-            }
-        });
         //if start/stop button is pressed, either activate or deactivate driver depending on state
         start.setOnClickListener(new View.OnClickListener() {
             @Override
