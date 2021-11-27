@@ -37,11 +37,11 @@
     <string name="remaining_energy">Remaining Energy</string>
     <string name="map_scale">Map Scale</string>
     <string name="start_pause">Start/Pause</string>
-    <string name="animation_speed">Animation Speed</string>
+    <string name="animation_speed">Set Animation Speed</string>
     <string name="go2losing">Go2Losing</string>
     <string name="go2winning">Go2Winning</string>
-    <string name="skill_level">Skill Level:</string>
-    <string name="cartographer">Cartographer</string>
+    <string name="skill_level">Choose Skill Level:</string>
+    <string name="cartographer">Choose Cartographer</string>
     <string name="no_rooms">No Rooms</string>
     <string name="explore">Explore</string>
     <string name="revisit">Revisit</string>

@@ -109,7 +109,7 @@
 
         <TextView
             android:id="@+id/AnimationSpeedText"
-            android:layout_width="163dp"
+            android:layout_width="301dp"
             android:layout_height="wrap_content"
             android:text="@string/animation_speed"
             android:textColor="#FFEB3B"
@@ -137,13 +137,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="276dp"
         android:layout_marginEnd="1dp"
-        android:layout_marginBottom="148dp"
+        android:layout_marginBottom="144dp"
         android:background="#C60F0F"
         android:contentDescription="Status of robot sensors"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/s1100" />
 

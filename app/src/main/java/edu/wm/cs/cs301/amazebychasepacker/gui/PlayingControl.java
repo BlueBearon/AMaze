@@ -24,7 +24,7 @@ public class PlayingControl
     PlayingActivity control;
 
     Maze mazeConfig ;
-
+    private boolean showWalls;
     private boolean showMaze;           // toggle switch to show overall maze on screen
     private boolean showSolution;       // toggle switch to show solution in overall maze on screen
     private boolean mapMode; // true: display map of maze, false: do not display map of maze
@@ -97,6 +97,28 @@ public class PlayingControl
 
          */
     }
+
+    public void setShowSolution(boolean value)
+    {
+        showSolution = value;
+    }
+
+    public void setShowMaze(boolean value)
+    {
+        showMaze = value;
+    }
+
+    public void setShowWalls(boolean value)
+    {
+        showWalls = value;
+    }
+
+    public void setShowMazeView(boolean value)
+    {
+        mapMode = value;
+    }
+
+
 
     /**
      * Initializes the drawer for the first person view

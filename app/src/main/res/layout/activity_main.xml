@@ -69,7 +69,7 @@
 
         <TextView
             android:id="@+id/SpinnerLabel"
-            android:layout_width="159dp"
+            android:layout_width="262dp"
             android:layout_height="wrap_content"
             android:text="@string/cartographer"
             android:textColor="#FFEB3B"

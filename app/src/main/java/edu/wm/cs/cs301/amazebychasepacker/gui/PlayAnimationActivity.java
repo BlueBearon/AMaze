@@ -66,8 +66,6 @@ public class PlayAnimationActivity extends PlayingActivity {
     CheckBox ShowMap;
     Button decreaseScale;
     Button increaseScale;
-    Button winning;
-    Button losing;
     Button start;
     SeekBar animation;
     ImageView sensorStatus;
@@ -145,12 +143,10 @@ public class PlayAnimationActivity extends PlayingActivity {
         try {
             game.setMazeConfiguration(theMaze);
             game.start(this);
-            Snackbar.make(winning, "Start Succeeded", Snackbar.LENGTH_LONG).show();
         }
         catch(Exception e)
         {
             Log.v("PlayAnimationActivity", e.toString());
-            Snackbar.make(winning, "Start Failed", Snackbar.LENGTH_LONG).show();
         }
 
         theMaze = GeneratingActivity.finishedMaze;
@@ -177,6 +173,9 @@ public class PlayAnimationActivity extends PlayingActivity {
                 {
                     showMapV = true;
                 }
+
+                //game.setShowMaze(showMapV);
+                game.setShowMazeView(showMapV);
 
                 String msg = "Show Map:  " + showMapV;
                 Log.v("PlayAnimationActivity", msg);
@@ -213,7 +212,7 @@ public class PlayAnimationActivity extends PlayingActivity {
                 Snackbar.make(increaseScale, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
-
+        //switch to losing
         //if start/stop button is pressed, either activate or deactivate driver depending on state
         start.setOnClickListener(new View.OnClickListener() {
             @Override

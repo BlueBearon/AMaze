@@ -18,8 +18,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import edu.wm.cs.cs301.amazebychasepacker.databinding.ActivityPlayManuallyBinding;
-
 import edu.wm.cs.cs301.amazebychasepacker.R;
 import edu.wm.cs.cs301.amazebychasepacker.generation.Maze;
 
@@ -79,6 +77,8 @@ public class PlayManuallyActivity extends PlayingActivity {
                     fullMazeViewValue = true;
                 }
 
+                game.setShowMazeView(fullMazeViewValue);
+
                 String msg = "fullMazeView:  " + fullMazeViewValue;
                 Log.v("PlayAnimationActivity", msg);
                 Snackbar.make(fullMazeView, msg, Snackbar.LENGTH_SHORT).show();
@@ -111,6 +111,8 @@ public class PlayManuallyActivity extends PlayingActivity {
                     showSolutionValue = true;
                 }
 
+                game.setShowSolution(showSolutionValue);
+
                 String msg = "showSolution:  " + showSolutionValue;
                 Log.v("PlayAnimationActivity", msg);
                 Snackbar.make(showSolution, msg, Snackbar.LENGTH_SHORT).show();
@@ -131,6 +133,8 @@ public class PlayManuallyActivity extends PlayingActivity {
                     showVisableWalls = true;
                 }
 
+                game.setShowWalls(showVisableWalls);
+
                 String msg = "showWalls:  " + showVisableWalls;
                 Log.v("PlayAnimationActivity", msg);
                 Snackbar.make(showWalls, msg, Snackbar.LENGTH_SHORT).show();
@@ -150,6 +154,8 @@ public class PlayManuallyActivity extends PlayingActivity {
                 {
                     MapScale -= .10;
                 }
+
+                game.keyDown(Constants.UserInput.ZOOMOUT,2);
                 String msg = "New Scale:  " + MapScale;
                 Log.v("PlayManuallyActivity", msg);
                 Snackbar.make(increaseScale, msg, Snackbar.LENGTH_SHORT).show();
@@ -164,6 +170,8 @@ public class PlayManuallyActivity extends PlayingActivity {
                 {
                     MapScale += .10;
                 }
+
+                game.keyDown(Constants.UserInput.ZOOMIN,2);
 
                 String msg = "New Scale:  " + MapScale;
                 Log.v("PlayManuallyActivity", msg);
