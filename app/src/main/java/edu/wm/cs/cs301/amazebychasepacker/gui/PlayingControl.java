@@ -69,9 +69,9 @@ public class PlayingControl
         //
         // adjust internal state of maze model
         // visibility settings
-        showMaze = false ;
-        showSolution = false ;
-        mapMode = false;
+        showMaze = true ;
+        showSolution = true ;
+        mapMode = true;
         // init data structure for visible walls
         seenCells = new Floorplan(mazeConfig.getWidth()+1,mazeConfig.getHeight()+1) ;
         // set the current position and direction consistently with the viewing direction
@@ -94,28 +94,6 @@ public class PlayingControl
 
          */
     }
-
-    public void setShowSolution(boolean value)
-    {
-        showSolution = value;
-    }
-
-    public void setShowMaze(boolean value)
-    {
-        showMaze = value;
-    }
-
-    public void setShowWalls(boolean value)
-    {
-        showWalls = value;
-    }
-
-    public void setShowMazeView(boolean value)
-    {
-        mapMode = value;
-    }
-
-
 
     /**
      * Initializes the drawer for the first person view

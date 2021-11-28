@@ -174,8 +174,7 @@ public class PlayAnimationActivity extends PlayingActivity {
                     showMapV = true;
                 }
 
-                //game.setShowMaze(showMapV);
-                game.setShowMazeView(showMapV);
+                game.keyDown(Constants.UserInput.TOGGLEFULLMAP, 2);
 
                 String msg = "Show Map:  " + showMapV;
                 Log.v("PlayAnimationActivity", msg);
@@ -192,9 +191,12 @@ public class PlayAnimationActivity extends PlayingActivity {
                     mapScale -= .10;
                 }
 
+                game.keyDown(Constants.UserInput.ZOOMOUT,2);
+
+
+
                 String msg = "New Scale:  " + mapScale;
                 Log.v("PlayAnimationActivity", msg);
-                Snackbar.make(decreaseScale, msg, Snackbar.LENGTH_SHORT).show();
 
             }
         });
@@ -207,9 +209,10 @@ public class PlayAnimationActivity extends PlayingActivity {
                     mapScale += .10;
                 }
 
+                game.keyDown(Constants.UserInput.ZOOMIN,2);
+
                 String msg = "New Scale:  " + mapScale;
                 Log.v("PlayAnimationActivity", msg);
-                Snackbar.make(increaseScale, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
         //switch to losing
@@ -229,7 +232,6 @@ public class PlayAnimationActivity extends PlayingActivity {
 
                 String msg = "Start/Stop button Selected";
                 Log.v("PlayAnimationActivity", msg);
-                Snackbar.make(increaseScale, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
         //if animation speed bar is changed, change the animation speed.
@@ -241,7 +243,6 @@ public class PlayAnimationActivity extends PlayingActivity {
                 String msg = "Animation speed set to " + progress + " .";
 
                 Log.v("PlayAnimationActivity", msg);
-                Snackbar.make(animation, msg, Snackbar.LENGTH_SHORT).show();
 
                 if(active)
                 {

@@ -64,6 +64,15 @@ public class PlayManuallyActivity extends PlayingActivity {
 
         theMaze = GeneratingActivity.finishedMaze;
 
+        try {
+            game.setMazeConfiguration(theMaze);
+            game.start(this, panel);
+        }
+        catch(Exception e)
+        {
+            Log.v("PlayAnimationActivity", e.toString());
+        }
+
         //if fullMazeView is clicked, change setting
         fullMazeView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +87,7 @@ public class PlayManuallyActivity extends PlayingActivity {
                     fullMazeViewValue = true;
                 }
 
-                game.setShowMazeView(fullMazeViewValue);
+                game.keyDown(Constants.UserInput.TOGGLEFULLMAP, 2);
 
                 String msg = "fullMazeView:  " + fullMazeViewValue;
                 Log.v("PlayAnimationActivity", msg);
@@ -88,16 +97,7 @@ public class PlayManuallyActivity extends PlayingActivity {
         });
 
 
-        try {
-            game.setMazeConfiguration(theMaze);
-            game.start(this, panel);
-            Snackbar.make(fullMazeView, "Start Succeeded", Snackbar.LENGTH_LONG).show();
-        }
-        catch(Exception e)
-        {
-            Log.v("PlayAnimationActivity", e.toString());
-            Snackbar.make(fullMazeView, "Start Failed", Snackbar.LENGTH_LONG).show();
-        }
+
 
         //if showSolution is clicked, change setting
         showSolution.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +112,7 @@ public class PlayManuallyActivity extends PlayingActivity {
                     showSolutionValue = true;
                 }
 
-                game.setShowSolution(showSolutionValue);
+                game.keyDown(Constants.UserInput.TOGGLESOLUTION, 2);
 
                 String msg = "showSolution:  " + showSolutionValue;
                 Log.v("PlayAnimationActivity", msg);
@@ -134,7 +134,7 @@ public class PlayManuallyActivity extends PlayingActivity {
                     showVisableWalls = true;
                 }
 
-                game.setShowWalls(showVisableWalls);
+                game.keyDown(Constants.UserInput.TOGGLELOCALMAP, 2);
 
                 String msg = "showWalls:  " + showVisableWalls;
                 Log.v("PlayAnimationActivity", msg);
