@@ -42,6 +42,7 @@ public class PlayManuallyActivity extends PlayingActivity {
     Button left;
     Button right;
     Button jump;
+    MazePanel panel;
     ////////////////////////////////////////////
 
     PlayingControl game = new PlayingControl();
@@ -89,7 +90,7 @@ public class PlayManuallyActivity extends PlayingActivity {
 
         try {
             game.setMazeConfiguration(theMaze);
-            game.start(this);
+            game.start(this, panel);
             Snackbar.make(fullMazeView, "Start Succeeded", Snackbar.LENGTH_LONG).show();
         }
         catch(Exception e)

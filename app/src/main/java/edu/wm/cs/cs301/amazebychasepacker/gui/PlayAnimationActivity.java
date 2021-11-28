@@ -69,7 +69,7 @@ public class PlayAnimationActivity extends PlayingActivity {
     Button start;
     SeekBar animation;
     ImageView sensorStatus;
-
+    MazePanel panel;
     ///////////////////////////
 
 
@@ -142,7 +142,7 @@ public class PlayAnimationActivity extends PlayingActivity {
 
         try {
             game.setMazeConfiguration(theMaze);
-            game.start(this);
+            game.start(this, panel);
         }
         catch(Exception e)
         {

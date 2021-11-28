@@ -59,7 +59,7 @@ public class PlayingControl
      * i.e., a dryrun of the game without the graphics part.
      * @param controller provides access to the controller this state resides in
      */
-    public void start(PlayingActivity controller) {
+    public void start(PlayingActivity controller, MazePanel panel) {
         //add panel later
         started = true;
         // keep the reference to the controller to be able to call method to switch the state

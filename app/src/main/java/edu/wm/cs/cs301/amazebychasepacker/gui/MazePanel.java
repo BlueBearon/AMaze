@@ -1,7 +1,14 @@
 package edu.wm.cs.cs301.amazebychasepacker.gui;
 
-public class MazePanel implements P5Panel21 {
+import android.content.Context;
+import android.view.View;
 
+public class MazePanel extends View implements P5Panel21 {
+
+
+    public MazePanel(Context context) {
+        super(context);
+    }
 
     public static int getColorfromRGB(int rgbValue, int rgb_def, int rgb_def1) {
         return 2;
