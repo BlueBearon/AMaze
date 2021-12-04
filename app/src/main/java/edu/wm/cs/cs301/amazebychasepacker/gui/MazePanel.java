@@ -11,6 +11,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PaintDrawable;
 import android.media.Image;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
@@ -45,6 +46,24 @@ public class MazePanel extends View implements P5Panel21 {
     public MazePanel(Context context) {
         super(context);
     }
+
+    public MazePanel(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public MazePanel(Context context, AttributeSet attrs, int defStyleAttr)
+    {
+        super(context, attrs, defStyleAttr);
+    }
+
+    public MazePanel(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
+    {
+        super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+
+
 
     public void setUpPanel(int id)
     {

@@ -120,10 +120,6 @@ public class PlayAnimationActivity extends PlayingActivity {
         setContentView(R.layout.activity_play_animation);
         theMaze = GeneratingActivity.finishedMaze;
 
-
-        panel = (MazePanel) findViewById(R.id.AnimationPanel);
-        panel.setUpPanel(R.id.AnimationPanel);
-
         consumption = (ProgressBar) findViewById(R.id.EnergyLeft);
         consumption.setProgress(3500);
 
@@ -139,6 +135,9 @@ public class PlayAnimationActivity extends PlayingActivity {
 
 
         try {
+
+            panel = (MazePanel) findViewById(R.id.AnimationPanel);
+            panel.setUpPanel(R.id.AnimationPanel);
             game.setMazeConfiguration(theMaze);
             game.start(this, panel);
         }
