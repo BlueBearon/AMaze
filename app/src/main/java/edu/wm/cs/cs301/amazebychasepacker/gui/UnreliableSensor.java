@@ -80,7 +80,15 @@ public class UnreliableSensor extends ReliableSensor implements DistanceSensor
 		t.interrupt();
 		
 	}
-	
+
+	@Override
+	public int getStatus() {
+		if(operational)
+			return 1;
+		else
+			return 0;
+	}
+
 	/**
 	 * This class implements the thread for Sensor failure, when it runs, and until it is interrupted,
 	 * the thread will repeatedly switch on and off the operational variable for whether or not

@@ -179,7 +179,20 @@ public class UnreliableRobot extends ReliableRobot implements Robot
 		//calls stopFailureAndRepairProcess on the 4 sensors in the sensors array
 		
 	}
-	
+
+	@Override
+	public int[] getSensorStatus() {
+
+		int[] status = new int[4];
+
+		for(int i = 0; i < 4; i++)
+		{
+			status[i] = getsensors()[i].getStatus();
+		}
+
+		return status;
+	}
+
 	/**
 	 * For testing purposes, this method forcefully makes all UnreliableSensors not operational.
 	 */

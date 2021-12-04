@@ -146,6 +146,8 @@ public interface DistanceSensor {
 	 * @throws UnsupportedOperationException if method not supported
 	 */
 	void stopFailureAndRepairProcess() throws UnsupportedOperationException;
+
+	int getStatus();
 	
 	
 

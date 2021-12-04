@@ -311,4 +311,7 @@ public interface Robot {
 	 * @throws UnsupportedOperationException if method not supported
 	 */
 	void stopFailureAndRepairProcess(Direction direction) throws UnsupportedOperationException;
+
+
+	int[] getSensorStatus();
 }

@@ -654,4 +654,9 @@ public class ReliableRobot implements Robot{
 		
 	}
 
+	@Override
+	public int[] getSensorStatus() {
+		return new int[]{1, 1, 1, 1};
+	}
+
 }

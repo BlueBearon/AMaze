@@ -342,4 +342,9 @@ public class ReliableSensor implements DistanceSensor{
 		
 	}
 
+	@Override
+	public int getStatus() {
+		return 1;
+	}
+
 }
