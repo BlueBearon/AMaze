@@ -6,9 +6,6 @@ import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,16 +14,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 
 import edu.wm.cs.cs301.amazebychasepacker.R;
 import edu.wm.cs.cs301.amazebychasepacker.generation.CardinalDirection;
 import edu.wm.cs.cs301.amazebychasepacker.generation.Maze;
-import edu.wm.cs.cs301.amazebychasepacker.generation.MazeContainer;
 
 public class PlayAnimationActivity extends PlayingActivity {
 
@@ -125,6 +118,11 @@ public class PlayAnimationActivity extends PlayingActivity {
 
 
         setContentView(R.layout.activity_play_animation);
+        theMaze = GeneratingActivity.finishedMaze;
+
+
+        panel = (MazePanel) findViewById(R.id.AnimationPanel);
+        panel.setUpPanel(R.id.AnimationPanel);
 
         consumption = (ProgressBar) findViewById(R.id.EnergyLeft);
         consumption.setProgress(3500);
@@ -149,7 +147,6 @@ public class PlayAnimationActivity extends PlayingActivity {
             Log.v("PlayAnimationActivity", e.toString());
         }
 
-        theMaze = GeneratingActivity.finishedMaze;
 
         start = (Button) findViewById(R.id.ActivateButton);
         animation = (SeekBar) findViewById(R.id.SpeedBar);

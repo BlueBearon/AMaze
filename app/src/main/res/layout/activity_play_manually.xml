@@ -85,8 +85,8 @@
         android:id="@+id/Go2Win"
         android:layout_width="122dp"
         android:layout_height="84dp"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="320dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="612dp"
         android:text="@string/go2win"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,31 +96,9 @@
         android:id="@+id/Jump"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="304dp"
-        android:layout_marginTop="504dp"
+        android:layout_marginStart="312dp"
+        android:layout_marginTop="600dp"
         android:text="@string/j"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/Left"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="256dp"
-        android:layout_marginTop="504dp"
-        android:text="@string/l"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/Right"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="352dp"
-        android:layout_marginTop="504dp"
-        android:text="@string/r"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -129,8 +107,8 @@
         android:id="@+id/Around"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="304dp"
-        android:layout_marginTop="552dp"
+        android:layout_marginStart="312dp"
+        android:layout_marginTop="648dp"
         android:text="@string/b"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
@@ -140,11 +118,42 @@
         android:id="@+id/Forward"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="304dp"
-        android:layout_marginTop="456dp"
+        android:layout_marginStart="312dp"
+        android:layout_marginTop="552dp"
         android:text="@string/f"
         android:visibility="visible"
         app:iconTint="#EDE0E0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Right"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="360dp"
+        android:layout_marginTop="600dp"
+        android:text="@string/r"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Left"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="264dp"
+        android:layout_marginTop="600dp"
+        android:text="@string/l"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <edu.wm.cs.cs301.amazebychasepacker.gui.MazePanel
+        android:id="@+id/ManualPanel"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="219dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

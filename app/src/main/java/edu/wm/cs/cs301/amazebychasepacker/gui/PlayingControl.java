@@ -432,6 +432,7 @@ public class PlayingControl
                 mazeConfig.hasWall(px, py, getCurrentDirection().oppositeDirection().rotateClockwise()) &&
                 mazeConfig.hasWall(px, py, getCurrentDirection().rotateClockwise()));
     }
+
     /////////////////////// Methods for debugging ////////////////////////////////
     /*
     private void dbg(String str) {
