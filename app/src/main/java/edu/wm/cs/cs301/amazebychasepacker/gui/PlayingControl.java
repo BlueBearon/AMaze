@@ -78,6 +78,8 @@ public class PlayingControl
         setPositionDirectionViewingDirection();
         walkStep = 0; // counts incremental steps during move/rotate operation
 
+        panel.setUpPanel(mazeConfig);
+
         // configure compass rose
         /*
         cr = new CompassRose();
@@ -180,17 +182,17 @@ public class PlayingControl
             case TOGGLELOCALMAP: // show local information: current position and visible walls
                 // precondition for showMaze and showSolution to be effective
                 // acts as a toggle switch
-                mapMode = !mapMode;
+                panel.toggleLocalMap();
                 draw() ;
                 break;
             case TOGGLEFULLMAP: // show the whole maze
                 // acts as a toggle switch
-                showMaze = !showMaze;
+                panel.toggleFullMap();
                 draw() ;
                 break;
             case TOGGLESOLUTION: // show the solution as a yellow line towards the exit
                 // acts as a toggle switch
-                showSolution = !showSolution;
+                panel.toggleSolution();
                 draw() ;
                 break;
             case ZOOMIN: // zoom into map

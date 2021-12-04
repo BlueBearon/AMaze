@@ -137,7 +137,6 @@ public class PlayAnimationActivity extends PlayingActivity {
         try {
 
             panel = (MazePanel) findViewById(R.id.AnimationPanel);
-            panel.setUpPanel(R.id.AnimationPanel);
             game.setMazeConfiguration(theMaze);
             game.start(this, panel);
         }
