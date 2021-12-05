@@ -72,6 +72,11 @@ public class PlayAnimationActivity extends PlayingActivity {
 
     Animation go;
 
+    public int[] getRobotStatus()
+    {
+        return robot.getSensorStatus();
+    }
+
 
 
     @Override

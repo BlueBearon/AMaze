@@ -185,7 +185,7 @@ public class MazePanel extends View implements P5Panel21 {
         //tell paint to fill
 
         paint.setStyle(Paint.Style.FILL);
-        art.drawRect(x, y, width, height, paint);
+        art.drawRect(x, y, x + width, y + height, paint);
         paint.setStyle(Paint.Style.STROKE);
 
     }
