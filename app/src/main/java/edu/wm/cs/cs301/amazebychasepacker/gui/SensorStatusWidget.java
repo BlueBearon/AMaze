@@ -78,9 +78,7 @@ public class SensorStatusWidget extends View {
         paint.setColor(Color.GREEN);
         canvas.drawPath(path, paint);
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.TRANSPARENT);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        canvas.drawPaint(paint);
         /*
         for (int i = 300; i < 400; i++) {
             path.moveTo(i, i-1);
@@ -129,6 +127,7 @@ public class SensorStatusWidget extends View {
         cone.lineTo((400 + (int)(.5 * length)), 400 + length);
         cone.moveTo((400 + (int)(.5 * length)), 400 + length);
         cone.close();
+        cone.setFillType(Path.FillType.EVEN_ODD);
         paint.setStrokeWidth(8);
         paint.setPathEffect(null);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);

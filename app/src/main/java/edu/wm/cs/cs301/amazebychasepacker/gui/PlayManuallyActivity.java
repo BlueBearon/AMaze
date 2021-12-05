@@ -9,10 +9,14 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.MotionEventCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -196,6 +200,10 @@ public class PlayManuallyActivity extends PlayingActivity {
             }
         });
 
+        ConstraintLayout layout = findViewById(R.id.ManualLayout);
+
+        SwipeListener swipeListener = new SwipeListener(layout);
+
         forward = (Button) findViewById(R.id.Forward);
         backward = (Button) findViewById(R.id.Around);
         left = (Button) findViewById(R.id.Left);
@@ -263,6 +271,118 @@ public class PlayManuallyActivity extends PlayingActivity {
         });
 
 
+    }
+    /*
+    @Override
+    public boolean onTouchEvent(MotionEvent event)
+    {
+        int action = event.getActionMasked();
+
+        switch(action)
+        {
+            case (MotionEvent.ACTION_DOWN) :
+                game.keyDown(Constants.UserInput.DOWN, 2);
+                return true;
+            case (MotionEvent.ACTION_UP) :
+                game.keyDown(Constants.UserInput.UP, 2);
+                return true;
+            case(MotionEvent.ACTION_)
+
+                default :
+                return super.onTouchEvent(event);
+        }
+    }
+
+     */
+
+    private class SwipeListener implements View.OnTouchListener{
+
+        //Tutorial:  https://www.youtube.com/watch?v=vNJyU-XW8_Y
+
+        GestureDetector gestureDetector;
+
+        SwipeListener(View view){
+            int threshold = 100;
+            int velocity_threshold = 100;
+
+            GestureDetector.SimpleOnGestureListener listener = new GestureDetector.SimpleOnGestureListener(){
+                @Override
+                public boolean onDown(MotionEvent e)
+                {
+                    return true;
+                }
+
+                @Override
+                public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+
+                    float xDiff = e2.getX() - e1.getX();
+                    float yDiff = e2.getY() - e1.getY();
+
+                    try
+                    {
+                        if(Math.abs(xDiff) > Math.abs(yDiff))
+                        {
+                            if(Math.abs(xDiff) > threshold  && Math.abs(velocityX) > velocity_threshold)
+                            {
+                                if(xDiff > 0)
+                                {
+                                    //Swipe Right
+                                    game.keyDown(Constants.UserInput.RIGHT, 2);
+                                    manualDebug();
+                                }
+                                else
+                                {
+                                    //Swipe Left
+                                    game.keyDown(Constants.UserInput.LEFT, 2);
+                                    manualDebug();
+                                }
+
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            if(Math.abs(yDiff) > threshold  && Math.abs(velocityY) > velocity_threshold)
+                            {
+                                if(yDiff > 0)
+                                {
+                                    //Swipe Down
+                                    game.keyDown(Constants.UserInput.DOWN, 2);
+                                    manualDebug();
+                                }
+                                else
+                                {
+                                    //Swipe UP
+                                    game.keyDown(Constants.UserInput.UP, 2);
+                                    manualDebug();
+                                }
+
+                                return true;
+                            }
+                        }
+                    }
+                    catch(Exception e)
+                    {
+
+                    }
+
+                    return false;
+
+
+
+                }
+            };
+
+            gestureDetector = new GestureDetector(getApplicationContext(), listener);
+
+            view.setOnTouchListener(this);
+
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            return gestureDetector.onTouchEvent(event);
+        }
     }
 
 
