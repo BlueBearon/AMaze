@@ -149,8 +149,8 @@
 
     <edu.wm.cs.cs301.amazebychasepacker.gui.MazePanel
         android:id="@+id/ManualPanel"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
+        android:layout_width="400sp"
+        android:layout_height="400sp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="160dp"
         android:visibility="visible"

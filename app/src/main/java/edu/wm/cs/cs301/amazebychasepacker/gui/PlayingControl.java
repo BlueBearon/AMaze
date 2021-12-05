@@ -78,8 +78,6 @@ public class PlayingControl
         setPositionDirectionViewingDirection();
         walkStep = 0; // counts incremental steps during move/rotate operation
 
-        panel.setUpPanel(mazeConfig);
-
         // configure compass rose
         /*
         cr = new CompassRose();
@@ -103,14 +101,14 @@ public class PlayingControl
      * for this state.
      */
     protected void startDrawer() {
-       /* firstPersonView = new FirstPersonView(Constants.VIEW_WIDTH,
+       firstPersonView = new FirstPersonView(Constants.VIEW_WIDTH,
                 Constants.VIEW_HEIGHT, Constants.MAP_UNIT,
                 Constants.STEP_SIZE, seenCells, mazeConfig.getRootnode()) ;
         mapView = new Map(seenCells, 15, mazeConfig) ;
         // draw the initial screen for this state
         draw();
 
-        */
+
     }
     /**
      * Internal method to set the current position, the direction
@@ -196,27 +194,25 @@ public class PlayingControl
                 draw() ;
                 break;
             case ZOOMIN: // zoom into map
-                /*
+
                 mapView.incrementMapScale();
                 draw() ;
                 break ;
 
-                */
-                break;
+
             case ZOOMOUT: // zoom out of map
-                /*
+
                 mapView.decrementMapScale();
                 draw() ;
                 break ;
-                 */
-                break;
+
         } // end of internal switch statement for playing state
         return true;
     }
     /**
      * Draws the current content on panel to show it on screen.
      */
-    protected void draw() {
+    public void draw() {
         /*
         if (panel == null) {
             printWarning();

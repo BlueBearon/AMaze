@@ -27,8 +27,6 @@ public class MazePanel extends View implements P5Panel21 {
 
     private Paint paint;
 
-    private CompassRose cr;
-
     private Bitmap map;
 
     private boolean showWalls;
@@ -39,16 +37,10 @@ public class MazePanel extends View implements P5Panel21 {
 
     private boolean showSolution;
 
-    private FirstPersonView firstPersonView;
-    private Map mapView;
-
-    private Maze mazeconfig;
-
-    private int angle;
 
     Floorplan seenCells;
 
-    private Picture pict;
+    private Boolean firstDraw = true;
 
 
 
@@ -83,60 +75,75 @@ public class MazePanel extends View implements P5Panel21 {
     @Override
     protected void onDraw(Canvas canvas)
     {
-        //canvas.drawRect(10, 10, 20, 20, new Paint());
+        //draw(art);
+
+        super.onDraw(canvas);
+
+        //draw(art);
+        /*
+        Path triangle = new Path();
+        triangle.moveTo(400, 400);
+        triangle.lineTo(600, 600);
+        triangle.lineTo(200, 600);
+        triangle.lineTo(400, 400);
+
+        paint.setStyle(Paint.Style.FILL);
+        paint.setStrokeWidth(10);
+        paint.setColor(Color.RED);
+
+         */
 
         art = canvas;
 
-        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        int[] xpoints = {400, 600, 200};
+        int[] ypoints = {400, 600, 600};
+        int num = 3;
+        paint.setColor(Color.RED);
+        addPolygon(xpoints, ypoints, num);
 
-
-
-
-
-
-        //art.drawRect(0, 0, Constants.VIEW_WIDTH, Constants.VIEW_HEIGHT, paint);
-
-        addBackground(100, 1400, 1400);
-
+        //addFilledRectangle(0, 0, 1400, 1400);
 
     }
 
 
     public MazePanel(Context context) {
         super(context);
+        init();
     }
 
     public MazePanel(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+        init();
     }
 
     public MazePanel(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
+        init();
     }
 
     public MazePanel(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
     {
         super(context, attrs, defStyleAttr, defStyleRes);
+        init();
     }
 
-
-
-
-    public void setUpPanel(Maze mazeConfig)
-    {
-       cr = new CompassRose();
-       cr.setPositionAndSize(Constants.VIEW_WIDTH/2, (int)(0.1*Constants.VIEW_HEIGHT), 35);
-
-       firstPersonView = new FirstPersonView(Constants.VIEW_WIDTH, Constants.VIEW_HEIGHT, Constants.MAP_UNIT, Constants.STEP_SIZE, seenCells, mazeConfig.getRootnode());
-
-    }
-
-    public void updateInfo()
+    private void init()
     {
 
+        art = new Canvas();
+
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setStrokeWidth(5);
+
+       setBackgroundResource(R.drawable.starsactual);
+
+
+
+        //addBackground(100, 1400, 1400);
     }
+
 
     public static int getColorfromRGB(int rgbValue, int rgb_def, int rgb_def1) {
         return 2;
@@ -168,6 +175,7 @@ public class MazePanel extends View implements P5Panel21 {
     @Override
     public void addBackground(float percentToExit, int viewWidth, int viewHeight) {
 
+
         Bitmap backgroundMap = BitmapFactory.decodeResource(getResources(), R.drawable.starsactual);
 
         paint.setColor(Color.BLACK);
@@ -196,20 +204,8 @@ public class MazePanel extends View implements P5Panel21 {
      //use path object
 
         paint.setStyle(Paint.Style.FILL);
-        //tell paint to fill
-        Path polygon = new Path();
-        polygon.moveTo(xPoints[0], yPoints[0]);
 
-        for(int i = 1; i < nPoints; i++)
-        {
-            polygon.lineTo(xPoints[i], yPoints[i]);
-            polygon.moveTo(xPoints[i], yPoints[i]);
-        }
-
-        polygon.lineTo(xPoints[0], yPoints[0]);
-
-        paint.setStyle(Paint.Style.STROKE);
-
+        addPolygon(xPoints, yPoints, nPoints);
 
     }
 
@@ -219,12 +215,20 @@ public class MazePanel extends View implements P5Panel21 {
 
         //use path object
         //tell paint to fill
-        Path path = new Path();
+        Path polygon = new Path();
+        polygon.moveTo(xPoints[0], yPoints[0]);
 
-        for(int i = 0; i < nPoints; i++)
+        for(int i = 1; i < nPoints; i++)
         {
-
+            polygon.lineTo(xPoints[i], yPoints[i]);
         }
+
+        polygon.lineTo(xPoints[0], yPoints[0]);
+        polygon.close();
+
+        art.drawPath(polygon, paint);
+
+        paint.setStyle(Paint.Style.STROKE);
 
     }
 
@@ -247,7 +251,7 @@ public class MazePanel extends View implements P5Panel21 {
     @Override
     public void addArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
 
-        art.drawArc(x, y, width, height, startAngle, arcAngle, true, paint);
+        art.drawArc(x, y, x+ width, y + height, startAngle, arcAngle, true, paint);
 
     }
 
