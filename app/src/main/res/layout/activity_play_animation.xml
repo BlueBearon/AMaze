@@ -8,88 +8,63 @@
     android:background="@drawable/starsactual"
     tools:context=".gui.PlayAnimationActivity">
 
-    <LinearLayout
+    <Button
+        android:id="@+id/Increase_Scale"
+        android:layout_width="50sp"
+        android:layout_height="50dp"
+        android:layout_marginStart="304dp"
+        android:layout_marginTop="84dp"
+        android:text="+"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Decrease_Scale"
+        android:layout_width="50sp"
+        android:layout_height="50dp"
+        android:layout_marginStart="244dp"
+        android:layout_marginTop="84dp"
+        android:text="-"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout"
         android:layout_width="414dp"
         android:layout_height="88dp"
-        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/EnergyLabel"
             android:layout_width="287dp"
-            android:layout_height="17dp"
-            android:layout_weight="1"
+            android:layout_height="0dp"
             android:text="@string/remaining_energy"
             android:textColor="@color/textColor"
             android:textSize="20sp"
-            android:visibility="visible" />
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/EnergyLeft"
+            app:layout_constraintStart_toStartOf="@+id/EnergyLeft"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
             android:id="@+id/EnergyLeft"
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@color/textColor"
             android:max="3500"
             android:progress="-1"
             android:progressTint="@color/spacePurple"
-            android:visibility="visible" />
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/EnergyLabel" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="410dp"
-        android:layout_height="94dp"
-        android:layout_marginTop="88dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <CheckBox
-            android:id="@+id/showMap"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/show_map"
-            android:textColor="#CDDC39"
-            android:textSize="20sp"
-            android:visibility="visible" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="visible">
-
-            <Button
-                android:id="@+id/Decrease_Scale"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:text="-"
-                android:visibility="visible" />
-
-            <TextView
-                android:id="@+id/MapScaleText"
-                android:layout_width="87dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/map_scale"
-                android:textColor="@color/textColor"
-                android:textSize="24sp"
-                android:visibility="visible" />
-
-            <Button
-                android:id="@+id/Increase_Scale"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:text="+"
-                android:visibility="visible" />
-        </LinearLayout>
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:layout_width="410dp"
@@ -143,7 +118,7 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/s1100" />
 
@@ -151,8 +126,20 @@
         android:id="@+id/AnimationPanel"
         android:layout_width="400dp"
         android:layout_height="400dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="187dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="136dp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/showMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="86dp"
+        android:text="@string/show_map"
+        android:textColor="#CDDC39"
+        android:textSize="20sp"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
