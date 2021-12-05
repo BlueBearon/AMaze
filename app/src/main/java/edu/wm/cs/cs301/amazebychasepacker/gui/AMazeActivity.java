@@ -1,5 +1,7 @@
 package edu.wm.cs.cs301.amazebychasepacker.gui;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -38,6 +40,11 @@ public class AMazeActivity extends AppCompatActivity{
 
     private int SkillLevel = 0;
     private boolean hasRooms = true;
+
+    final int mode = Activity.MODE_PRIVATE;
+    final String MYPREFS = "MyPreferences_001";
+    SharedPreferences mySharedPreferences;
+    SharedPreferences.Editor myEditor;
 
 
     private int builder = 0;
@@ -99,6 +106,10 @@ public class AMazeActivity extends AppCompatActivity{
         });
 
         ///////////////////////////////////////////////////////////////////////////////////
+
+
+        mySharedPreferences = getSharedPreferences(MYPREFS, mode);
+        myEditor = mySharedPreferences.edit();
 
         //Maze Generation////////////////////////////////////////////////////////////////////
         //spinner tutorial:  https://www.youtube.com/watch?v=PjW-XiQ6usI
@@ -235,25 +246,55 @@ public class AMazeActivity extends AppCompatActivity{
     private void SwitchtoGenerating(boolean newMaze)
     {
         Intent toGenerating = new Intent(this, GeneratingActivity.class);
-        toGenerating.putExtra("Skill Level", SkillLevel);
-        toGenerating.putExtra("Has Rooms", hasRooms);
-        toGenerating.putExtra("Builder", builder);
+
 
         Random gen = new Random();
 
         if(newMaze == true)
         {
            seed = gen.nextInt();
+           storeMazeInfo(seed, SkillLevel, hasRooms, builder);
         }
         else
         {
-
+            if(mySharedPreferences != null && mySharedPreferences.contains("Seed"))
+            {
+                getMazeInfo();
+            }
+            else
+            {
+                seed = gen.nextInt();
+                storeMazeInfo(seed, SkillLevel, hasRooms, builder);
+                Log.v("AMazeActivity" , "No maze is stored, generating new Maze");
+            }
         }
 
         toGenerating.putExtra("Seed", seed);
 
+        toGenerating.putExtra("Skill Level", SkillLevel);
+        toGenerating.putExtra("Has Rooms", hasRooms);
+        toGenerating.putExtra("Builder", builder);
+
         startActivity(toGenerating);
 
+    }
+
+    private void storeMazeInfo(int seed, int skillLevel, boolean hasRooms, int builder) {
+        myEditor.clear();
+        myEditor.putInt("Seed", seed);
+        myEditor.putInt("Skill Level", SkillLevel);
+        myEditor.putBoolean("Has Rooms", hasRooms);
+        myEditor.putInt("Builder", builder);
+    }
+
+    private void getMazeInfo()
+    {
+        Random gen = new Random();
+
+        seed = mySharedPreferences.getInt("Seed", gen.nextInt());
+        SkillLevel = mySharedPreferences.getInt("Skill Level", SkillLevel);
+        hasRooms = mySharedPreferences.getBoolean("Has Rooms", hasRooms);
+        builder = mySharedPreferences.getInt("Builder", builder);
     }
 
 }
