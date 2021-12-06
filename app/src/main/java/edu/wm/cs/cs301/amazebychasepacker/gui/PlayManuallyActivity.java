@@ -320,9 +320,10 @@ public class PlayManuallyActivity extends PlayingActivity {
 
                     try
                     {
+                        //if swipe is horizontal
                         if(Math.abs(xDiff) > Math.abs(yDiff))
                         {
-                            if(Math.abs(xDiff) > threshold  && Math.abs(velocityX) > velocity_threshold)
+                            if(Math.abs(xDiff) > threshold  && Math.abs(velocityX) > velocity_threshold)//only if it is actually a swipe
                             {
                                 if(xDiff > 0)
                                 {
@@ -340,9 +341,9 @@ public class PlayManuallyActivity extends PlayingActivity {
                                 return true;
                             }
                         }
-                        else
+                        else //swipe is vertical
                         {
-                            if(Math.abs(yDiff) > threshold  && Math.abs(velocityY) > velocity_threshold)
+                            if(Math.abs(yDiff) > threshold  && Math.abs(velocityY) > velocity_threshold)//only if it is actually a swipe
                             {
                                 if(yDiff > 0)
                                 {

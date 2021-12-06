@@ -12,6 +12,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PaintDrawable;
+import android.graphics.fonts.Font;
 import android.media.Image;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -99,9 +100,13 @@ public class MazePanel extends View implements P5Panel21 {
         int[] ypoints = {400, 600, 600};
         int num = 3;
         paint.setColor(Color.RED);
-        addPolygon(xpoints, ypoints, num);
+        addFilledPolygon(xpoints, ypoints, num);
+        paint.setColor(Color.BLUE);
+        addFilledRectangle(200, 200, 200, 200);
 
-        //addFilledRectangle(0, 0, 1400, 1400);
+        art.drawRect(0, 0, 1400, 1400, paint);
+
+        addMarker(700, 700, "Hello");
 
     }
 
@@ -175,7 +180,7 @@ public class MazePanel extends View implements P5Panel21 {
     @Override
     public void addBackground(float percentToExit, int viewWidth, int viewHeight) {
 
-
+        /*
         Bitmap backgroundMap = BitmapFactory.decodeResource(getResources(), R.drawable.starsactual);
 
         paint.setColor(Color.BLACK);
@@ -184,6 +189,8 @@ public class MazePanel extends View implements P5Panel21 {
         addFilledRectangle(0, 0, viewWidth, viewHeight);
 
        // addFilledRectangle(0, viewHeight/2, viewWidth, viewHeight/2);
+
+         */
 
 
     }
@@ -258,7 +265,11 @@ public class MazePanel extends View implements P5Panel21 {
     @Override
     public void addMarker(float x, float y, String str) {
 
+        paint.setTextSize(100);
+        paint.setStrokeWidth(4);
+        paint.setStyle(Paint.Style.FILL);
         art.drawText(str, x, y, paint);
+        paint.setStyle(Paint.Style.STROKE);
 
     }
 
