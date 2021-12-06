@@ -35,7 +35,7 @@ public class PlayingControl
     int walkStep; // counter for intermediate steps within a single step forward or backward
     Floorplan seenCells; // a matrix with cells to memorize which cells are visible from the current point of view
     // the FirstPersonView obtains this information and the Map uses it for highlighting currently visible walls on the map
-    //private CompassRose cr; // compass rose to show current direction
+    private CompassRose cr; // compass rose to show current direction
 
     // debug stuff
     //private boolean deepdebug = false;
@@ -79,7 +79,7 @@ public class PlayingControl
         walkStep = 0; // counts incremental steps during move/rotate operation
 
         // configure compass rose
-        /*
+
         cr = new CompassRose();
         cr.setPositionAndSize(Constants.VIEW_WIDTH/2,
                 (int)(0.1*Constants.VIEW_HEIGHT),35);
@@ -92,7 +92,7 @@ public class PlayingControl
             printWarning();
         }
 
-         */
+
     }
 
     /**
@@ -398,8 +398,8 @@ public class PlayingControl
         // in testing environments, there is sometimes no panel to draw on
         // or the panel is unable to deliver a graphics object
         // check this and quietly move on if drawing is impossible
-        /*
-        if ((panel == null || panel.getBufferGraphics() == null)) {
+
+        if (panel.isOperational()) {
             printWarning();
             return;
         }
@@ -416,9 +416,9 @@ public class PlayingControl
             cr.setCurrentDirection(getCurrentDirection());
             cr.paintComponent(panel);
         }
-        panel.update();
+        panel.commit();
 
-         */
+
     }
     /**
      * Checks if the current position and direction
