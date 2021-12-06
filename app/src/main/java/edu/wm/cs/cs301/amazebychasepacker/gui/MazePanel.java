@@ -28,15 +28,9 @@ public class MazePanel extends View implements P5Panel21 {
 
     private Paint paint;
 
-    private Bitmap map;
+    private Bitmap map = null;
 
-    private boolean showWalls;
-
-    private boolean mapMode;
-
-    private boolean showMaze;
-
-    private boolean showSolution;
+    private PlayingControl game = null;
 
 
     Floorplan seenCells;
@@ -51,26 +45,10 @@ public class MazePanel extends View implements P5Panel21 {
 
     https://www.youtube.com/watch?v=sb9OEl4k9Dk&list=PLnZX5HteTIv_8QCo1e-qgQGHptWALWSIR&index=1&t=4s
 
+    https://stackoverflow.com/questions/10918773/how-to-draw-canvas-on-canvas
 
+    https://stackoverflow.com/questions/5663671/creating-an-empty-bitmap-and-drawing-though-canvas-in-android
      */
-
-    public void toggleSolution()
-    {
-        showSolution = !showSolution;
-    }
-
-    public void toggleFullMap()
-    {
-        showMaze = showMaze;
-    }
-
-    public void toggleLocalMap()
-    {
-        mapMode = !mapMode;
-    }
-
-
-
 
 
     @Override
@@ -80,33 +58,27 @@ public class MazePanel extends View implements P5Panel21 {
 
         super.onDraw(canvas);
 
-        //draw(art);
-        /*
-        Path triangle = new Path();
-        triangle.moveTo(400, 400);
-        triangle.lineTo(600, 600);
-        triangle.lineTo(200, 600);
-        triangle.lineTo(400, 400);
+        if(map == null)
+        {
+            art = canvas;
 
-        paint.setStyle(Paint.Style.FILL);
-        paint.setStrokeWidth(10);
-        paint.setColor(Color.RED);
+            int[] xpoints = {400, 600, 200};
+            int[] ypoints = {400, 600, 600};
+            int num = 3;
+            paint.setColor(Color.RED);
+            addFilledPolygon(xpoints, ypoints, num);
+            paint.setColor(Color.BLUE);
+            addFilledRectangle(200, 200, 200, 200);
 
-         */
+            art.drawRect(0, 0, Constants.VIEW_WIDTH, Constants.VIEW_HEIGHT, paint);
 
-        art = canvas;
+            addMarker(700, 700, "Hello");
+        }
+        else
+        {
+          //canvas.drawBitmap(map, 0, 0, paint);
+        }
 
-        int[] xpoints = {400, 600, 200};
-        int[] ypoints = {400, 600, 600};
-        int num = 3;
-        paint.setColor(Color.RED);
-        addFilledPolygon(xpoints, ypoints, num);
-        paint.setColor(Color.BLUE);
-        addFilledRectangle(200, 200, 200, 200);
-
-        art.drawRect(0, 0, 1400, 1400, paint);
-
-        addMarker(700, 700, "Hello");
 
     }
 
@@ -136,8 +108,9 @@ public class MazePanel extends View implements P5Panel21 {
 
     private void init()
     {
-
+        firstDraw = true;
         art = new Canvas();
+
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStrokeWidth(5);
@@ -146,7 +119,7 @@ public class MazePanel extends View implements P5Panel21 {
 
 
 
-        //addBackground(100, 1400, 1400);
+        //addBackground(100, Constants.VIEW_HEIGHT, Constants.VIEW_HEIGHT);
     }
 
 
@@ -280,5 +253,9 @@ public class MazePanel extends View implements P5Panel21 {
     }
 
 
-
+    public void StartDrawing()
+    {
+        map = Bitmap.createBitmap(Constants.VIEW_WIDTH, Constants.VIEW_HEIGHT, Bitmap.Config.ARGB_8888);
+        art = new Canvas(map);
+    }
 }

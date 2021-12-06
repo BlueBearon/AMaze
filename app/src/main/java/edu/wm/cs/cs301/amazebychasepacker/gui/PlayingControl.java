@@ -101,7 +101,8 @@ public class PlayingControl
      * for this state.
      */
     protected void startDrawer() {
-       firstPersonView = new FirstPersonView(Constants.VIEW_WIDTH,
+
+        firstPersonView = new FirstPersonView(Constants.VIEW_WIDTH,
                 Constants.VIEW_HEIGHT, Constants.MAP_UNIT,
                 Constants.STEP_SIZE, seenCells, mazeConfig.getRootnode()) ;
         mapView = new Map(seenCells, 15, mazeConfig) ;
@@ -180,17 +181,17 @@ public class PlayingControl
             case TOGGLELOCALMAP: // show local information: current position and visible walls
                 // precondition for showMaze and showSolution to be effective
                 // acts as a toggle switch
-                panel.toggleLocalMap();
+                mapMode = !mapMode;
                 draw() ;
                 break;
             case TOGGLEFULLMAP: // show the whole maze
                 // acts as a toggle switch
-                panel.toggleFullMap();
+                showMaze = !showMaze;
                 draw() ;
                 break;
             case TOGGLESOLUTION: // show the solution as a yellow line towards the exit
                 // acts as a toggle switch
-                panel.toggleSolution();
+                showSolution = !showSolution;
                 draw() ;
                 break;
             case ZOOMIN: // zoom into map
@@ -218,6 +219,7 @@ public class PlayingControl
             printWarning();
             return;
         }
+        panel.StartDrawing();
         // draw the first person view and the map view if wanted
         firstPersonView.draw(panel, px, py, walkStep, angle,
                 getPercentageForDistanceToExit()) ;
@@ -226,7 +228,7 @@ public class PlayingControl
                     isInShowMazeMode(),isInShowSolutionMode()) ;
         }
         // update the screen with the buffer graphics
-        panel.update() ;
+        panel.commit() ;
 
          */
     }
