@@ -61,25 +61,43 @@ public class MazePanel extends View implements P5Panel21 {
         if(map == null)
         {
             art = canvas;
+            myTestImage(art);
 
-            int[] xpoints = {400, 600, 200};
-            int[] ypoints = {400, 600, 600};
-            int num = 3;
-            paint.setColor(Color.RED);
-            addFilledPolygon(xpoints, ypoints, num);
-            paint.setColor(Color.BLUE);
-            addFilledRectangle(200, 200, 200, 200);
-
-            art.drawRect(0, 0, Constants.VIEW_WIDTH, Constants.VIEW_HEIGHT, paint);
-
-            addMarker(700, 700, "Hello");
         }
         else
         {
-          //canvas.drawBitmap(map, 0, 0, paint);
+          canvas.drawBitmap(map, 0, 0, paint);
         }
 
 
+    }
+
+    private void myTestImage(Canvas canvas)
+    {
+        int[] xpoints = {400, 600, 200};
+        int[] ypoints = {400, 600, 600};
+        int num = 3;
+        paint.setColor(Color.BLUE);
+        addFilledPolygon(xpoints, ypoints, num);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(Color.RED);
+        addArc(800, 400, 200, 200, 180, 180);
+        addArc(800, 400, 200, 200, -180, -180);
+
+        paint.setColor(Color.GREEN);
+        addArc(400, 1000, 200, 200, 180, 180);
+        addArc(400, 1000, 200, 200, -180, -180);
+
+        paint.setColor(Color.YELLOW);
+        addFilledRectangle(800, 1000, 200, 200);
+        addLine(0, 0, 1288, 1400);
+        addLine(0, 0, 1400, 288);
+        addLine(234, 15, 24, 488);
+
+        paint.setColor(Color.BLUE);
+        art.drawRect(0, 0, Constants.VIEW_WIDTH, Constants.VIEW_HEIGHT, paint);
+
+        addMarker(700, 700, "Hello");
     }
 
 
@@ -109,7 +127,8 @@ public class MazePanel extends View implements P5Panel21 {
     private void init()
     {
         firstDraw = true;
-        art = new Canvas();
+        map = Bitmap.createBitmap(Constants.VIEW_WIDTH, Constants.VIEW_HEIGHT, Bitmap.Config.ARGB_8888);
+        art = new Canvas(map);
 
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -253,9 +272,4 @@ public class MazePanel extends View implements P5Panel21 {
     }
 
 
-    public void StartDrawing()
-    {
-        map = Bitmap.createBitmap(Constants.VIEW_WIDTH, Constants.VIEW_HEIGHT, Bitmap.Config.ARGB_8888);
-        art = new Canvas(map);
-    }
 }
