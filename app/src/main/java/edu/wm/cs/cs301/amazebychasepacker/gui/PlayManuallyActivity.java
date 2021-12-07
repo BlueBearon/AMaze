@@ -48,7 +48,7 @@ public class PlayManuallyActivity extends PlayingActivity {
     MazePanel panel;
     ////////////////////////////////////////////
 
-    PlayingControl game = new PlayingControl();
+    PlayingControl game = new PlayingControl(false);
     Maze theMaze;
 
     @Override

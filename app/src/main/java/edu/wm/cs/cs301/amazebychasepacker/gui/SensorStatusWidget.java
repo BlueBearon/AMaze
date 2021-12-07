@@ -23,7 +23,7 @@ public class SensorStatusWidget{
     private MazePanel panel;
 
 
-    public void NewConstructor(MazePanel panel, int startposx, int startposy, int length, int[] status)
+    public SensorStatusWidget(MazePanel panel, int startposx, int startposy, int length, int[] status)
     {
         this.panel = panel;
         x = startposx;

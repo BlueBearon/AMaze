@@ -66,7 +66,7 @@ public class PlayAnimationActivity extends PlayingActivity {
     ///////////////////////////
 
 
-    PlayingControl game = new PlayingControl();
+    PlayingControl game = new PlayingControl(true);
 
     private boolean finished = false;
 
@@ -121,6 +121,7 @@ public class PlayAnimationActivity extends PlayingActivity {
 
         theMaze = GeneratingActivity.finishedMaze;
 
+        game.getRobot(robot);
 
         setContentView(R.layout.activity_play_animation);
         theMaze = GeneratingActivity.finishedMaze;
@@ -496,6 +497,7 @@ public class PlayAnimationActivity extends PlayingActivity {
 
 
     }
+
 
 
 

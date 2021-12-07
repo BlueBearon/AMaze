@@ -18,6 +18,8 @@ public class PlayingControl
     Map mapView;
     MazePanel panel;
     PlayingActivity control;
+    Robot robot;
+    private boolean isAnimation;
 
 
     Maze mazeConfig ;
@@ -36,6 +38,7 @@ public class PlayingControl
     Floorplan seenCells; // a matrix with cells to memorize which cells are visible from the current point of view
     // the FirstPersonView obtains this information and the Map uses it for highlighting currently visible walls on the map
     private CompassRose cr; // compass rose to show current direction
+    private SensorStatusWidget status;
 
     // debug stuff
     //private boolean deepdebug = false;
@@ -45,8 +48,9 @@ public class PlayingControl
 
     boolean started;
 
-    public PlayingControl() {
+    public PlayingControl(Boolean isAnimation) {
         started = false;
+        this.isAnimation = isAnimation;
     }
 
 
@@ -108,6 +112,11 @@ public class PlayingControl
                 Constants.STEP_SIZE, seenCells, mazeConfig.getRootnode()) ;
         mapView = new Map(seenCells, 100, mazeConfig) ;
         // draw the initial screen for this state
+
+        if(isAnimation)
+        {
+           status = new SensorStatusWidget(panel, 800, 200, 100, robot.getSensorStatus());
+        }
         draw();
 
 
@@ -235,6 +244,11 @@ public class PlayingControl
         if (isInMapMode()) {
            mapView.draw(panel, px, py, angle, walkStep,
                     isInShowMazeMode(),isInShowSolutionMode()) ;
+        }
+
+        if(isAnimation)
+        {
+            //status.drawWidget();
         }
         // update the screen with the buffer graphics
         panel.commit() ;
@@ -440,6 +454,12 @@ public class PlayingControl
                 mazeConfig.hasWall(px, py, getCurrentDirection().oppositeDirection().rotateClockwise()) &&
                 mazeConfig.hasWall(px, py, getCurrentDirection().rotateClockwise()));
     }
+
+    public void getRobot(Robot robot)
+    {
+        this.robot = robot;
+    }
+
 
     /////////////////////// Methods for debugging ////////////////////////////////
     /*
