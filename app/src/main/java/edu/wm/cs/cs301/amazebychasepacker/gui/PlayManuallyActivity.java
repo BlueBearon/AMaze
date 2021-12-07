@@ -68,7 +68,10 @@ public class PlayManuallyActivity extends PlayingActivity {
 
         theMaze = GeneratingActivity.finishedMaze;
 
+
+
         try {
+            panel = (MazePanel) findViewById(R.id.ManualPanel);
             game.setMazeConfiguration(theMaze);
             game.start(this, panel);
         }

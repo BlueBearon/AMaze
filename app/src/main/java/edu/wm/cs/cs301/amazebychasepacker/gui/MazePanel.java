@@ -36,6 +36,7 @@ public class MazePanel extends View implements P5Panel21 {
     Floorplan seenCells;
 
     private Boolean firstDraw = true;
+    int count = 0;
 
 
 
@@ -52,28 +53,30 @@ public class MazePanel extends View implements P5Panel21 {
 
 
     @Override
-    protected void onDraw(Canvas canvas)
-    {
-        //draw(art);
+    protected void onDraw(Canvas canvas) {
+
+        Log.v("MazePanel", "OnDraw called");
 
         super.onDraw(canvas);
 
-        if(map == null)
-        {
+        if (map == null) {
             art = canvas;
             myTestImage(art);
 
-        }
-        else
-        {
-          canvas.drawBitmap(map, 0, 0, paint);
+        } else {
+            canvas.drawBitmap(map, 0, 0, paint);
         }
 
 
     }
 
-    private void myTestImage(Canvas canvas)
+    public void drawTest()
     {
+        myTestImage(art);
+    }
+
+
+    private void myTestImage(Canvas canvas) {
         int[] xpoints = {400, 600, 200};
         int[] ypoints = {400, 600, 600};
         int num = 3;
@@ -96,8 +99,6 @@ public class MazePanel extends View implements P5Panel21 {
 
         paint.setColor(Color.BLUE);
         art.drawRect(0, 0, Constants.VIEW_WIDTH, Constants.VIEW_HEIGHT, paint);
-
-        addMarker(700, 700, "Hello");
     }
 
 
@@ -106,37 +107,32 @@ public class MazePanel extends View implements P5Panel21 {
         init();
     }
 
-    public MazePanel(Context context, AttributeSet attrs)
-    {
+    public MazePanel(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public MazePanel(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public MazePanel(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
-    public MazePanel(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
-    {
+    public MazePanel(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 
-    private void init()
-    {
+    private void init() {
         firstDraw = true;
-        map = Bitmap.createBitmap(Constants.VIEW_WIDTH, Constants.VIEW_HEIGHT, Bitmap.Config.ARGB_8888);
-        art = new Canvas(map);
+        startDrawing();
 
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStrokeWidth(5);
 
-       setBackgroundResource(R.drawable.starsactual);
+        setBackgroundResource(R.drawable.starsactual);
 
-
+        myTestImage(art);
 
         //addBackground(100, Constants.VIEW_HEIGHT, Constants.VIEW_HEIGHT);
     }
@@ -148,13 +144,13 @@ public class MazePanel extends View implements P5Panel21 {
 
     @Override
     public void commit() {
-        postInvalidate();
+        invalidate();
     }
 
     @Override
     public boolean isOperational() {
 
-        return(art != null && paint != null && map != null);
+        return (art != null && paint != null && map != null);
     }
 
     @Override
@@ -164,8 +160,7 @@ public class MazePanel extends View implements P5Panel21 {
     }
 
     @Override
-    public int getColor()
-    {
+    public int getColor() {
         return paint.getColor();
     }
 
@@ -200,7 +195,7 @@ public class MazePanel extends View implements P5Panel21 {
     @Override
     public void addFilledPolygon(int[] xPoints, int[] yPoints, int nPoints) {
         //https://stackoverflow.com/questions/5783624/porting-awt-graphics-code-to-android
-     //use path object
+        //use path object
 
         paint.setStyle(Paint.Style.FILL);
 
@@ -217,8 +212,7 @@ public class MazePanel extends View implements P5Panel21 {
         Path polygon = new Path();
         polygon.moveTo(xPoints[0], yPoints[0]);
 
-        for(int i = 1; i < nPoints; i++)
-        {
+        for (int i = 1; i < nPoints; i++) {
             polygon.lineTo(xPoints[i], yPoints[i]);
         }
 
@@ -250,7 +244,7 @@ public class MazePanel extends View implements P5Panel21 {
     @Override
     public void addArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
 
-        art.drawArc(x, y, x+ width, y + height, startAngle, arcAngle, true, paint);
+        art.drawArc(x, y, x + width, y + height, startAngle, arcAngle, true, paint);
 
     }
 
@@ -268,8 +262,16 @@ public class MazePanel extends View implements P5Panel21 {
     @Override
     public void setRenderingHint(P5RenderingHints hintKey, P5RenderingHints hintValue) {
 
-        Log.v("MazePanel" , "setRenderingHint not implemented");
+        Log.v("MazePanel", "setRenderingHint not implemented");
     }
 
+    public void startDrawing()
+    {
+        map = Bitmap.createBitmap(Constants.VIEW_WIDTH, Constants.VIEW_HEIGHT, Bitmap.Config.ARGB_8888);
+        art = new Canvas(map);
+    }
 
 }
+
+
+

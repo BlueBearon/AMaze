@@ -41,6 +41,7 @@ public class PlayingControl
     //private boolean deepdebug = false;
     //private boolean allVisible = false;
     //private boolean newGame = false;
+    private int count = 0;
 
     boolean started;
 
@@ -214,6 +215,12 @@ public class PlayingControl
      * Draws the current content on panel to show it on screen.
      */
     public void draw() {
+        count ++;
+        panel.startDrawing();
+        panel.drawTest();
+        String res = "Draw " + count;
+        panel.addMarker(900, 900, res);
+        panel.commit();
         /*
         if (panel == null) {
             printWarning();
