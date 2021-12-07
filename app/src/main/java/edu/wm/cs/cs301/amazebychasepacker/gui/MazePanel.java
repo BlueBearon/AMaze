@@ -139,8 +139,11 @@ public class MazePanel extends View implements P5Panel21 {
 
 
     public static int getColorfromRGB(int rgbValue, int rgb_def, int rgb_def1) {
-        return 2;
+
+        return Color.rgb(rgbValue, rgb_def, rgb_def1);
     }
+
+
 
     @Override
     public void commit() {
@@ -251,7 +254,7 @@ public class MazePanel extends View implements P5Panel21 {
     @Override
     public void addMarker(float x, float y, String str) {
 
-        paint.setTextSize(100);
+        paint.setTextSize(50);
         paint.setStrokeWidth(4);
         paint.setStyle(Paint.Style.FILL);
         art.drawText(str, x, y, paint);

@@ -358,6 +358,7 @@ public class PlayManuallyActivity extends PlayingActivity {
                                 {
                                     //Swipe UP
                                     game.keyDown(Constants.UserInput.UP, 2);
+                                    PathLength++;
                                     manualDebug();
                                 }
 

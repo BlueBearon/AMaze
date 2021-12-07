@@ -460,6 +460,9 @@ public class FirstPersonView {
 		
 		//WAIT FOR WALL's COLOR TO BE REMOVED
 		panel.setColor(wall.getColor());
+		String msg = "Color picked was " + wall.getColor();
+		Log.v("FPV", msg);
+		//panel.setColor(Color.BLUE);
 		boolean drawn = drawPolygons(x1, x2, y11, y12, y21, y22, panel);
 		
 		if (drawn && !wall.isSeen()) {
@@ -542,7 +545,6 @@ public class FirstPersonView {
 			// debug
 			//System.out.println("polygon-x: " + xps[0] + ", " + xps[1] + ", " + xps[2] + ", " + xps[3]) ;
 			//System.out.println("polygon-y: " + yps[0] + ", " + yps[1] + ", " + yps[2] + ", " + yps[3]) ;
-			panel.setColor(Color.RED);
 			panel.addFilledPolygon(xps, yps, 4);
 			// for debugging purposes, code will draw a red line around polygon
 			// this makes individual walls visible

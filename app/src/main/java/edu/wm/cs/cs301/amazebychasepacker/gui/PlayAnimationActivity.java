@@ -174,7 +174,7 @@ public class PlayAnimationActivity extends PlayingActivity {
                     showMapV = true;
                 }
 
-                game.keyDown(Constants.UserInput.TOGGLEFULLMAP, 2);
+                game.keyDown(Constants.UserInput.TOGGLELOCALMAP, 2);
 
                 String msg = "Show Map:  " + showMapV;
                 Log.v("PlayAnimationActivity", msg);

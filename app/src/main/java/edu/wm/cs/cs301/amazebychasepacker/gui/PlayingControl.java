@@ -83,7 +83,7 @@ public class PlayingControl
 
         cr = new CompassRose();
         cr.setPositionAndSize(Constants.VIEW_WIDTH/2,
-                (int)(0.1*Constants.VIEW_HEIGHT),35);
+                (int)(0.1*Constants.VIEW_HEIGHT),150);
 
         if (panel != null) {
             startDrawer();
@@ -407,7 +407,7 @@ public class PlayingControl
         // or the panel is unable to deliver a graphics object
         // check this and quietly move on if drawing is impossible
 
-        if (panel.isOperational()) {
+        if (!panel.isOperational()) {
             printWarning();
             return;
         }
