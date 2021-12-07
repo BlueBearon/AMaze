@@ -50,7 +50,7 @@
             android:layout_height="57dp"
             android:backgroundTint="#FFEB3B"
             android:indeterminate="false"
-            android:max="16"
+            android:max="15"
             android:progress="1"
             android:progressTint="#FFEB3B"
             android:visibility="visible" />
