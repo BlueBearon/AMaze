@@ -106,7 +106,7 @@ public class PlayingControl
         firstPersonView = new FirstPersonView(Constants.VIEW_WIDTH,
                 Constants.VIEW_HEIGHT, Constants.MAP_UNIT,
                 Constants.STEP_SIZE, seenCells, mazeConfig.getRootnode()) ;
-        mapView = new Map(seenCells, 15, mazeConfig) ;
+        mapView = new Map(seenCells, 100, mazeConfig) ;
         // draw the initial screen for this state
         draw();
 
@@ -215,29 +215,30 @@ public class PlayingControl
      * Draws the current content on panel to show it on screen.
      */
     public void draw() {
+        /*
         count ++;
         panel.startDrawing();
         panel.drawTest();
         String res = "Draw " + count;
         panel.addMarker(900, 900, res);
         panel.commit();
-        /*
+        */
+
         if (panel == null) {
             printWarning();
             return;
         }
-        panel.StartDrawing();
+        panel.startDrawing();
         // draw the first person view and the map view if wanted
         firstPersonView.draw(panel, px, py, walkStep, angle,
                 getPercentageForDistanceToExit()) ;
         if (isInMapMode()) {
-            mapView.draw(panel, px, py, angle, walkStep,
+           mapView.draw(panel, px, py, angle, walkStep,
                     isInShowMazeMode(),isInShowSolutionMode()) ;
         }
         // update the screen with the buffer graphics
         panel.commit() ;
 
-         */
     }
     /**
      * Calculates a distance to exit as a percentage.

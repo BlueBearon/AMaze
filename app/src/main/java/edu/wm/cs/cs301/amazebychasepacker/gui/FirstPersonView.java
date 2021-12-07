@@ -4,6 +4,9 @@
 package edu.wm.cs.cs301.amazebychasepacker.gui;
 
 
+import android.graphics.Color;
+import android.util.Log;
+
 import java.util.List;
 
 import edu.wm.cs.cs301.amazebychasepacker.generation.BSPBranch;
@@ -156,17 +159,18 @@ public class FirstPersonView {
 		// obtain a Graphics2D object we can draw on
         // viewers draw on the buffer graphics
         if (!panel.isOperational()) {
-            System.out.println("FirstPersonDrawer.draw: can't get graphics object to draw on, skipping redraw operation") ;
+			Log.v("FPV", "Cannot Draw, panel not operational");
             return;
         }
-        
+
+
         // update fields angle, viewx, viewy for current position and viewing angle
         angle = ang ;
         setView(x, y, walkStep);
         
         // update graphics
         // draw background figure: lightGrey to green on bottom half, yellow to gold on top half
-        drawBackground(percentToExit, panel);
+        //drawBackground(percentToExit, panel);
         // set color to white and draw what ever can be seen from the current position
         panel.setColor(-1);//white
         // reset the set of ranges to a single new element (0,width-1)
@@ -179,6 +183,7 @@ public class FirstPersonView {
         		drawRectCounter = drawRectLateCounter = drawRectWallCounter = 0;
         //
         drawAllVisibleSectors(bspRoot, panel);
+
 	}
 
 
@@ -485,6 +490,8 @@ public class FirstPersonView {
 		//System.out.println(drawrect_late_ct + " drawPieces: " + x1 + ", " + x2 
 		//		+ ", " + y11 + ", " + y12 + ", " + y21 + ", " + y22 );
 		drawRectLateCounter++; // debug, counter
+
+		Log.v("FPV", "Drawing Polygons");
 		
 		// some constants to improve readability in formulas for yps below
 		final int xd = x2 - x1; // length of interval on x-axis
@@ -535,6 +542,7 @@ public class FirstPersonView {
 			// debug
 			//System.out.println("polygon-x: " + xps[0] + ", " + xps[1] + ", " + xps[2] + ", " + xps[3]) ;
 			//System.out.println("polygon-y: " + yps[0] + ", " + yps[1] + ", " + yps[2] + ", " + yps[3]) ;
+			panel.setColor(Color.RED);
 			panel.addFilledPolygon(xps, yps, 4);
 			// for debugging purposes, code will draw a red line around polygon
 			// this makes individual walls visible
