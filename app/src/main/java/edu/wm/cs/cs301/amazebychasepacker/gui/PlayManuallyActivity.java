@@ -40,7 +40,6 @@ public class PlayManuallyActivity extends PlayingActivity {
     CheckBox showWalls;
     Button decreaseScale;
     Button increaseScale;
-    Button Go2Win;
     Button forward;
     Button backward;
     Button left;
@@ -187,21 +186,6 @@ public class PlayManuallyActivity extends PlayingActivity {
             }
         });
 
-
-
-        Go2Win = (Button) findViewById(R.id.Go2Win);
-
-        //if go2Win is pressed, go to WinningActivity
-        Go2Win.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String msg = "Going to Win";
-                Log.v("PlayManuallyActivity", msg);
-                Snackbar.make(Go2Win, msg, Snackbar.LENGTH_SHORT).show();
-                switchToWinning();
-
-            }
-        });
 
         ConstraintLayout layout = findViewById(R.id.ManualLayout);
 
@@ -399,10 +383,6 @@ public class PlayManuallyActivity extends PlayingActivity {
 
         int dist = testMaze.getDistanceToExit(position[0], position[1]);
 
-        String msg = "Distance:  " + dist;
-
-        Log.v("PlayManualActivity", msg);
-        Snackbar.make(Go2Win, msg, Snackbar.LENGTH_SHORT).show();
     }
 
 
