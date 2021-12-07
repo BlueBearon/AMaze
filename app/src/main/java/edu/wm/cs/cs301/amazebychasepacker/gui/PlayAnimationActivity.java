@@ -308,8 +308,9 @@ public class PlayAnimationActivity extends PlayingActivity {
      * switches to AMazeActivity
      */
     public void switchToTitle() {
-
-        t.interrupt();
+        if(active) {
+            stopDriver();
+        }
         Intent toTitle = new Intent(this, AMazeActivity.class);
         startActivity(toTitle);
     }
