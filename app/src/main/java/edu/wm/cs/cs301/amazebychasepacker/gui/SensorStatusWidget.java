@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 public class SensorStatusWidget{
 
 
-    private int[] robotStatus = {1, 0, 0, 1};
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
 
@@ -23,30 +22,29 @@ public class SensorStatusWidget{
     private MazePanel panel;
 
 
-    public SensorStatusWidget(MazePanel panel, int startposx, int startposy, int length, int[] status)
+    public SensorStatusWidget(MazePanel panel, int startposx, int startposy, int length)
     {
         this.panel = panel;
         x = startposx;
         y = startposy;
         this.length = length;
-        robotStatus = status;
     }
 
 
-    public void drawWidget()
+    public void drawWidget(int[] status)
     {
         panel.setColor(Color.YELLOW);
 
-        panel.addFilledRectangle(x, y, x + length, y + length);
-        drawFrontSensor(x, y, length);
-        drawLeftSensor(x, y, length);
-        drawBackSensor(x, y, length);
-        drawRightSensor(x, y, length);
+        panel.addFilledRectangle(x, y, length, length);
+        drawFrontSensor(x, y, length, status[0]);
+        drawLeftSensor(x, y, length, status[1]);
+        drawBackSensor(x, y, length, status[3]);
+        drawRightSensor(x, y, length, status[2]);
 
     }
 
-    private void drawBackSensor(int startx, int starty, int length) {
-        if(robotStatus[3] == 1)
+    private void drawBackSensor(int startx, int starty, int length, int status) {
+        if(status == 1)
         {
             panel.setColor(Color.GREEN);
         }
@@ -68,10 +66,10 @@ public class SensorStatusWidget{
         panel.addFilledPolygon(xpoints, ypoints, 3);
     }
 
-    private void drawLeftSensor(int startx, int starty, int length) {
+    private void drawLeftSensor(int startx, int starty, int length, int status) {
 
 
-        if(robotStatus[3] == 1)
+        if(status == 1)
         {
             panel.setColor(Color.GREEN);
         }
@@ -93,9 +91,9 @@ public class SensorStatusWidget{
         panel.addFilledPolygon(xpoints, ypoints, 3);
     }
 
-    private void drawRightSensor(int startx, int starty, int length) {
+    private void drawRightSensor(int startx, int starty, int length, int status) {
 
-        if(robotStatus[3] == 1)
+        if(status == 1)
         {
             panel.setColor(Color.GREEN);
         }
@@ -117,10 +115,10 @@ public class SensorStatusWidget{
         panel.addFilledPolygon(xpoints, ypoints, 3);
     }
 
-    private void drawFrontSensor(int startx, int starty, int length) {
+    private void drawFrontSensor(int startx, int starty, int length, int status) {
 
 
-        if(robotStatus[3] == 1)
+        if(status == 1)
         {
             panel.setColor(Color.GREEN);
         }

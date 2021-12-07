@@ -115,7 +115,7 @@ public class PlayingControl
 
         if(isAnimation)
         {
-           status = new SensorStatusWidget(panel, 800, 200, 100, robot.getSensorStatus());
+           status = new SensorStatusWidget(panel, 1100, 150, 100);
         }
         draw();
 
@@ -248,7 +248,7 @@ public class PlayingControl
 
         if(isAnimation)
         {
-            //status.drawWidget();
+            status.drawWidget(robot.getSensorStatus());
         }
         // update the screen with the buffer graphics
         panel.commit() ;
