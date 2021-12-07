@@ -60,7 +60,7 @@ public class CompassRose {
      * Construct a compass rose with the default settings.
      */
     public CompassRose() {
-        this(0.9, 1.7);
+        this(0.9, 1.5);
     }
      
     /**
@@ -329,7 +329,7 @@ public class CompassRose {
         
        // g2.drawGlyphVector(gv, x, y);
     	
-    	panel.addMarker(x, y, str);
+    	panel.addMarker(x-20, y+20, str);
         
     }
 }
