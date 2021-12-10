@@ -259,6 +259,7 @@ public class AMazeActivity extends AppCompatActivity{
         {
             if(mySharedPreferences != null && mySharedPreferences.contains("Seed"))
             {
+                Log.v("AMazeActivity" , "Getting Maze Info");
                 getMazeInfo();
             }
             else

@@ -36,9 +36,9 @@ public class SensorStatusWidget{
         panel.setColor(Color.YELLOW);
 
         panel.addFilledRectangle(x, y, length, length);
-        drawFrontSensor(x, y, length, status[0]);
+        drawFrontSensor(x, y, length, status[3]);
         drawLeftSensor(x, y, length, status[1]);
-        drawBackSensor(x, y, length, status[3]);
+        drawBackSensor(x, y, length, status[0]);
         drawRightSensor(x, y, length, status[2]);
 
     }

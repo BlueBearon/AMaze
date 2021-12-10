@@ -1,5 +1,7 @@
 package edu.wm.cs.cs301.amazebychasepacker.gui;
 
+import android.util.Log;
+
 import java.util.Arrays;
 
 import edu.wm.cs.cs301.amazebychasepacker.generation.CardinalDirection;
@@ -282,7 +284,15 @@ public class ReliableRobot implements Robot{
 		assert(!hasStopped()):"Robot is dead";
 		
 		//assert the turn is the proper enum
-		
+		try {
+			String str = "Position:  " + getCurrentPosition()[0] + " " + getCurrentPosition()[1] + "Direction:  " + getCurrentDirection();
+
+			Log.v("ReliableRobot", str);
+		}
+		catch(Exception e)
+		{
+
+		}
 		
 		/*
 		 * The Maze coordinates and coordinates in the State don't match.
@@ -340,6 +350,16 @@ public class ReliableRobot implements Robot{
 	 */
 	@Override
 	public void move(int distance) {
+
+		try {
+			String str = "Position:  " + getCurrentPosition()[0] + " " + getCurrentPosition()[1] + "Direction:  " + getCurrentDirection();
+
+			Log.v("ReliableRobot", str);
+		}
+		catch(Exception e)
+		{
+
+		}
 		
 		//assert distance is positive value
 		assert(distance >= 0): "Value must be positive";
@@ -381,6 +401,7 @@ public class ReliableRobot implements Robot{
 			}
 			
 		}
+
 		
 	}
 	//Complex

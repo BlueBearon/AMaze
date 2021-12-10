@@ -55,8 +55,6 @@ public class MazePanel extends View implements P5Panel21 {
     @Override
     protected void onDraw(Canvas canvas) {
 
-        Log.v("MazePanel", "OnDraw called");
-
         super.onDraw(canvas);
 
         if (map == null) {

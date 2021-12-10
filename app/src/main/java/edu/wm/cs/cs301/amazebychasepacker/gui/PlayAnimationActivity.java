@@ -358,6 +358,11 @@ public class PlayAnimationActivity extends PlayingActivity {
         //project 7
         active = false;
 
+        while(!go.isSleeping())
+        {
+
+        }
+
         t.interrupt();
     }
 
@@ -424,6 +429,7 @@ public class PlayAnimationActivity extends PlayingActivity {
     private class Animation implements Runnable
     {
         private int delay;
+        private boolean sleeping = false;
 
         //speed -> delay
         //0 - 1000 ms
@@ -467,9 +473,11 @@ public class PlayAnimationActivity extends PlayingActivity {
         public void run()
         {
 
+            int[] curPosition = game.getCurrentPosition();
+            CardinalDirection curDirection = game.getCurrentDirection();
+
             try
             {
-                SetupDriver();
 
                 while (!done)
                 {
@@ -479,11 +487,15 @@ public class PlayAnimationActivity extends PlayingActivity {
                     }
                     //1 step to exit
                     if(active) {
+                        curPosition = game.getCurrentPosition();
+                        curDirection = game.getCurrentDirection();
+                        sleeping = false;
                         driver.drive1Step2Exit();
 
                         int showConsumption = (int) (3500 - driver.getEnergyConsumption());
 
                         consumption.setProgress(showConsumption);
+                        sleeping = true;
                         Thread.sleep(delay);
                     }
 
@@ -494,6 +506,9 @@ public class PlayAnimationActivity extends PlayingActivity {
             catch (InterruptedException e)
             {
                 active = false;
+
+                //game.setCurrentPosition(curPosition[1], curPosition[1]);
+               // game.setCurrentDirection(curDirection);
             }
             catch(Exception e)
             {
@@ -535,6 +550,11 @@ public class PlayAnimationActivity extends PlayingActivity {
             //Filler code for now, this is not how delay is calculated
             speedToDelay();
 
+        }
+
+        public boolean isSleeping()
+        {
+            return sleeping;
         }
 
 

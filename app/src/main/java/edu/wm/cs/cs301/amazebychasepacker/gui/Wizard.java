@@ -234,6 +234,14 @@ public class Wizard implements RobotDriver{
 		int[] neighbor = theMaze.getNeighborCloserToExit(currentPos[0], currentPos[1]);
 
 		int dist = theMaze.getDistanceToExit(currentPos[0], currentPos[1]);
+		int dist2 = theMaze.getDistanceToExit(neighbor[0], neighbor[1]);
+
+		if((dist2 + 1) != dist)
+		{
+			String msg = "Bad neighbor is" + neighbor[0] + " " + neighbor[1];
+			Log.v("Wizard", msg);
+		}
+
 
 		String msg = "Distance " + dist;
 
@@ -253,6 +261,7 @@ public class Wizard implements RobotDriver{
 		else if(turnDirection(currentDir, neighborDir) == Robot.Turn.AROUND)
 		{
 			theRobot.rotate(Robot.Turn.AROUND);
+			Log.v("Wizard", "Why the fuck am I turning around");
 		}
 		else if(turnDirection(currentDir, neighborDir) == Robot.Turn.LEFT)
 		{
@@ -262,8 +271,11 @@ public class Wizard implements RobotDriver{
 		{
 			theRobot.rotate(Robot.Turn.RIGHT);
 		}
+
+		Log.v("Wizard", "Turn done");
 		//tell robot to move forward	
 		theRobot.move(1);
+		Log.v("Wizard", "Has moved");
 		
 		if(theRobot.hasStopped())
 		{

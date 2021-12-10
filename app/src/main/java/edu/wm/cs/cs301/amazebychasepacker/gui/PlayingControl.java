@@ -153,6 +153,10 @@ public class PlayingControl
         if (!started)
             return false;
 
+        CardinalDirection cur = getCurrentDirection();
+        String str = "Position " + px + " " + py + " Direction:  " + cur;
+        Log.v("PlayingControl", str);
+
         // react to input for directions and interrupt signal (ESCAPE key)
         // react to input for displaying a map of the current path or of the overall maze (on/off toggle switch)
         // react to input to display solution (on/off toggle switch)
@@ -220,9 +224,6 @@ public class PlayingControl
                 break ;
 
         } // end of internal switch statement for playing state
-        CardinalDirection cur = getCurrentDirection();
-        String str = "Position " + px + " " + py + " Direction:  " + cur;
-        Log.v("PlayingControl", str);
         return true;
     }
     /**
@@ -303,6 +304,13 @@ public class PlayingControl
         result[0] = px;
         result[1] = py;
         return result;
+    }
+
+    public void setCurrentDirection(CardinalDirection e)
+    {
+        int[] dir = e.getDirection();
+        dx = dir[0];
+        dy = dir[1];
     }
     protected CardinalDirection getCurrentDirection() {
         return CardinalDirection.getDirection(dx, dy);

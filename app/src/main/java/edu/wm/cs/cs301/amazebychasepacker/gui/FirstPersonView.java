@@ -460,8 +460,6 @@ public class FirstPersonView {
 		
 		//WAIT FOR WALL's COLOR TO BE REMOVED
 		panel.setColor(wall.getColor());
-		String msg = "Color picked was " + wall.getColor();
-		Log.v("FPV", msg);
 		//panel.setColor(Color.BLUE);
 		boolean drawn = drawPolygons(x1, x2, y11, y12, y21, y22, panel);
 		
@@ -494,7 +492,6 @@ public class FirstPersonView {
 		//		+ ", " + y11 + ", " + y12 + ", " + y21 + ", " + y22 );
 		drawRectLateCounter++; // debug, counter
 
-		Log.v("FPV", "Drawing Polygons");
 		
 		// some constants to improve readability in formulas for yps below
 		final int xd = x2 - x1; // length of interval on x-axis
