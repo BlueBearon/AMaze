@@ -29,6 +29,12 @@ import edu.wm.cs.cs301.amazebychasepacker.databinding.ActivityGeneratingBinding;
 
 import edu.wm.cs.cs301.amazebychasepacker.R;
 
+/**
+ * This Generating Activity is responsible for generating the maze.  It works
+ * with builder, factory and order to build a maze.  The activity also asks to user
+ * for a driver (or manual) and a configuration for the sensors on the robot if a driver
+ * is selected.
+ */
 public class GeneratingActivity extends AppCompatActivity implements Order{
 
     private AppBarConfiguration appBarConfiguration;
@@ -282,7 +288,13 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
      */
     private void switchToTitle()
     {
-        t.interrupt();
+        try {
+            t.interrupt();
+        }
+        catch(Exception e)
+        {
+
+        }
         Intent toTitle = new Intent (this, AMazeActivity.class);
         startActivity(toTitle);
     }
