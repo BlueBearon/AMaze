@@ -1,6 +1,8 @@
 package edu.wm.cs.cs301.amazebychasepacker.gui;
 
 
+import android.util.Log;
+
 import edu.wm.cs.cs301.amazebychasepacker.generation.CardinalDirection;
 import edu.wm.cs.cs301.amazebychasepacker.generation.Floorplan;
 import edu.wm.cs.cs301.amazebychasepacker.generation.Maze;
@@ -218,6 +220,9 @@ public class PlayingControl
                 break ;
 
         } // end of internal switch statement for playing state
+        CardinalDirection cur = getCurrentDirection();
+        String str = "Position " + px + " " + py + " Direction:  " + cur;
+        Log.v("PlayingControl", str);
         return true;
     }
     /**

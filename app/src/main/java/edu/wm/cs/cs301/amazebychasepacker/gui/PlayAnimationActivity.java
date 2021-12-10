@@ -315,6 +315,45 @@ public class PlayAnimationActivity extends PlayingActivity {
         startActivity(toTitle);
     }
 
+    private void SetupDriver()
+    {
+        switch(DriverV)
+        {
+            case 2:
+            {
+                driver = new WizardJump();
+                break;
+            }
+            case 3:
+            {
+                driver = new Wallfollower();
+                break;
+            }
+            default:
+            {
+                driver = new Wizard();
+                break;
+            }
+        }
+
+        if(this.RobotConfig.contains("0"))
+        {
+            robot = new UnreliableRobot(this, this.RobotConfig);
+        }
+        else
+        {
+            robot = new ReliableRobot(this);
+        }
+
+        driver.setRobot(robot);
+
+        driver.setMaze(GeneratingActivity.finishedMaze);
+
+        theMaze = GeneratingActivity.finishedMaze;
+
+        game.getRobot(robot);
+    }
+
     private void stopDriver() {
         //project 7
         active = false;
@@ -430,6 +469,8 @@ public class PlayAnimationActivity extends PlayingActivity {
 
             try
             {
+                SetupDriver();
+
                 while (!done)
                 {
                     if(theMaze.getDistanceToExit(getCurrentPosition()[0],getCurrentPosition()[1]) == 1)
