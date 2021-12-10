@@ -41,10 +41,16 @@ public class AMazeActivity extends AppCompatActivity{
     private int SkillLevel = 0;
     private boolean hasRooms = true;
 
+    private static final String MYPREFS = "MyPreferences_001";
+    public static final String Seed = "Seed";
+    public static final String Skill = "SkillLevel";
+    public static final String Rooms = "HasRooms";
+    public static final String Gen = "Builder";
+    //
+
     final int mode = Activity.MODE_PRIVATE;
-    final String MYPREFS = "MyPreferences_001";
-    SharedPreferences mySharedPreferences;
-    SharedPreferences.Editor myEditor;
+   // SharedPreferences mySharedPreferences;
+   // SharedPreferences.Editor myEditor;
 
 
     private int builder = 0;
@@ -106,10 +112,6 @@ public class AMazeActivity extends AppCompatActivity{
         });
 
         ///////////////////////////////////////////////////////////////////////////////////
-
-
-        mySharedPreferences = getSharedPreferences(MYPREFS, mode);
-        myEditor = mySharedPreferences.edit();
 
         //Maze Generation////////////////////////////////////////////////////////////////////
         //spinner tutorial:  https://www.youtube.com/watch?v=PjW-XiQ6usI
@@ -247,6 +249,9 @@ public class AMazeActivity extends AppCompatActivity{
     {
         Intent toGenerating = new Intent(this, GeneratingActivity.class);
 
+        SharedPreferences mySharedPreferences = getSharedPreferences(MYPREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = mySharedPreferences.edit();
+
 
         Random gen = new Random();
 
@@ -257,6 +262,8 @@ public class AMazeActivity extends AppCompatActivity{
         }
         else
         {
+
+
             if(mySharedPreferences != null && mySharedPreferences.contains("Seed"))
             {
                 Log.v("AMazeActivity" , "Getting Maze Info");
@@ -280,22 +287,34 @@ public class AMazeActivity extends AppCompatActivity{
 
     }
 
+    /*
+    Tutorial for storing data:
+    https://www.youtube.com/watch?v=fJEFZ6EOM9o
+     */
+
     private void storeMazeInfo(int seed, int skillLevel, boolean hasRooms, int builder) {
-        myEditor.clear();
-        myEditor.putInt("Seed", seed);
-        myEditor.putInt("Skill Level", SkillLevel);
-        myEditor.putBoolean("Has Rooms", hasRooms);
-        myEditor.putInt("Builder", builder);
+        SharedPreferences mySharedPreferences = getSharedPreferences(MYPREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = mySharedPreferences.edit();
+
+        editor.putInt(Seed, seed);
+        editor.putInt(Skill, SkillLevel);
+        editor.putBoolean(Rooms, hasRooms);
+        editor.putInt(Gen, builder);
+
+        editor.apply();
+
+        Log.v("AMazeActivity", "Data Saved");
     }
 
     private void getMazeInfo()
     {
         Random gen = new Random();
+        SharedPreferences pref = getSharedPreferences(MYPREFS, MODE_PRIVATE);
 
-        seed = mySharedPreferences.getInt("Seed", gen.nextInt());
-        SkillLevel = mySharedPreferences.getInt("Skill Level", SkillLevel);
-        hasRooms = mySharedPreferences.getBoolean("Has Rooms", hasRooms);
-        builder = mySharedPreferences.getInt("Builder", builder);
+        seed = pref.getInt(Seed, gen.nextInt());
+        SkillLevel = pref.getInt(Skill, SkillLevel);
+        hasRooms = pref.getBoolean(Rooms, hasRooms);
+        builder = pref.getInt(Gen, builder);
     }
 
 }
