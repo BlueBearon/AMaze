@@ -2,6 +2,9 @@ package edu.wm.cs.cs301.amazebychasepacker.gui;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.AudioAttributes;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 
 
@@ -66,7 +69,11 @@ public class PlayAnimationActivity extends PlayingActivity {
     ImageView sensorStatus;
     MazePanel panel;
     ///////////////////////////
+    //Sound Tutorial:  https://www.youtube.com/watch?v=fIWPSni7kUk
+    private SoundPool sounds;
+    private int rocketSound;
 
+    private MediaPlayer media;
 
     PlayingControl game = new PlayingControl(true);
 
@@ -88,6 +95,21 @@ public class PlayAnimationActivity extends PlayingActivity {
 
         DriverV = getIntent().getIntExtra("Driver", 0);
         RobotConfig = getIntent().getStringExtra("RobotConfig");
+
+        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_GAME)
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build();
+
+        sounds = new SoundPool.Builder()
+                .setMaxStreams(6)
+                .setAudioAttributes(audioAttributes)
+                .build();
+
+        rocketSound = sounds.load(this, R.raw.shuttlelaunch, 1);
+
+        media = MediaPlayer.create(this, R.raw.shuttlelaunch);
+
+
 
         switch(DriverV)
         {
@@ -224,11 +246,14 @@ public class PlayAnimationActivity extends PlayingActivity {
 
                 if(active)
                 {
+                    //sounds.pause(rocketSound);
+                    media.pause();
                     stopDriver();
                 }
                 else
                 {
                     startDriver();
+                   // sounds.play(rocketSound, (float)0.5, (float)0.5, 0, 0, 1);
                 }
 
                 String msg = "Start/Stop button Selected";
@@ -325,6 +350,9 @@ public class PlayAnimationActivity extends PlayingActivity {
         if(active) {
             stopDriver();
         }
+       // sounds.pause(rocketSound);
+        //sounds.release();
+        media.stop();
         Intent toTitle = new Intent(this, AMazeActivity.class);
         startActivity(toTitle);
     }
@@ -366,6 +394,9 @@ public class PlayAnimationActivity extends PlayingActivity {
      * Switches to WinningActivity with path and consumption
      */
     public void switchToWinning() {
+        //sounds.pause(rocketSound);
+        //sounds.release();
+        media.stop();
         Intent toWinning = new Intent(this, WinningActivity.class);
         consumedEnergy = driver.getEnergyConsumption();
         pathLength = driver.getPathLength();
@@ -378,6 +409,9 @@ public class PlayAnimationActivity extends PlayingActivity {
      * Switches ot LosingActivity and sends path and consumption
      */
     private void switchToLosing() {
+        //sounds.pause(rocketSound);
+       // sounds.release();
+        media.stop();
         Intent toLosing = new Intent(this, LosingActivity.class);
         toLosing.putExtra("Consumption", consumedEnergy);
         toLosing.putExtra("path", pathLength);
@@ -459,6 +493,8 @@ public class PlayAnimationActivity extends PlayingActivity {
 
             int[] curPosition = game.getCurrentPosition();
             CardinalDirection curDirection = game.getCurrentDirection();
+
+            media.start();
 
             try
             {

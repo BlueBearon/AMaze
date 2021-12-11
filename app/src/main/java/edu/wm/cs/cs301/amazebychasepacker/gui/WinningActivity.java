@@ -1,6 +1,7 @@
 package edu.wm.cs.cs301.amazebychasepacker.gui;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -72,6 +73,9 @@ public class WinningActivity extends AppCompatActivity {
 
         pathText.setText(msgPath);
         energyText.setText(msgEnergy);
+
+        MediaPlayer media = MediaPlayer.create(this, R.raw.victory);
+        media.start();
 
         //if title button is selected, change to Title
         titleButton.setOnClickListener(new View.OnClickListener() {

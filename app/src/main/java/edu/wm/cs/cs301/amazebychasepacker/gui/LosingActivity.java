@@ -1,6 +1,9 @@
 package edu.wm.cs.cs301.amazebychasepacker.gui;
 
 import android.content.Intent;
+import android.media.AudioAttributes;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -38,6 +41,9 @@ public class LosingActivity extends AppCompatActivity {
     private String FailureMessage = "Vehicle has run out of Energy";
     private String LosingMessage2 = "Attempting Recovery...";
 
+    private SoundPool sounds;
+    private int failSound;
+
     //Gui////
     TextView pathText;
     TextView energyText;
@@ -73,6 +79,32 @@ public class LosingActivity extends AppCompatActivity {
 
         pathText.setText(msgPath);
         energyText.setText(msgEnergy);
+
+        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
+
+        sounds = new SoundPool.Builder()
+                .setMaxStreams(6)
+                .setAudioAttributes(audioAttributes)
+                .build();
+
+        failSound = sounds.load(this, R.raw.wilhelmscream, 1);
+
+        MediaPlayer media = MediaPlayer.create(this, R.raw.wilhelmscream);
+
+        media.start();
+
+        while(media.isPlaying())
+        {
+
+        }
+
+        MediaPlayer media2 = MediaPlayer.create(this, R.raw.failure);
+
+        media2.start();
+
+        //sounds.play(failSound, (float) 0.5, (float)0.5, 0, 0, 1);
 
 
         if(cause == 1)

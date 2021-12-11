@@ -1,5 +1,8 @@
 package edu.wm.cs.cs301.amazebychasepacker.gui;
 
+import android.media.AudioAttributes;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -42,6 +45,10 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityGeneratingBinding binding;
+
+    private SoundPool sounds;
+    private int genSound;
+    MediaPlayer media;
 
     //////Driving Information/////////////////////////
     private String[] drivers = {"Manual", "Wall Follower", "Wizard", "Jumping Wizard"};
@@ -101,6 +108,19 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
 
         setContentView(R.layout.activity_generating);
 
+        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_GAME)
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build();
+
+        sounds = new SoundPool.Builder()
+                .setMaxStreams(6)
+                .setAudioAttributes(audioAttributes)
+                .build();
+
+        genSound = sounds.load(this, R.raw.loading, 1);
+
+        media = MediaPlayer.create(this, R.raw.loading);
+
         //Get Info from AMazeActivity////////////////////////////////////////////////
         SkillLevel = getIntent().getIntExtra("Skill Level", 0);
         hasRooms = getIntent().getBooleanExtra("Has Rooms", true);
@@ -149,6 +169,10 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
         //Generate the maze.
         StartGenerating();
 
+
+
+        //if driverSelected is true, switchToPlaying
+        //else, create pop up telling user to indicate driver
         /////////////////////////////////////////////////////////////////////////////////
 
         //Driver Spinner/////////////////////////////////////////
@@ -374,6 +398,8 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
 
         mazeProgress = 0;
 
+        media.start();
+
         if(filename == null)
         {
             assert null != factory:  "GeneratingActivity:  factory must be present";
@@ -385,6 +411,8 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
     @Override
     public void deliver(Maze mazeconfig)
     {
+        media.stop();
+        //sounds.pause(genSound);
        if(Floorplan.deepdebugWall)
        {
            mazeconfig.getFloorplan().saveLogFile(Floorplan.deepedebugWallFileName);
