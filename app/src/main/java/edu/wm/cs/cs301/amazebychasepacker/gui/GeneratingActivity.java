@@ -2,7 +2,7 @@ package edu.wm.cs.cs301.amazebychasepacker.gui;
 
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
+
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -46,8 +46,6 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
     private AppBarConfiguration appBarConfiguration;
     private ActivityGeneratingBinding binding;
 
-    private SoundPool sounds;
-    private int genSound;
     MediaPlayer media;
 
     //////Driving Information/////////////////////////
@@ -108,16 +106,6 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
 
         setContentView(R.layout.activity_generating);
 
-        AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_GAME)
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build();
-
-        sounds = new SoundPool.Builder()
-                .setMaxStreams(6)
-                .setAudioAttributes(audioAttributes)
-                .build();
-
-        genSound = sounds.load(this, R.raw.loading, 1);
 
         media = MediaPlayer.create(this, R.raw.loading);
 
@@ -227,9 +215,9 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
                 {
                     switchToPlaying();
                 }
-                else
+                else if(driverSelected)
                 {
-                    Snackbar.make(view, "Please Wait for Maze to be Generated", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(view, "Please Wait for Maze to be Generated", Snackbar.LENGTH_LONG).show();
                 }
 
             }
@@ -309,6 +297,7 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
         {
 
         }
+        media.stop();
         Intent toTitle = new Intent (this, AMazeActivity.class);
         startActivity(toTitle);
     }
@@ -412,7 +401,7 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
     public void deliver(Maze mazeconfig)
     {
         media.stop();
-        //sounds.pause(genSound);
+
        if(Floorplan.deepdebugWall)
        {
            mazeconfig.getFloorplan().saveLogFile(Floorplan.deepedebugWallFileName);

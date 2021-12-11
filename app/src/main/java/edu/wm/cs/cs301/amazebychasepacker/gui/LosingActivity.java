@@ -41,8 +41,7 @@ public class LosingActivity extends AppCompatActivity {
     private String FailureMessage = "Vehicle has run out of Energy";
     private String LosingMessage2 = "Attempting Recovery...";
 
-    private SoundPool sounds;
-    private int failSound;
+
 
     //Gui////
     TextView pathText;
@@ -80,16 +79,6 @@ public class LosingActivity extends AppCompatActivity {
         pathText.setText(msgPath);
         energyText.setText(msgEnergy);
 
-        AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
-
-        sounds = new SoundPool.Builder()
-                .setMaxStreams(6)
-                .setAudioAttributes(audioAttributes)
-                .build();
-
-        failSound = sounds.load(this, R.raw.wilhelmscream, 1);
 
         MediaPlayer media = MediaPlayer.create(this, R.raw.wilhelmscream);
 
@@ -104,7 +93,6 @@ public class LosingActivity extends AppCompatActivity {
 
         media2.start();
 
-        //sounds.play(failSound, (float) 0.5, (float)0.5, 0, 0, 1);
 
 
         if(cause == 1)
