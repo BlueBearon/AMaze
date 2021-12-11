@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,32 +31,30 @@ import android.content.Intent;
 import java.util.Random;
 import android.widget.Toast;
 
+/**
+ * @author Chase Packer
+ *
+ * This class is starting activity.  This class is incharge of taking user input for the maze that
+ * will be generated and gives that information to GeneratingActivity.  It has many view objects
+ * to take and record said input.
+ */
 public class AMazeActivity extends AppCompatActivity{
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
-
+    //maze variables
     private int SkillLevel = 0;
     private boolean hasRooms = true;
+    private int builder = 0;
+    private int seed = 13;
 
+    //Preferences variables
     private static final String MYPREFS = "MyPreferences_001";
     public static final String Seed = "Seed";
     public static final String Skill = "SkillLevel";
     public static final String Rooms = "HasRooms";
     public static final String Gen = "Builder";
-    //
-
-    final int mode = Activity.MODE_PRIVATE;
-   // SharedPreferences mySharedPreferences;
-   // SharedPreferences.Editor myEditor;
-
-
-    private int builder = 0;
-    private String[] builders = {"DFS", "Prim", "Boruvka"};
-    private int seed = 13;
-
-    private int[] previousSeeds = new int[10];
 
 
     /*
@@ -98,7 +95,6 @@ public class AMazeActivity extends AppCompatActivity{
 
                 String msg = "Skill Level set to " + progress + ".";
                 Log.v("AMazeActivity", msg);
-                Snackbar.make(skilllevelBar, msg, Snackbar.LENGTH_SHORT).show();
             }
 
             @Override
@@ -128,8 +124,7 @@ public class AMazeActivity extends AppCompatActivity{
 
                 String msg = "Builder selected is " + choice + ".";
                 Log.v("AMazeActivity", msg);
-                Snackbar.make(builderSpinner, msg, Snackbar.LENGTH_SHORT).show();
-
+                //set builder
               switch(choice)
               {
                   case "Prim":
@@ -179,7 +174,6 @@ public class AMazeActivity extends AppCompatActivity{
 
                 String msg = "Has rooms is set to " + hasRooms + ".";
                 Log.v("AMazeActivity", msg);
-                Snackbar.make(roomBox, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
         /////////////////////////////////////////////////////////////////////////////////////
@@ -193,7 +187,6 @@ public class AMazeActivity extends AppCompatActivity{
             {
                 String msg = "Explore Selected";
                 Log.v("AMazeActivity", msg);
-                Snackbar.make(newButton, msg, Snackbar.LENGTH_SHORT).show();
 
               SwitchtoGenerating(true);
             }
@@ -209,7 +202,6 @@ public class AMazeActivity extends AppCompatActivity{
 
                 String msg = "Revist Selected";
                 Log.v("AMazeActivity", msg);
-                Snackbar.make(newButton, msg, Snackbar.LENGTH_SHORT).show();
                 SwitchtoGenerating(false);
             }
         });
@@ -277,6 +269,8 @@ public class AMazeActivity extends AppCompatActivity{
             }
         }
 
+
+        //set Extras and go to Generating
         toGenerating.putExtra("Seed", seed);
 
         toGenerating.putExtra("Skill Level", SkillLevel);
@@ -292,12 +286,20 @@ public class AMazeActivity extends AppCompatActivity{
     https://www.youtube.com/watch?v=fJEFZ6EOM9o
      */
 
+    /**
+     * Takes seed, skilllevel, hasRooms, and builder of generated maze and stores them
+     * in preferences for later use.
+     * @param seed
+     * @param skillLevel
+     * @param hasRooms
+     * @param builder
+     */
     private void storeMazeInfo(int seed, int skillLevel, boolean hasRooms, int builder) {
         SharedPreferences mySharedPreferences = getSharedPreferences(MYPREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = mySharedPreferences.edit();
 
         editor.putInt(Seed, seed);
-        editor.putInt(Skill, SkillLevel);
+        editor.putInt(Skill, skillLevel);
         editor.putBoolean(Rooms, hasRooms);
         editor.putInt(Gen, builder);
 
@@ -306,6 +308,10 @@ public class AMazeActivity extends AppCompatActivity{
         Log.v("AMazeActivity", "Data Saved");
     }
 
+    /**
+     * If revisit is selected, this method accesses the variables of the previous maze
+     * within preferences, and then sets those variables.
+     */
     private void getMazeInfo()
     {
         Random gen = new Random();

@@ -3,8 +3,6 @@ package edu.wm.cs.cs301.amazebychasepacker.gui;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,6 +22,12 @@ import edu.wm.cs.cs301.amazebychasepacker.databinding.ActivityWinningBinding;
 
 import edu.wm.cs.cs301.amazebychasepacker.R;
 
+/**
+ * @author Chase Packer
+ * This class is responsible for recieving and displaying relevant information
+ * after the user or RobotDriver has navigated the maze successfully.  Then sends
+ * the user back to AMazeActivity.
+ */
 public class WinningActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
@@ -54,7 +58,6 @@ public class WinningActivity extends AppCompatActivity {
 
         String msg = "pathLength:  " + pathLength + " EnergyConsumed:  " + energyConsumed;
         Log.v("WinningActivity", msg);
-        Snackbar.make(pathText, msg, Snackbar.LENGTH_SHORT).show();
 
         //set text contents
         String msgPath = "Pathlength:  " + pathLength;
@@ -77,7 +80,6 @@ public class WinningActivity extends AppCompatActivity {
 
                 String msg = "Going to title screen";
                 Log.v("WinningActivity", msg);
-                Snackbar.make(v, msg, Snackbar.LENGTH_SHORT).show();
                 switchToTitle();
 
             }

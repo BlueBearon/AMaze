@@ -8,6 +8,7 @@ import edu.wm.cs.cs301.amazebychasepacker.generation.Floorplan;
 import edu.wm.cs.cs301.amazebychasepacker.generation.Maze;
 
 /**
+ * @author Chase Packer
  * This class is responsible for replacing StatePlaying from Eclipse Project.
  *
  * PlayManualActivity and PlayAnimationActivity will share a lot of code in

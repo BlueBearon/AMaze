@@ -3,8 +3,6 @@ package edu.wm.cs.cs301.amazebychasepacker.gui;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,9 +23,15 @@ import androidx.navigation.ui.NavigationUI;
 import edu.wm.cs.cs301.amazebychasepacker.R;
 import edu.wm.cs.cs301.amazebychasepacker.generation.Maze;
 
+/**
+ * @author Chase Packer
+ *
+ * This class is in charge of handling manual navigation in the maze.  It works with PlayingControl
+ * to handle actually playing through the maze.
+ * This class is responsible for taking user input and giving it to PlayingControl.
+ */
 public class PlayManuallyActivity extends PlayingActivity {
 
-    private AppBarConfiguration appBarConfiguration;
 
     private boolean fullMazeViewValue = false;
     private boolean showSolutionValue = false;
@@ -47,7 +51,7 @@ public class PlayManuallyActivity extends PlayingActivity {
     Button jump;
     MazePanel panel;
     ////////////////////////////////////////////
-
+    //set PlayingControl
     PlayingControl game = new PlayingControl(false);
     Maze theMaze;
 
@@ -68,7 +72,7 @@ public class PlayManuallyActivity extends PlayingActivity {
         theMaze = GeneratingActivity.finishedMaze;
 
 
-
+        //set up PlayingControl for playing
         try {
             panel = (MazePanel) findViewById(R.id.ManualPanel);
             game.setMazeConfiguration(theMaze);
@@ -97,7 +101,6 @@ public class PlayManuallyActivity extends PlayingActivity {
 
                 String msg = "fullMazeView:  " + fullMazeViewValue;
                 Log.v("PlayAnimationActivity", msg);
-                Snackbar.make(fullMazeView, msg, Snackbar.LENGTH_SHORT).show();
 
             }
         });
@@ -122,7 +125,6 @@ public class PlayManuallyActivity extends PlayingActivity {
 
                 String msg = "showSolution:  " + showSolutionValue;
                 Log.v("PlayAnimationActivity", msg);
-                Snackbar.make(showSolution, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -144,7 +146,6 @@ public class PlayManuallyActivity extends PlayingActivity {
 
                 String msg = "showWalls:  " + showVisableWalls;
                 Log.v("PlayAnimationActivity", msg);
-                Snackbar.make(showWalls, msg, Snackbar.LENGTH_SHORT).show();
 
             }
         });
@@ -165,7 +166,6 @@ public class PlayManuallyActivity extends PlayingActivity {
                 game.keyDown(Constants.UserInput.ZOOMOUT,2);
                 String msg = "New Scale:  " + MapScale;
                 Log.v("PlayManuallyActivity", msg);
-                Snackbar.make(increaseScale, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -182,11 +182,10 @@ public class PlayManuallyActivity extends PlayingActivity {
 
                 String msg = "New Scale:  " + MapScale;
                 Log.v("PlayManuallyActivity", msg);
-                Snackbar.make(increaseScale, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
 
-
+        //set up inputs for moving throughout maze
         ConstraintLayout layout = findViewById(R.id.ManualLayout);
 
         SwipeListener swipeListener = new SwipeListener(layout);
@@ -204,9 +203,7 @@ public class PlayManuallyActivity extends PlayingActivity {
                 PathLength++;
                 String msg = "forward pressed";
                 Log.v("PlayManuallyActivity", msg);
-                Snackbar.make(v, msg, Snackbar.LENGTH_SHORT).show();
                 game.keyDown(Constants.UserInput.UP, 2);
-                manualDebug();
             }
         });
 
@@ -215,9 +212,7 @@ public class PlayManuallyActivity extends PlayingActivity {
             public void onClick(View v) {
                 String msg = "back pressed";
                 Log.v("PlayManuallyActivity", msg);
-                Snackbar.make(v, msg, Snackbar.LENGTH_SHORT).show();
                 game.keyDown(Constants.UserInput.DOWN, 2);
-                manualDebug();
             }
         });
 
@@ -226,9 +221,7 @@ public class PlayManuallyActivity extends PlayingActivity {
             public void onClick(View v) {
                 String msg = "left pressed";
                 Log.v("PlayManuallyActivity", msg);
-                Snackbar.make(v, msg, Snackbar.LENGTH_SHORT).show();
                 game.keyDown(Constants.UserInput.LEFT, 2);
-                manualDebug();
             }
         });
 
@@ -237,9 +230,7 @@ public class PlayManuallyActivity extends PlayingActivity {
             public void onClick(View v) {
                 String msg = "right pressed";
                 Log.v("PlayManuallyActivity", msg);
-                Snackbar.make(v, msg, Snackbar.LENGTH_SHORT).show();
                 game.keyDown(Constants.UserInput.RIGHT, 2);
-                manualDebug();
             }
         });
 
@@ -251,37 +242,16 @@ public class PlayManuallyActivity extends PlayingActivity {
 
                 String msg = "jump pressed";
                 Log.v("PlayManuallyActivity", msg);
-                Snackbar.make(v, msg, Snackbar.LENGTH_SHORT).show();
                 game.keyDown(Constants.UserInput.JUMP, 2);
-                manualDebug();
             }
         });
 
 
     }
-    /*
-    @Override
-    public boolean onTouchEvent(MotionEvent event)
-    {
-        int action = event.getActionMasked();
 
-        switch(action)
-        {
-            case (MotionEvent.ACTION_DOWN) :
-                game.keyDown(Constants.UserInput.DOWN, 2);
-                return true;
-            case (MotionEvent.ACTION_UP) :
-                game.keyDown(Constants.UserInput.UP, 2);
-                return true;
-            case(MotionEvent.ACTION_)
-
-                default :
-                return super.onTouchEvent(event);
-        }
-    }
-
+    /**
+     *This class is responsible for handling Gesture controls
      */
-
     private class SwipeListener implements View.OnTouchListener{
 
         //Tutorial:  https://www.youtube.com/watch?v=vNJyU-XW8_Y
@@ -289,6 +259,7 @@ public class PlayManuallyActivity extends PlayingActivity {
         GestureDetector gestureDetector;
 
         SwipeListener(View view){
+            //thresholds for recongizing movement
             int threshold = 100;
             int velocity_threshold = 100;
 
@@ -301,13 +272,13 @@ public class PlayManuallyActivity extends PlayingActivity {
 
                 @Override
                 public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-
+                    //differences between position of beginning and end of swipe
                     float xDiff = e2.getX() - e1.getX();
                     float yDiff = e2.getY() - e1.getY();
 
                     try
                     {
-                        //if swipe is horizontal
+                        //if swipe is horizontal, i.e., swipe is mostly going horizontal
                         if(Math.abs(xDiff) > Math.abs(yDiff))
                         {
                             if(Math.abs(xDiff) > threshold  && Math.abs(velocityX) > velocity_threshold)//only if it is actually a swipe
@@ -316,13 +287,11 @@ public class PlayManuallyActivity extends PlayingActivity {
                                 {
                                     //Swipe Right
                                     game.keyDown(Constants.UserInput.RIGHT, 2);
-                                    manualDebug();
                                 }
                                 else
                                 {
                                     //Swipe Left
                                     game.keyDown(Constants.UserInput.LEFT, 2);
-                                    manualDebug();
                                 }
 
                                 return true;
@@ -336,14 +305,12 @@ public class PlayManuallyActivity extends PlayingActivity {
                                 {
                                     //Swipe Down
                                     game.keyDown(Constants.UserInput.DOWN, 2);
-                                    manualDebug();
                                 }
                                 else
                                 {
                                     //Swipe UP
                                     game.keyDown(Constants.UserInput.UP, 2);
                                     PathLength++;
-                                    manualDebug();
                                 }
 
                                 return true;
@@ -373,21 +340,6 @@ public class PlayManuallyActivity extends PlayingActivity {
             return gestureDetector.onTouchEvent(event);
         }
     }
-
-
-    public void manualDebug()
-    {
-        Maze testMaze = game.getMazeConfiguration();
-
-        int[] position = game.getCurrentPosition();
-
-        int dist = testMaze.getDistanceToExit(position[0], position[1]);
-
-    }
-
-
-
-
 
     @Override
     public void onBackPressed()

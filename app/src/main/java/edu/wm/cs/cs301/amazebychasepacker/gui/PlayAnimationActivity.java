@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
 
 import android.util.Log;
 import android.view.View;
@@ -21,6 +20,9 @@ import edu.wm.cs.cs301.amazebychasepacker.R;
 import edu.wm.cs.cs301.amazebychasepacker.generation.CardinalDirection;
 import edu.wm.cs.cs301.amazebychasepacker.generation.Maze;
 
+/**
+ *
+ */
 public class PlayAnimationActivity extends PlayingActivity {
 
     private AppBarConfiguration appBarConfiguration;
@@ -131,7 +133,6 @@ public class PlayAnimationActivity extends PlayingActivity {
 
         String msg = "Driver:  " + DriverV + " RobotConfig:  " + RobotConfig;
         Log.v("PlayAnimationActivity", msg);
-        Snackbar.make(consumption, msg, Snackbar.LENGTH_SHORT).show();
 
         ShowMap = (CheckBox) findViewById(R.id.showMap);
         ShowMap.setChecked(true);
@@ -179,7 +180,6 @@ public class PlayAnimationActivity extends PlayingActivity {
 
                 String msg = "Show Map:  " + showMapV;
                 Log.v("PlayAnimationActivity", msg);
-                Snackbar.make(ShowMap, msg, Snackbar.LENGTH_SHORT).show();
             }
         });
         //decrease map scale if pressed.
@@ -265,15 +265,29 @@ public class PlayAnimationActivity extends PlayingActivity {
 
     }
 
+    /**
+     *
+     * @return currentPosition in game
+     */
     public int[] getCurrentPosition()
     {
         return game.getCurrentPosition();
     }
 
+    /**
+     *
+     * @return current direction in game
+     */
     public CardinalDirection getCurrentDirection() {
         return game.getCurrentDirection();
     }
 
+    /**
+     * Recieves and sends the input to PlayingControl
+     * @param key
+     * @param value
+     * @return
+     */
     public boolean keyDown(Constants.UserInput key, int value) {
         // delegated to state object
         return game.keyDown(key, value);
@@ -315,45 +329,11 @@ public class PlayAnimationActivity extends PlayingActivity {
         startActivity(toTitle);
     }
 
-    private void SetupDriver()
-    {
-        switch(DriverV)
-        {
-            case 2:
-            {
-                driver = new WizardJump();
-                break;
-            }
-            case 3:
-            {
-                driver = new Wallfollower();
-                break;
-            }
-            default:
-            {
-                driver = new Wizard();
-                break;
-            }
-        }
 
-        if(this.RobotConfig.contains("0"))
-        {
-            robot = new UnreliableRobot(this, this.RobotConfig);
-        }
-        else
-        {
-            robot = new ReliableRobot(this);
-        }
-
-        driver.setRobot(robot);
-
-        driver.setMaze(GeneratingActivity.finishedMaze);
-
-        theMaze = GeneratingActivity.finishedMaze;
-
-        game.getRobot(robot);
-    }
-
+    /**
+     * Stops the driver thread.  Waits until thread is sleeping to interrupt
+     * as to avoid interrupting thread while it is currently changing state of the game.
+     */
     private void stopDriver() {
         //project 7
         active = false;
@@ -366,6 +346,9 @@ public class PlayAnimationActivity extends PlayingActivity {
         t.interrupt();
     }
 
+    /**
+     * method that starts the animation thread for robotdriver
+     */
     private void startDriver() {
         //project 7
         active = true;
@@ -402,30 +385,31 @@ public class PlayAnimationActivity extends PlayingActivity {
         startActivity(toLosing);
     }
 
+    /**
+     * Sets the sensor string for the robot
+     * @param SensorString
+     */
     public void setSensors(String SensorString)
     {
         RobotConfig = SensorString;
     }
 
+    /**
+     * Returns whether or not the driver has finished yet
+     * @return
+     */
     public boolean hasWon()
     {
         return finished;
     }
 
-    public void notifyWin() {
-        done = true;
 
-        stopDriver();
-
-        pathLength = driver.getPathLength();
-
-        consumedEnergy = driver.getEnergyConsumption();
-
-        switchToWinning();
-
-
-    }
-
+    /**
+     * This class is in charge of starting and stopping the maze driver.
+     * When active, it repeatedly calls Drive1Step2Exit, then sleeps for x amount of time
+     * determined by animation speed.
+     * The thread cannot be interrupted while doing movement operation.
+     */
     private class Animation implements Runnable
     {
         private int delay;
@@ -487,15 +471,14 @@ public class PlayAnimationActivity extends PlayingActivity {
                     }
                     //1 step to exit
                     if(active) {
-                        curPosition = game.getCurrentPosition();
-                        curDirection = game.getCurrentDirection();
-                        sleeping = false;
-                        driver.drive1Step2Exit();
+                        sleeping = false;//about to do an operation, set to false
+                        driver.drive1Step2Exit();//do operation
 
+                        //update energy bar
                         int showConsumption = (int) (3500 - driver.getEnergyConsumption());
 
                         consumption.setProgress(showConsumption);
-                        sleeping = true;
+                        sleeping = true;//movement operation complete, thread about to sleep
                         Thread.sleep(delay);
                     }
 
@@ -507,8 +490,6 @@ public class PlayAnimationActivity extends PlayingActivity {
             {
                 active = false;
 
-                //game.setCurrentPosition(curPosition[1], curPosition[1]);
-               // game.setCurrentDirection(curDirection);
             }
             catch(Exception e)
             {
@@ -552,6 +533,12 @@ public class PlayAnimationActivity extends PlayingActivity {
 
         }
 
+        /**
+         * returns whether the robot is sleeping or in an operation.
+         * The purpose of this method is to make sure that the thread is
+         * not interrupted while in a movement operation, as that causes problems
+         * @return whether or not the robot is sleeping
+         */
         public boolean isSleeping()
         {
             return sleeping;

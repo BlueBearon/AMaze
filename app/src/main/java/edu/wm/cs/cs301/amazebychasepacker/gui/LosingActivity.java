@@ -21,6 +21,12 @@ import androidx.navigation.ui.NavigationUI;
 
 import edu.wm.cs.cs301.amazebychasepacker.R;
 
+/**
+ * @author Chase Packer
+ * This class is responsible for recieving and displaying relevant information
+ * after the RobotDriver has failed to naviagate the maze.  Then sends
+ * the user back to AMazeActivity.
+ */
 public class LosingActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;

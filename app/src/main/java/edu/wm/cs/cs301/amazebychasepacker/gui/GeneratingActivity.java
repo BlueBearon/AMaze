@@ -30,10 +30,13 @@ import edu.wm.cs.cs301.amazebychasepacker.databinding.ActivityGeneratingBinding;
 import edu.wm.cs.cs301.amazebychasepacker.R;
 
 /**
+ * @author Chase Packer
  * This Generating Activity is responsible for generating the maze.  It works
  * with builder, factory and order to build a maze.  The activity also asks to user
  * for a driver (or manual) and a configuration for the sensors on the robot if a driver
  * is selected.
+ * It recieves info from AMazeActivity, and then sends the maze and driver info to
+ * either PlayManually or PlayAnimation
  */
 public class GeneratingActivity extends AppCompatActivity implements Order{
 
@@ -53,10 +56,6 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
     private boolean mazeBuilt = false;
     ///////////////////////////////////////////////////
 
-    /*
-
-    101010101000100100100100100010
-     */
 
     ///////MazeGenerationInformation/////////////////////
     private int SkillLevel = 0;
@@ -82,6 +81,7 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
     Spinner configSpinner;
     ProgressBar progress;
 
+    //initialize variables for order.
     public GeneratingActivity() {
         filename = null;
         factory = new MazeFactory();
@@ -107,6 +107,7 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
         builderint = getIntent().getIntExtra("Builder", 0);
         seed = getIntent().getIntExtra("Seed", 13);
 
+        //set the builder
         switch(builderint)
         {
 
@@ -141,22 +142,13 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
         ////////////////////
         String msg = "Skill Level: " + SkillLevel + " hasRooms:  " + hasRooms + " Builder:  " + " Seed:  " + seed;
         Log.v("GeneratingActivity", msg);
-        Snackbar.make(percent, msg, Snackbar.LENGTH_SHORT).show();
         ////////////////////////
 
-        //start thread
-
-        /*
-        progressSimulation simulate = new progressSimulation();
-        t = new Thread(simulate);
-        t.start();
-        */
 
 
+        //Generate the maze.
         StartGenerating();
 
-        //if driverSelected is true, switchToPlaying
-        //else, create pop up telling user to indicate driver
         /////////////////////////////////////////////////////////////////////////////////
 
         //Driver Spinner/////////////////////////////////////////
@@ -172,8 +164,7 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
 
                 String msg = "Driver selected:  " + choice;
                 Log.v("GeneratingActivity", msg);
-                Snackbar.make(driverSpinner, msg, Snackbar.LENGTH_SHORT).show();
-
+                //set driver
                 switch(choice)
                 {
                     case "Manual":
@@ -241,8 +232,7 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
 
                 String msg = "Robot Config selected:  " + choice;
                 Log.v("GeneratingActivity", msg);
-                Snackbar.make(configSpinner, msg, Snackbar.LENGTH_SHORT).show();
-
+                //set robot config
                 switch(choice)
                 {
                     case "Mediocre":
@@ -340,30 +330,13 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
         return this.builder;
     }
 
+    /**
+     * Sets the builder for Maze Generation
+     * @param builder
+     */
     public void setBuilder(Builder builder)
     {
         this.builder = builder;
-    }
-
-    public void setHasRooms(boolean rooms)
-    {
-        this.hasRooms = rooms;
-    }
-
-    public void setSeed(int seed)
-    {
-        this.seed = seed;
-    }
-
-    private Maze loadMazeConfigurationFromFile(String filename)
-    {
-        return null;
-    }
-
-
-    public void setFilename(String filename)
-    {
-        this.filename = filename;
     }
 
     @Override
@@ -380,6 +353,7 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
     @Override
     public void updateProgress(int percentage)
     {
+        //if progress is different and less than 100%
         if(this.mazeProgress < percentage && percentage <= 100)
         {
           this.mazeProgress = percentage;
@@ -391,6 +365,9 @@ public class GeneratingActivity extends AppCompatActivity implements Order{
         }
     }
 
+    /**
+     * This method is in charge of starting the maze generation, calling factory.order(this)
+     */
     public void StartGenerating()
     {
         started = true;
